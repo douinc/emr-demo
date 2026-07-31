@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>[접속정보 : 배성준] 처방관리 Ver. 2.0.0.122</title>
+<style>
+:root{
+  --face:#f0efe8;
+  --face2:#e6e4dc;
+  --line:#8e9aab;
+  --line2:#b8bcc4;
+  --lbl:#e9edf3;
+  --sel:#316ac5;
+  --cream:#fdf7dd;
+  --mint:#dff0e4;
+  --blue-l:#e2ecf8;
+  --tbl-head:#e4e8ef;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:#1b1b1b;}
+body{
+  font-family:"Malgun Gothic","맑은 고딕","Dotum","돋움",AppleGothic,sans-serif;
+  font-size:11px;color:#111;-webkit-font-smoothing:antialiased;
+}
+.screen{width:1540px;min-height:875px;position:relative;background:#000;}
+.app{width:1540px;background:var(--face);border:1px solid #204070;}
+
+/* ---------- title bar ---------- */
+.titlebar{
+  height:22px;display:flex;align-items:center;
+  background:linear-gradient(180deg,#3b6ea5 0%,#22497c 45%,#1b3c69 100%);
+  color:#fff;padding:0 4px;font-size:11px;
+}
+.titlebar .tico{width:14px;height:14px;margin-right:4px;background:#dfe8f6;border:1px solid #7a8ba9;
+  display:flex;align-items:center;justify-content:center;font-size:9px;color:#204070;}
+.titlebar .ttxt{flex:1;overflow:hidden;white-space:nowrap;}
+.wbtns{display:flex;gap:2px;}
+.wbtn{width:22px;height:16px;background:#d9dde4;border:1px solid #6d798c;color:#1b3c69;
+  display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1;}
+.wbtn.close{background:#e6d6d6;}
+
+/* ---------- menu bar ---------- */
+.menubar{display:flex;align-items:center;height:19px;background:var(--face);
+  border-bottom:1px solid #c9c6bd;padding-left:2px;}
+.menubar span{padding:2px 9px;white-space:nowrap;}
+.menubar span.on{background:var(--sel);color:#fff;}
+
+/* ---------- patient header ---------- */
+.pheader{display:flex;border-bottom:1px solid #b9b6ae;background:var(--face);padding:2px 0 0 0;}
+.pfields{padding:2px 0 0 4px;}
+.prow{display:flex;align-items:center;margin-bottom:2px;}
+.lb{width:56px;height:17px;line-height:15px;text-align:center;background:var(--lbl);
+  border:1px solid var(--line);margin-right:2px;font-size:11px;white-space:nowrap;}
+.lb.w60{width:60px;}
+.lb.w48{width:48px;}
+.fd{height:17px;line-height:15px;border:1px solid var(--line);background:#fff;
+  padding:0 3px;margin-right:6px;font-size:11px;white-space:nowrap;overflow:hidden;}
+.fd.cream{background:var(--cream);}
+.fd.mint{background:var(--mint);}
+.fd.gray{background:#eceef2;}
+.fd.w70{width:70px;} .fd.w56{width:56px;} .fd.w62{width:62px;}
+.fd.w80{width:80px;} .fd.w48{width:48px;} .fd.w90{width:90px;}
+.plain{font-size:11px;margin-right:6px;white-space:nowrap;}
+.birth{padding:1px 0 2px 4px;font-size:11px;color:#333;}
+
+.psurg{margin-left:6px;display:flex;align-items:flex-start;padding-top:2px;}
+.dosu{border:1px solid var(--line);background:#fbe6d2;width:82px;font-size:11px;}
+.dosu .dh{text-align:center;background:#fbe6d2;border-bottom:1px solid var(--line);padding:1px 0;}
+.dosu .dr{padding:1px 4px;}
+.optable{border:1px solid var(--line);background:#fff;width:590px;height:66px;}
+.optable .oh{display:flex;background:var(--tbl-head);border-bottom:1px solid var(--line);}
+.optable .oh div{border-right:1px solid var(--line2);text-align:center;padding:1px 0;}
+.oh .c1{width:60px;} .oh .c2{width:38px;} .oh .c3{width:52px;} .oh .c4{width:66px;} .oh .c5{flex:1;border-right:none;}
+
+.picons{display:flex;gap:2px;margin-left:auto;padding:2px 4px 0 6px;}
+.picon{width:62px;text-align:center;font-size:11px;color:#111;}
+.picon .gi{font-size:22px;line-height:24px;}
+
+/* ---------- mini toolbar ---------- */
+.minibar{display:flex;align-items:center;gap:6px;height:24px;padding:1px 6px;
+  border-bottom:1px solid #b9b6ae;background:var(--face);}
+.minibar .mi{font-size:15px;}
+.minibar .cal{width:17px;height:17px;border:1px solid #a33;background:#fff;color:#a33;
+  font-size:9px;display:flex;align-items:center;justify-content:center;}
+
+/* ---------- tabs ---------- */
+.tabstrip{display:flex;align-items:flex-end;height:20px;background:var(--face);
+  border-bottom:1px solid var(--line);padding-left:16px;}
+.tab{border:1px solid var(--line);border-bottom:none;background:var(--face2);
+  padding:2px 8px 3px;margin-right:2px;font-size:11px;display:flex;gap:6px;align-items:center;}
+.tab.on{background:#fff;}
+.tab .x{color:#a33;font-size:10px;}
+
+/* ---------- main grid ---------- */
+.main{display:flex;background:var(--face);padding:3px 2px 4px 2px;gap:3px;}
+.vstrip{width:12px;background:var(--face2);border:1px solid var(--line2);
+  font-size:9px;color:#333;writing-mode:vertical-rl;text-align:center;padding-top:6px;letter-spacing:1px;}
+
+.panel{border:1px solid var(--line);background:var(--face);}
+.pad{padding:3px;}
+
+/* left column */
+.colL{width:196px;display:flex;flex-direction:column;gap:3px;}
+.row{display:flex;align-items:center;gap:4px;margin-bottom:3px;}
+.spin{width:44px;height:17px;border:1px solid var(--line);background:#fff;
+  display:flex;align-items:center;padding:0 2px;justify-content:space-between;}
+.spin i{font-style:normal;font-size:7px;color:#333;line-height:6px;}
+.sel{height:18px;border:1px solid var(--line);background:#fff;padding:0 2px;
+  display:flex;align-items:center;justify-content:space-between;}
+.sel .ar{font-size:7px;background:var(--face2);border-left:1px solid var(--line2);padding:0 2px;}
+.btn{border:1px solid #8a8a8a;background:linear-gradient(180deg,#fdfdfd,#e3e1da);
+  padding:2px 6px;font-size:11px;text-align:center;white-space:nowrap;cursor:default;}
+.btn:active{background:#d4d2cb;}
+.btn.sm{padding:1px 5px;}
+.tree{border:1px solid var(--line);background:#fff;flex:1;padding:4px 3px;font-size:11px;line-height:16px;}
+.tree .nd{display:flex;align-items:center;gap:3px;padding-left:0;}
+.tree .box{width:9px;height:9px;border:1px solid #888;background:#fff;font-size:8px;
+  line-height:7px;text-align:center;color:#333;}
+.tree .ind1{padding-left:12px;} .tree .ind2{padding-left:26px;} .tree .ind3{padding-left:40px;}
+.tree .hit{background:var(--sel);color:#fff;padding:0 3px;}
+
+/* center column */
+.colC{width:580px;display:flex;flex-direction:column;gap:3px;}
+.ctools{display:flex;gap:3px;align-items:center;padding:2px;}
+.ctools .nav{border:1px solid #8a8a8a;background:linear-gradient(180deg,#fdfdfd,#e3e1da);
+  padding:2px 4px;color:#1b4e9b;}
+.ctools .g{color:#0a7a2a;} .ctools .b{color:#12409c;}
+.ctools .pacs{background:#f7d7ef;border-color:#a86a9a;color:#7a1d63;}
+.chartbox{border:1px solid var(--line);background:#fff;flex:1;display:flex;flex-direction:column;}
+.chart-title{background:var(--face2);border-bottom:1px solid var(--line2);padding:2px 6px;}
+.chart-meta{display:flex;align-items:center;border-bottom:1px solid var(--line2);padding:2px 4px;background:#fafafa;}
+.chart-meta .m1{font-weight:bold;} .chart-meta .m2{margin-left:26px;}
+.chart-meta .mb{margin-left:auto;display:flex;gap:2px;}
+.chart-body{flex:1;padding:6px 10px;line-height:22px;position:relative;overflow:auto;}
+.chart-body .sec{margin:0 0 14px 14px;}
+.chart-body .sub{margin-left:34px;}
+.chart-body[contenteditable]{outline:none;caret-color:#000;cursor:text;}
+.chart-body[contenteditable]:focus{background:#fffffe;}
+.chart-body .sec:empty::before{content:"";display:inline-block;}
+.saveflash{margin-left:10px;color:#0a7a2a;opacity:0;transition:opacity .2s;}
+.saveflash.on{opacity:1;}
+.chart-sign{margin:24px 0 0 40px;}
+.scrollv{width:13px;background:var(--face2);border-left:1px solid var(--line2);
+  display:flex;flex-direction:column;justify-content:space-between;align-items:center;font-size:8px;}
+
+/* mid column */
+.colM{width:238px;display:flex;flex-direction:column;gap:3px;}
+.vtabs{display:flex;gap:2px;}
+.vtab{flex:1;border:1px solid #8a8a8a;background:linear-gradient(180deg,#fdfdfd,#e3e1da);
+  text-align:center;padding:2px 0;font-size:11px;}
+.vtab.on{background:linear-gradient(180deg,#d8e8fb,#a9c9ee);border-color:#5a7fae;color:#12306b;}
+.grid{background:#fff;border:1px solid var(--line);}
+.grid table{border-collapse:collapse;width:100%;font-size:11px;}
+.grid th{background:var(--tbl-head);border:1px solid var(--line2);font-weight:normal;padding:1px 2px;}
+.grid td{border:1px solid #e3e3e3;padding:1px 3px;height:16px;}
+.secthead{background:var(--face2);border:1px solid var(--line);border-bottom:none;
+  display:flex;align-items:center;padding:2px 4px;}
+.secthead .ttl{flex:1;}
+.arrbtns{display:flex;gap:2px;}
+.arrbtn{width:16px;height:15px;border:1px solid #8a8a8a;background:linear-gradient(180deg,#fdfdfd,#e3e1da);
+  color:#12409c;font-size:9px;display:flex;align-items:center;justify-content:center;}
+.memo{display:flex;gap:2px;}
+.memo .mbox{flex:1;border:1px solid var(--line);background:#fff;height:60px;
+  display:flex;align-items:center;justify-content:center;color:#9aa0a8;}
+.memo .save{width:22px;border:1px solid #8a8a8a;background:linear-gradient(180deg,#fdfdfd,#e3e1da);
+  display:flex;align-items:center;justify-content:center;text-align:center;line-height:12px;}
+
+/* right column */
+.colR{width:440px;display:flex;flex-direction:column;gap:3px;}
+.rtop{display:flex;align-items:center;gap:3px;}
+.chk{display:flex;align-items:center;gap:3px;margin-right:10px;color:#333;}
+.chk i{width:11px;height:11px;border:1px solid #8a8a8a;background:#fff;display:inline-block;}
+.rbtns{display:flex;gap:3px;flex-wrap:wrap;}
+.rbtn{border:1px solid #8a8a8a;background:linear-gradient(180deg,#fdfdfd,#e3e1da);
+  padding:3px 6px;display:flex;align-items:center;gap:3px;}
+.bottombar{display:flex;gap:3px;}
+.bottombar .rbtn{flex:1;justify-content:center;padding:5px 2px;flex-direction:column;font-size:11px;}
+.bottombar .rbtn .ic{font-size:13px;line-height:14px;}
+
+/* vertical button column */
+.colV{width:74px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start;padding-top:22px;}
+.vbtn{width:34px;height:26px;border:1px solid #8a8a8a;background:linear-gradient(180deg,#fdfdfd,#dedcd5);
+  display:flex;align-items:center;justify-content:center;font-size:11px;}
+.vbtn.on{background:linear-gradient(180deg,#d8e8fb,#a9c9ee);border-color:#5a7fae;color:#12306b;}
+.vbtn.ghost{visibility:hidden;}
+
+/* taskbar */
+.taskbar{position:absolute;left:0;right:0;bottom:0;height:30px;background:#1f1f1f;
+  display:flex;align-items:center;padding:0 8px;color:#e9e9e9;font-size:11px;gap:10px;}
+.taskbar .start{font-size:14px;}
+.taskbar .search{display:flex;align-items:center;gap:6px;background:#2c2c2c;border:1px solid #3a3a3a;
+  border-radius:12px;padding:2px 12px;width:190px;color:#bdbdbd;}
+.taskbar .tico{font-size:14px;}
+.taskbar .right{margin-left:auto;display:flex;align-items:center;gap:10px;text-align:right;line-height:12px;}
+/* ---------- layout fixes: fill viewport, no overflow ---------- */
+html,body{height:100%;background:#101010;}
+body{overflow:auto;}
+.screen{display:flex;flex-direction:column;width:100%;min-width:1240px;height:100vh;
+  background:var(--face);}
+.app{width:auto;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;border:none;}
+
+/* header: 수술정보 테이블이 남는 폭을 먹고, 우측 아이콘은 항상 창 안에 */
+.pheader{overflow:hidden;flex:0 0 auto;}
+.pfields{flex:0 0 auto;}
+.psurg{flex:1 1 auto;min-width:0;}
+.optable{width:auto;flex:1 1 auto;min-width:180px;}
+.picons{flex:0 0 auto;margin-left:6px;}
+
+/* main: 남은 높이 전부 사용 */
+.main{flex:1 1 auto;min-height:0;align-items:stretch;}
+.main > *{min-height:0;}
+.colL{flex:0 0 196px;}
+.colC{flex:1 1 560px;width:auto;min-width:360px;}
+.colM{flex:0 0 238px;}
+.colR{flex:1 1 430px;width:auto;min-width:430px;}
+.colV{flex:0 0 74px;}
+.tree{overflow:auto;}
+.chartbox{min-height:0;}
+.chart-body{min-height:0;}
+
+/* 그리드가 높이에 맞춰 늘어나도록 */
+.gflex{flex:1 1 auto;min-height:90px;overflow:auto;}
+.gwrap{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;}
+.gwrap .grid{flex:1 1 auto;overflow:auto;}
+
+/* 라벨 줄바꿈 방지 */
+.rtop,.chk,.rbtn,.lb,.plain{white-space:nowrap;}
+.rbtn{padding:3px 5px;}
+
+.taskbar{position:static;flex:0 0 30px;}
+</style>
+</head>
+<body>
+<div class="screen">
+<div class="app">
+
+  <!-- ================= title bar ================= -->
+  <div class="titlebar">
+    <div class="tico">＆</div>
+    <div class="ttxt">[접속정보 : 배성준] 처방관리 Ver. 2.0.0.122 : [ 외래 - 00436157 손동욱 (M / [나이 : 30세1개월0주] ) ⊙ 960726 - 1****** ⊙ ☎ / ]</div>
+    <div class="wbtns">
+      <div class="wbtn">▤</div><div class="wbtn">—</div><div class="wbtn">❐</div><div class="wbtn close">✕</div>
+    </div>
+  </div>
+
+  <!-- ================= menu ================= -->
+  <div class="menubar">
+    <span>File</span><span class="on">진료환자정보</span><span>기본기능</span><span>추가기능</span>
+    <span>보조기능</span><span>Clinical Pathway</span><span>간호업무</span><span>상담업무</span>
+    <span>진료지원자료조회</span><span>통계</span><span>설정</span>
+  </div>
+
+  <!-- ================= patient header ================= -->
+  <div class="pheader">
+    <div class="pfields">
+      <div class="prow">
+        <div class="lb">환자 번호</div><div class="fd cream w70">00436157</div>
+        <div class="lb">진 료 과</div><div class="fd w70">OS1</div>
+        <div class="lb">내원구분</div><div class="fd gray w62">외래</div>
+        <div class="lb w60">초 / 재진</div><div class="fd gray w56">초진</div>
+        <div class="lb">환자유형</div><div class="fd mint w62">일반</div>
+        <div class="lb">원외조제</div><div class="fd mint w70">원외조제</div>
+        <div class="lb">감염관리</div>
+      </div>
+      <div class="prow">
+        <div class="lb">환자 성명</div><div class="fd cream w70">손동욱</div>
+        <div class="lb">HD/POD</div><div class="fd cream w70">외래 / 0</div>
+        <div class="lb">입원일자</div><div class="fd w62"></div>
+        <div class="lb w60">선 / 후물</div><div class="fd gray w56">후불</div>
+        <div class="lb">보조유형</div><div class="fd mint w62">종합검진</div>
+        <div class="lb">내원목적</div><div class="fd mint w70">진찰료제외</div>
+        <div class="plain">C.P적용</div>
+      </div>
+      <div class="prow">
+        <div class="lb">성별/나이</div><div class="fd w70">M / 30세 0개월</div>
+        <div class="lb">진 료 일자</div><div class="fd cream w70">2026/07/28</div>
+        <div class="lb">퇴원일자</div><div class="fd w62"></div>
+        <div class="lb w60">병실/병상</div><div class="fd w56"></div>
+        <div class="lb">할인코드</div><div class="fd mint w62">해당없음</div>
+        <div class="lb">중증코드</div><div class="fd w70"></div>
+        <div class="plain">C.V.R</div>
+      </div>
+      <div class="birth">[생년월일 : 1996/07/26]</div>
+    </div>
+
+    <div class="psurg">
+      <div class="dosu">
+        <div class="dh">[도수치료건수]</div>
+        <div class="dr">일 : 0</div><div class="dr">주 : 0</div><div class="dr">년 : 0</div>
+      </div>
+      <div class="optable" style="margin-left:2px;">
+        <div class="oh">
+          <div class="c1">수술일</div><div class="c2">POD</div><div class="c3">집도의</div>
+          <div class="c4">부위</div><div class="c5">수술명</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="picons">
+      <div class="picon"><div class="gi">📝</div>차트작성기</div>
+      <div class="picon"><div class="gi">📋</div>차트/슬립</div>
+      <div class="picon"><div class="gi">👨‍⚕️</div>수술스케줄조회</div>
+      <div class="picon"><div class="gi">🧑‍⚕️</div>통합결과조회</div>
+    </div>
+  </div>
+
+  <!-- ================= mini toolbar ================= -->
+  <div class="minibar">
+    <span class="mi" style="color:#0a7a2a;">✅</span>
+    <span class="mi">🗒️</span>
+    <span class="cal">31</span>
+    <span class="mi">🖨️</span>
+    <span style="font-size:7px;">▼</span>
+  </div>
+
+  <!-- ================= tabs ================= -->
+  <div class="tabstrip">
+    <div class="tab">새록 인터페이스 <span class="x">✕</span></div>
+    <div class="tab on">차트 / 슬립 <span class="x">✕</span></div>
+  </div>
+
+  <!-- ================= main ================= -->
+  <div class="main">
+    <div class="vstrip">환자정보 | n</div>
+
+    <!-- ---------- LEFT ---------- -->
+    <div class="colL">
+      <div class="panel pad" style="background:var(--face);">
+        <div class="row">
+          <span>출력 매수 :</span>
+          <div class="spin"><span>1</span><span><i>▲</i><br><i>▼</i></span></div>
+          <span class="mi">🖨️</span>
+          <span style="color:#1b4e9b;">🔄</span>
+        </div>
+        <div class="row"><label><input type="radio" name="a" checked> 서식별</label>
+          <label><input type="radio" name="a"> 일자별</label></div>
+        <div class="row"><label><input type="checkbox"> 과별</label>
+          <label><input type="checkbox"> 동일 과분야별</label></div>
+        <div class="row"><label><input type="radio" name="b" checked> 전체</label>
+          <label><input type="radio" name="b"> 외래</label>
+          <label><input type="radio" name="b"> 입원</label></div>
+        <div class="sel" style="margin-bottom:3px;"><span>전체</span><span class="ar">▼</span></div>
+        <div class="row" style="gap:2px;">
+          <div class="sel" style="flex:1;"><span>2025-07-29</span><span class="ar">▼</span></div>
+          <span>~</span>
+          <div class="sel" style="flex:1;"><span>2026-07-28</span><span class="ar">▼</span></div>
+        </div>
+        <div class="row" style="gap:2px;">
+          <div class="btn sm" style="flex:1;">3개월</div>
+          <div class="btn sm" style="flex:1;">6개월</div>
+          <div class="btn sm" style="flex:1;">1년</div>
+          <div class="btn sm" style="flex:1;">전체</div>
+        </div>
+      </div>
+
+      <div class="tree">
+        <div class="nd"><span class="box">−</span> 손동욱 (00436157)</div>
+        <div class="nd ind1"><span class="box">−</span> 외래</div>
+        <div class="nd ind2"><span class="box">+</span> 경과기록지</div>
+        <div class="nd ind2"><span class="box">+</span> Doctor's Order</div>
+        <div class="nd ind2"><span class="box">+</span> 물리치료Progress Note</div>
+        <div class="nd ind2"><span class="box">+</span> 내시경 사전 점검표</div>
+        <div class="nd ind2"><span class="box">+</span> 외래 진료 신청서</div>
+        <div class="nd ind2"><span class="box">+</span> 입원약정서</div>
+        <div class="nd ind2"><span class="box">+</span> <span class="hit">초진기록지</span></div>
+        <div class="nd ind1"><span class="box">+</span> 진단서</div>
+      </div>
+    </div>
+
+    <!-- ---------- CENTER ---------- -->
+    <div class="colC">
+      <div class="ctools">
+        <div class="nav">«</div><div class="nav">»</div>
+        <div class="btn g">미비완료</div>
+        <div class="btn b">통합결과</div>
+        <div class="btn pacs">PACS</div>
+        <div class="btn">단어장</div>
+        <div class="btn">그림작성</div>
+        <div class="btn">서식작성</div>
+        <div class="btn">차트작성</div>
+        <div class="btn">차트삭제</div>
+      </div>
+
+      <div class="chartbox">
+        <div class="chart-title">차트 조회 : 손동욱 (00436157 - M/30)</div>
+        <div class="chart-meta">
+          <span class="m1">2026/07/28 초진기록지 [배성준]</span>
+          <span class="m2">작성일시 : 2026/07/28 10:40:10</span>
+          <span class="mb">
+            <span class="saveflash" id="saveFlash">저장되었습니다</span>
+            <span class="btn sm">Repeat</span><span class="btn sm">수정</span>
+            <span class="btn sm" id="btnSave">저장</span><span class="btn sm">삭제</span>
+          </span>
+        </div>
+        <div style="display:flex;flex:1;min-height:0;">
+          <div class="chart-body" id="chartBody" contenteditable="true" spellcheck="false">
+            <div style="margin-bottom:14px;">초진차트</div>
+            <div class="sec">1. C.C :</div>
+            <div class="sec">2. P.I :</div>
+            <div class="sec">3. PHx :</div>
+            <div class="sec">4. PEx :</div>
+            <div class="sec" id="editStart" style="margin-bottom:6px;"><br></div>
+            <div class="sec">
+              5. 1. 통증의 강도
+              <div class="sub">VAS ( &nbsp;- &nbsp;)점</div>
+              <div class="sub">FPRS ( &nbsp;- &nbsp;)점</div>
+              <div style="margin-top:14px;">&nbsp;&nbsp;&nbsp;2. 통증의 빈도 지속적</div>
+              <div style="margin-top:14px;">&nbsp;&nbsp;&nbsp;3.통증의 양상 쑤심</div>
+            </div>
+            <div class="sec">6. Impression :</div>
+            <div class="sec" style="margin-top:24px;">7. 치료계획 :</div>
+            <div class="chart-sign">by Dr.배성준</div>
+          </div>
+          <div class="scrollv"><span>▲</span><span>▼</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- MID ---------- -->
+    <div class="colM">
+      <div class="vtabs">
+        <div class="vtab on">VitalSign</div><div class="vtab">BST</div>
+        <div class="vtab">내원일</div><div class="vtab">수술정보</div>
+      </div>
+      <div class="grid" style="height:120px;">
+        <table>
+          <tr><th style="width:52px;">측정일</th><th style="width:34px;">시간</th>
+              <th>SBP</th><th>DBP</th><th>맥박</th><th>체온</th></tr>
+        </table>
+      </div>
+      <div style="display:flex;align-items:center;gap:2px;">
+        <div style="flex:1;height:12px;border:1px solid var(--line2);background:#fff;"></div>
+      </div>
+
+      <div>
+        <div class="secthead">
+          <span class="ttl">상병정보</span>
+          <span class="arrbtns">
+            <span class="arrbtn">⤒</span><span class="arrbtn">↑</span>
+            <span class="arrbtn">↓</span><span class="arrbtn">⤓</span>
+          </span>
+        </div>
+        <div class="grid" style="height:88px;border-top:none;">
+          <table>
+            <tr><th style="width:72px;">발행일</th><th style="width:46px;">코드</th><th>상병명</th></tr>
+            <tr><td>2026/07/28</td><td style="text-align:center;">00 <span style="color:#c00;">주</span></td><td>상병미정</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="secthead"><span class="ttl">메디칼메모 / 환자메모</span></div>
+        <div class="memo" style="border:1px solid var(--line);border-top:none;padding:2px;">
+          <div style="flex:1;display:flex;flex-direction:column;gap:2px;">
+            <div class="mbox">[메디칼메모]</div>
+            <div class="mbox">[환자메모]</div>
+          </div>
+          <div class="save">저<br>장</div>
+        </div>
+      </div>
+
+      <div class="gwrap">
+        <div class="secthead"><span class="ttl">과거처방 [ ● : 완료 &nbsp;◐ : 진행중 &nbsp;○ : 접수 ]</span></div>
+        <div class="grid" style="border-top:none;">
+          <table>
+            <tr><th style="width:66px;">처방일</th><th style="width:34px;">과</th><th style="width:22px;">약</th>
+                <th style="width:20px;">주<br>사</th><th style="width:20px;">영<br>상</th>
+                <th style="width:20px;">검<br>사</th><th style="width:20px;">수<br>술</th></tr>
+            <tr><td>2025/06/17</td><td>OS5</td><td>√</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>2025/03/27</td><td>NR1</td><td>√</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>2025/03/12</td><td>OS4</td><td>√</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>2024/11/19</td><td>OS5</td><td>√</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>2024/03/12</td><td>OS1</td><td>√</td><td></td><td></td><td></td><td></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- RIGHT ---------- -->
+    <div class="colR">
+      <div class="rtop">
+        <div class="sel" style="width:74px;"><span>외래</span><span class="ar">▼</span></div>
+        <div class="sel" style="width:56px;"><span>전체</span><span class="ar">▼</span></div>
+        <div class="sel" style="width:62px;"><span>전체</span><span class="ar">▼</span></div>
+        <span style="margin-left:auto;">Week</span>
+        <div class="sel" style="width:54px;"><span>52</span><span class="ar">▼</span></div>
+      </div>
+      <div class="rtop">
+        <span class="chk"><i></i> DC처방 제외</span>
+        <span class="chk"><i></i> Slip 번호</span>
+        <span class="chk"><i></i> 처방단위</span>
+        <span style="margin-left:auto;">처방종류</span>
+        <div class="sel" style="width:74px;"><span>전체</span><span class="ar">▼</span></div>
+      </div>
+
+      <div class="grid gflex" style="min-height:120px;">
+        <table>
+          <tr>
+            <th style="width:64px;">처방일</th><th style="width:34px;">과</th><th>처방명</th>
+            <th style="width:26px;">용<br>량</th><th style="width:26px;">횟<br>수</th>
+            <th style="width:26px;">일<br>수</th><th style="width:26px;">용<br>법</th>
+            <th style="width:24px;">구<br>분</th><th style="width:24px;">진<br>행</th>
+          </tr>
+          <tr><td>2026/01/12</td><td></td><td>&nbsp;&nbsp;&lt;&lt; Routine Order &gt;&gt;-일반</td>
+              <td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td></td><td>OS1</td><td>제증명부본 (1매당)</td>
+              <td style="text-align:center;">1</td><td style="text-align:center;">1</td>
+              <td style="text-align:center;">1</td><td></td>
+              <td style="text-align:center;">B</td><td style="text-align:center;color:#c00;">수</td></tr>
+        </table>
+      </div>
+
+      <div class="rtop">
+        <span>처방구분</span>
+        <div class="sel" style="width:110px;"><span>Routine Order</span><span class="ar">▼</span></div>
+        <div style="display:flex;flex-direction:column;gap:1px;margin-left:6px;">
+          <span class="chk"><i></i> 처방일 변경</span>
+          <span class="chk"><i></i> 처방일 고정</span>
+        </div>
+        <span class="arrbtn">◀</span>
+        <div class="sel" style="width:98px;color:#8a8a8a;background:#eee;"><span>2026-07-28</span><span class="ar">▼</span></div>
+        <span class="arrbtn">▶</span>
+        <span style="margin-left:auto;display:flex;gap:2px;">
+          <span class="arrbtn">⤒</span><span class="arrbtn">↑</span>
+          <span class="arrbtn">↓</span><span class="arrbtn">⤓</span>
+        </span>
+      </div>
+
+      <div class="rbtns">
+        <div class="rbtn"><span>🏥</span>입원지시</div>
+        <div class="rbtn"><span>📄</span>진료상담</div>
+        <div class="rbtn"><span>💬</span>무료상담</div>
+        <div class="rbtn"><span>📅</span>스케줄처방</div>
+        <div class="rbtn"><span>🧮</span>진료비계산</div>
+        <div class="rbtn">처방순서조정</div>
+      </div>
+
+      <div class="grid gflex" style="min-height:110px;">
+        <table>
+          <tr>
+            <th style="width:34px;">분류</th><th style="width:44px;">CODE</th><th style="width:20px;">A</th>
+            <th style="width:30px;">내외</th><th>처방명</th><th style="width:34px;">용량</th>
+            <th style="width:32px;">단위</th><th style="width:24px;">횟<br>수</th>
+            <th style="width:16px;">*</th><th style="width:34px;">용법</th>
+            <th style="width:24px;">일<br>수</th><th style="width:24px;">구<br>분</th>
+          </tr>
+        </table>
+      </div>
+
+      <div class="bottombar">
+        <div class="rbtn"><span class="ic">📄</span>초기화</div>
+        <div class="rbtn"><span class="ic">🔄</span>새로<br>고침</div>
+        <div class="rbtn"><span class="ic">💾</span>저장</div>
+        <div class="rbtn"><span class="ic">🖨️</span>완료</div>
+        <div class="rbtn"><span class="ic" style="color:#c00;">✖</span>삭제</div>
+        <div class="rbtn"><span class="ic">🔍</span>삭제<br>정보</div>
+        <div class="rbtn"><span class="ic">🔎</span>처방<br>검색</div>
+      </div>
+    </div>
+
+    <!-- ---------- VERTICAL BUTTONS ---------- -->
+    <div class="colV">
+      <div class="vbtn on">과거</div><div class="vbtn">물리</div>
+      <div class="vbtn">약속</div><div class="vbtn">문서</div>
+      <div class="vbtn">약</div><div class="vbtn">Cast</div>
+      <div class="vbtn">주사</div><div class="vbtn">지시</div>
+      <div class="vbtn">영상</div><div class="vbtn">마취</div>
+      <div class="vbtn">진검</div><div class="vbtn ghost">-</div>
+      <div class="vbtn">기능</div><div class="vbtn ghost">-</div>
+      <div class="vbtn">처치</div><div class="vbtn ghost">-</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= taskbar ================= -->
+<div class="taskbar">
+  <span class="start">⊞</span>
+  <span class="search">🔍 찾기</span>
+  <span class="tico">🌾</span>
+  <span class="tico">🗂️</span>
+  <span class="tico" style="color:#4aa3ff;">V</span>
+  <span class="tico">👤</span>
+  <span class="tico">📊</span>
+  <span class="tico">🌐</span>
+  <span class="right">
+    <span>▶ 망을 쳐놨는데 둘고…</span>
+    <span>^ 🖥️ 🔊 가</span>
+    <span class="tray-clock">오전 11:53<br>2026-07-28</span>
+    <span>💬</span>
+  </span>
+</div>
+</div>
+
+<script>
+(function () {
+  var body  = document.getElementById('chartBody');
+  var start = document.getElementById('editStart');
+  var save  = document.getElementById('btnSave');
+  var flash = document.getElementById('saveFlash');
+
+  function placeCaretAtStartLine() {
+    body.focus({ preventScroll: true });
+    var range = document.createRange();
+    var sel = window.getSelection();
+    range.setStart(start, 0);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  // 화면 진입 시 4. PEx 아래 입력 지점에 커서 배치
+  window.addEventListener('load', placeCaretAtStartLine);
+
+  // 붙여넣기는 서식 없는 순수 텍스트로만
+  body.addEventListener('paste', function (e) {
+    e.preventDefault();
+    var text = (e.clipboardData || window.clipboardData).getData('text/plain');
+    document.execCommand('insertText', false, text);
+  });
+
+  save.addEventListener('click', function () {
+    flash.classList.add('on');
+    setTimeout(function () { flash.classList.remove('on'); }, 1200);
+  });
+})();
+</script>
+</body>
+</html>
