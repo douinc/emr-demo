@@ -118,6 +118,18 @@ body{
   line-height:7px;text-align:center;color:#333;}
 .tree .ind1{padding-left:12px;} .tree .ind2{padding-left:26px;} .tree .ind3{padding-left:40px;}
 .tree .hit{background:var(--sel);color:#fff;padding:0 3px;}
+.record-list{padding:3px;background:#f7f7f7;}
+.record-list-title{padding:2px 4px 5px;color:#404852;font-weight:bold;}
+.record-item{display:block;width:100%;margin:0 0 3px;padding:6px 7px;border:1px solid #aeb5bf;
+  background:linear-gradient(180deg,#fff,#eeece6);color:#111;text-align:left;font:inherit;
+  line-height:14px;cursor:pointer;box-shadow:inset 1px 1px 0 #fff;}
+.record-item:hover{border-color:#6687b2;background:#edf4fc;}
+.record-item:focus-visible{outline:2px solid #ef9b24;outline-offset:-2px;}
+.record-item[aria-selected="true"]{border-color:#244e83;background:var(--sel);color:#fff;}
+.record-item .record-no{font-weight:bold;margin-right:3px;}
+.record-item .record-dept{float:right;font-size:10px;opacity:.86;}
+.record-item .record-summary{display:block;margin-top:2px;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;opacity:.9;}
 
 /* center column */
 .colC{width:580px;display:flex;flex-direction:column;gap:3px;}
@@ -131,7 +143,8 @@ body{
 .chart-meta{display:flex;align-items:center;border-bottom:1px solid var(--line2);padding:2px 4px;background:#fafafa;}
 .chart-meta .m1{font-weight:bold;} .chart-meta .m2{margin-left:26px;}
 .chart-meta .mb{margin-left:auto;display:flex;gap:2px;}
-.chart-body{flex:1;padding:6px 10px;line-height:22px;position:relative;overflow:auto;}
+.chart-body{flex:1;padding:10px 16px;line-height:1.7;position:relative;overflow:auto;
+  white-space:pre-wrap;overflow-wrap:anywhere;}
 .chart-body .sec{margin:0 0 14px 14px;}
 .chart-body .sub{margin-left:34px;}
 .chart-body[contenteditable]{outline:none;caret-color:#000;cursor:text;}
@@ -237,7 +250,7 @@ body{overflow:auto;}
   <!-- ================= title bar ================= -->
   <div class="titlebar">
     <div class="tico">＆</div>
-    <div class="ttxt">[접속정보 : 배성준] 처방관리 Ver. 2.0.0.122 : [ 외래 - 00436157 손동욱 (M / [나이 : 30세1개월0주] ) ⊙ 960726 - 1****** ⊙ ☎ / ]</div>
+    <div class="ttxt" id="windowTitle">[접속정보 : 배성준] 처방관리 Ver. 2.0.0.122 : [ 예시 진료기록 1 / 6 ]</div>
     <div class="wbtns">
       <div class="wbtn">▤</div><div class="wbtn">—</div><div class="wbtn">❐</div><div class="wbtn close">✕</div>
     </div>
@@ -254,8 +267,8 @@ body{overflow:auto;}
   <div class="pheader">
     <div class="pfields">
       <div class="prow">
-        <div class="lb">환자 번호</div><div class="fd cream w70">00436157</div>
-        <div class="lb">진 료 과</div><div class="fd w70">OS1</div>
+        <div class="lb">환자 번호</div><div class="fd cream w70" id="patientNo">DEMO-01</div>
+        <div class="lb">진 료 과</div><div class="fd w70" id="department">안과</div>
         <div class="lb">내원구분</div><div class="fd gray w62">외래</div>
         <div class="lb w60">초 / 재진</div><div class="fd gray w56">초진</div>
         <div class="lb">환자유형</div><div class="fd mint w62">일반</div>
@@ -263,7 +276,7 @@ body{overflow:auto;}
         <div class="lb">감염관리</div>
       </div>
       <div class="prow">
-        <div class="lb">환자 성명</div><div class="fd cream w70">손동욱</div>
+        <div class="lb">환자 성명</div><div class="fd cream w70" id="patientName">예시 환자 01</div>
         <div class="lb">HD/POD</div><div class="fd cream w70">외래 / 0</div>
         <div class="lb">입원일자</div><div class="fd w62"></div>
         <div class="lb w60">선 / 후물</div><div class="fd gray w56">후불</div>
@@ -272,15 +285,15 @@ body{overflow:auto;}
         <div class="plain">C.P적용</div>
       </div>
       <div class="prow">
-        <div class="lb">성별/나이</div><div class="fd w70">M / 30세 0개월</div>
-        <div class="lb">진 료 일자</div><div class="fd cream w70">2026/07/28</div>
+        <div class="lb">성별/나이</div><div class="fd w70">- / -</div>
+        <div class="lb">진 료 일자</div><div class="fd cream w70" id="visitDate">예시 기록</div>
         <div class="lb">퇴원일자</div><div class="fd w62"></div>
         <div class="lb w60">병실/병상</div><div class="fd w56"></div>
         <div class="lb">할인코드</div><div class="fd mint w62">해당없음</div>
         <div class="lb">중증코드</div><div class="fd w70"></div>
         <div class="plain">C.V.R</div>
       </div>
-      <div class="birth">[생년월일 : 1996/07/26]</div>
+      <div class="birth">[개인정보가 제거된 데모 데이터]</div>
     </div>
 
     <div class="psurg">
@@ -353,17 +366,8 @@ body{overflow:auto;}
         </div>
       </div>
 
-      <div class="tree">
-        <div class="nd"><span class="box">−</span> 손동욱 (00436157)</div>
-        <div class="nd ind1"><span class="box">−</span> 외래</div>
-        <div class="nd ind2"><span class="box">+</span> 경과기록지</div>
-        <div class="nd ind2"><span class="box">+</span> Doctor's Order</div>
-        <div class="nd ind2"><span class="box">+</span> 물리치료Progress Note</div>
-        <div class="nd ind2"><span class="box">+</span> 내시경 사전 점검표</div>
-        <div class="nd ind2"><span class="box">+</span> 외래 진료 신청서</div>
-        <div class="nd ind2"><span class="box">+</span> 입원약정서</div>
-        <div class="nd ind2"><span class="box">+</span> <span class="hit">초진기록지</span></div>
-        <div class="nd ind1"><span class="box">+</span> 진단서</div>
+      <div class="tree record-list" id="recordList" role="listbox" aria-label="예시 진료기록">
+        <div class="record-list-title">예시 진료기록 (6건)</div>
       </div>
     </div>
 
@@ -382,10 +386,10 @@ body{overflow:auto;}
       </div>
 
       <div class="chartbox">
-        <div class="chart-title">차트 조회 : 손동욱 (00436157 - M/30)</div>
+        <div class="chart-title" id="chartTitle">차트 조회 : 예시 환자 01 (DEMO-01)</div>
         <div class="chart-meta">
-          <span class="m1">2026/07/28 초진기록지 [배성준]</span>
-          <span class="m2">작성일시 : 2026/07/28 10:40:10</span>
+          <span class="m1" id="chartMetaTitle">기록 1 · 안과</span>
+          <span class="m2" id="chartMetaDetail">예시 진료기록</span>
           <span class="mb">
             <span class="saveflash" id="saveFlash">저장되었습니다</span>
             <span class="btn sm">Repeat</span><span class="btn sm">수정</span>
@@ -393,24 +397,7 @@ body{overflow:auto;}
           </span>
         </div>
         <div style="display:flex;flex:1;min-height:0;">
-          <div class="chart-body" id="chartBody" contenteditable="true" spellcheck="false">
-            <div style="margin-bottom:14px;">초진차트</div>
-            <div class="sec">1. C.C :</div>
-            <div class="sec">2. P.I :</div>
-            <div class="sec">3. PHx :</div>
-            <div class="sec">4. PEx :</div>
-            <div class="sec" id="editStart" style="margin-bottom:6px;"><br></div>
-            <div class="sec">
-              5. 1. 통증의 강도
-              <div class="sub">VAS ( &nbsp;- &nbsp;)점</div>
-              <div class="sub">FPRS ( &nbsp;- &nbsp;)점</div>
-              <div style="margin-top:14px;">&nbsp;&nbsp;&nbsp;2. 통증의 빈도 지속적</div>
-              <div style="margin-top:14px;">&nbsp;&nbsp;&nbsp;3.통증의 양상 쑤심</div>
-            </div>
-            <div class="sec">6. Impression :</div>
-            <div class="sec" style="margin-top:24px;">7. 치료계획 :</div>
-            <div class="chart-sign">by Dr.배성준</div>
-          </div>
+          <div class="chart-body" id="chartBody" contenteditable="true" spellcheck="false" aria-label="선택된 진료기록 내용"></div>
           <div class="scrollv"><span>▲</span><span>▼</span></div>
         </div>
       </div>
@@ -593,23 +580,210 @@ body{overflow:auto;}
 
 <script>
 (function () {
-  var body  = document.getElementById('chartBody');
-  var start = document.getElementById('editStart');
-  var save  = document.getElementById('btnSave');
-  var flash = document.getElementById('saveFlash');
+  var records = [
+    {
+      department: '안과', summary: '가려움, 좌안 겹쳐 보임, 눈 시림',
+      content: `C.C: 가려움, 좌안 겹쳐 보임, 눈 시림
 
-  function placeCaretAtStartLine() {
-    body.focus({ preventScroll: true });
-    var range = document.createRange();
-    var sel = window.getSelection();
-    range.setStart(start, 0);
-    range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range);
+환> 다초점 안경 쓰면 왼쪽이 더 흐리고 그림자가 두 개로 겹쳐 보여요. 눈이 시려서 안경을 씁니다. 한 달 다 되어가니 약간 가려움이 있어요.
+
+Lid: MGD(OU) 노란 기름 배출됨, manual squeezing 시행
+Vision: 0.8/0.9 (6개월 전과 동일)
+IOP: 정상
+Fundus: 시신경, 황반 정상
+
+안검염(MGD)으로 인해 눈 시림 및 불편감 발생함. 금일 눈꺼풀 기름 짜내는 치료 시행함.
+과거 레이저 치료력 있음.
+기존 건조증 치료제 및 염증약 중단하고 가려움증 약으로 변경함.
+
+med> 알레지온, 인공눈물
+adv) 1개월 후 진료`
+    },
+    {
+      department: '소화기내과', summary: '식후 아랫배 통증 및 불편감',
+      content: `1. C.C :
+식후(특히 저녁 식사 후) 허리를 펴지 못할 정도의 아랫배 통증 및 불편감 (일주일에 2~3회 반복됨)
+
+2. P.I :
+평소 변비나 설사는 없으며, 배변은 이틀에 한 번 평범하게 보는 편임.
+최근 저녁 식사 후 아랫배가 꼬이듯 아프고 불편한 증상이 지속되어 내원함.
+임신 가능성 없음.
+마지막 대장 내시경 검사는 2005년에 시행함.
+
+3. PMHx :
+복부 수술 및 기타 수술 이력 없음.
+대장암 가족력 없음.
+특이 알레르기(땅콩 등) 없음.
+
+4. 현재 복용중인 약물:
+없음
+
+5. PEx :
+복부 촉진 시 특이 통증 없음 (진료 당시에는 통증이 없는 상태)
+
+6. Impression :
+Abdominal pain, unspecified (식후 복통 및 하복부 불편감)
+
+7. 치료계획 :
+위·대장 내시경 동시 시행 예정 (수면, 알약 세정제 처방)
+식이 조절 기간(최소 3일) 고려하여 다음 주 중으로 예약 진행 (외래 간호사 통해 일정 조율 및 변경 가능 안내)
+현재 특별한 증상이 없고 원인이 불명확하므로, 사전 약물 처방은 보류하고 내시경 검사 결과 확인 후 필요 시 약제 처방하기로 함.`
+    },
+    {
+      department: '내과', summary: '고지혈증 약 재처방',
+      content: `S
+최근 피검사 후 고지혈증 약을 처방받아 복용 중임
+원래 7월 내원 예정이었으나 바빠서 내원이 지연됨
+주말에는 약을 잘 안 먹게 된다고 함
+현재 약이 거의 다 떨어진 상태임
+금식 상태 아님
+이전 담당 의사가 다음 내원 시 많이 호전되었으면 약 처방만 받으라고 했다고 함
+약 복용 중 특별한 불편감은 없다고 함
+
+O
+언급 없음
+
+A
+고지혈증
+
+P
+동일한 고지혈증 약 3개월분 처방
+3개월 후 내원하여 피검사 진행 예정 (내원 시 공복 유지 필요)
+추후 환자가 직접 연락하여 예약 일정을 잡기로 함`
+    },
+    {
+      department: '이비인후과', summary: '좌측 귀 통증, 진물 및 출혈',
+      content: `[주호소 및 병력]
+환자는 왼쪽 귀 내부의 통증을 호소하며 내원함.
+최근 면봉을 사용하여 귀지를 파낸 적이 있으며, 이후 새벽에 통증이 발생함.
+통증 완화를 위해 타이레놀을 복용하였으나 속이 미식거리는 증상이 동반됨.
+왼쪽 귀에서 진물과 약간의 피가 섞여 나오는 증상이 관찰됨.
+양측 귀가 먹먹하고 소리가 잘 들리지 않는 증상이 동반됨.
+
+[신체 진찰 및 검사 소견]
+우측 이도: 귀지가 다량 관찰되나, 염증 소견은 없으며 고막은 정상임.
+좌측 이도: 귀지를 파내는 과정에서 발생한 것으로 보이는 상처 및 염증 소견이 관찰됨.
+
+[처치 및 시술]
+양측 이도의 귀지 제거 시행함.
+좌측 이도 소독 및 연고 도포 시행함.
+
+[치료 및 관리 계획]
+약물 처방: 경구약 및 외용 이점적액(좌측 귀 전용) 처방함.
+추적 관찰: 토요일에 재내원하여 이도 소독 및 경과 관찰 예정임.
+주의 사항: 당분간 귀에 물이 들어가거나 손을 대지 않도록 주의할 것을 교육함. 진물이 흘러내릴 경우 겉만 닦아내고, 이도 안쪽으로는 면봉 사용을 절대 금하도록 안내함.`
+    },
+    {
+      department: '정형외과', summary: '고관절 수술 3개월 후 보행 불안정',
+      content: `S :
+수술 후 3개월 경과, 다리 상태는 호전됨. 평소 보행 시 몸이 앞으로 굽어지고 균형을 잡기 어려움.
+
+O :
+X-ray상 고관절 수술 부위는 잘 유지되고 있음.
+자세 평가: 전면에서 볼 때 신체 정렬이 비뚤어져 있으며, 측면에서 볼 때 상체가 앞으로 심하게 기울어짐(전방 전위). 이로 인한 낙상 위험이 매우 높은 상태임.
+
+A :
+Status post hip arthroplasty, 3 months
+Postural instability and gait disturbance
+
+P :
+보행 시 낙상 방지 및 자세 교정을 위해 양손 스틱(T-cane 또는 walker) 반드시 사용하도록 교육함.
+금일 처방 약물은 없음.
+6개월 후 내원하여 X-ray 추적 관찰 및 신체 정렬 상태 재평가 예정.`
+    },
+    {
+      department: '정형외과', summary: '골반 틀어짐, 통증 및 다리 저림',
+      content: `1. C.C : 골반 틀어짐 및 통증, 다리 저림(가끔)
+
+2. P.I : 8세 때 골수염으로 고관절 인공관절 치환술 시행받은 과거력 있음. 최근 골반 틀어짐과 통증, 가끔 발생하는 다리 저림 증상으로 내원함. 환자는 다리 길이 차이 교정을 위한 재수술 가능 여부를 문의하나, 육안상 다리 길이 차이는 미미하며 골반 틀어짐 및 척추 문제가 주 원인으로 의심됨.
+
+3. PHx : 8세 때 골수염으로 고관절 인공관절 수술 시행
+
+4. PEx : 육안상 다리 길이 차이 미미함. 골반 틀어짐 관찰됨. 통증은 특정 부위에 국한됨. 우측은 특이소견 없음.
+
+5. 1. 통증의 강도
+    VAS (  -  )점
+    FPRS (  -  )점
+
+   2. 통증의 빈도 지속적
+
+   3. 통증의 양상 쑤심
+
+6. Impression : 척추 질환 의증 (r/o Spine pathology)
+               고관절 인공관절 상태 (Status post THR)
+
+7. 치료계획 : 신경외과 협진 의뢰 (척추 평가 및 치료 계획 수립)
+    ; 올바른 보행법 교육 (노르딕 워킹 등) 및 운동 치료 권장
+    ; 고관절 재수술은 불필요함을 설명`
+    }
+  ];
+
+  var body = document.getElementById('chartBody');
+  var list = document.getElementById('recordList');
+  var save = document.getElementById('btnSave');
+  var flash = document.getElementById('saveFlash');
+  var selectedIndex = -1;
+
+  function recordId(index) {
+    return 'DEMO-' + String(index + 1).padStart(2, '0');
   }
 
-  // 화면 진입 시 4. PEx 아래 입력 지점에 커서 배치
-  window.addEventListener('load', placeCaretAtStartLine);
+  records.forEach(function (record, index) {
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'record-item';
+    button.setAttribute('role', 'option');
+    button.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+    button.dataset.index = index;
+
+    var number = document.createElement('span');
+    number.className = 'record-no';
+    number.textContent = (index + 1) + '.';
+    var department = document.createElement('span');
+    department.className = 'record-dept';
+    department.textContent = record.department;
+    var summary = document.createElement('span');
+    summary.className = 'record-summary';
+    summary.textContent = record.summary;
+    button.append(number, department, summary);
+    list.appendChild(button);
+  });
+
+  function selectRecord(index) {
+    if (selectedIndex >= 0) {
+      records[selectedIndex].content = body.innerText.replace(/\n+$/, '');
+    }
+    selectedIndex = index;
+    var record = records[index];
+    var id = recordId(index);
+
+    list.querySelectorAll('.record-item').forEach(function (item, itemIndex) {
+      item.setAttribute('aria-selected', itemIndex === index ? 'true' : 'false');
+    });
+    document.getElementById('patientNo').textContent = id;
+    document.getElementById('patientName').textContent = '예시 환자 ' + String(index + 1).padStart(2, '0');
+    document.getElementById('department').textContent = record.department;
+    document.getElementById('windowTitle').textContent = '[접속정보 : 배성준] 처방관리 Ver. 2.0.0.122 : [ 예시 진료기록 ' + (index + 1) + ' / ' + records.length + ' ]';
+    document.getElementById('chartTitle').textContent = '차트 조회 : 예시 환자 ' + String(index + 1).padStart(2, '0') + ' (' + id + ')';
+    document.getElementById('chartMetaTitle').textContent = '기록 ' + (index + 1) + ' · ' + record.department;
+    document.getElementById('chartMetaDetail').textContent = record.summary;
+    body.textContent = record.content;
+    body.scrollTop = 0;
+  }
+
+  list.addEventListener('click', function (event) {
+    var item = event.target.closest('.record-item');
+    if (item) selectRecord(Number(item.dataset.index));
+  });
+
+  list.addEventListener('keydown', function (event) {
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+    event.preventDefault();
+    var step = event.key === 'ArrowDown' ? 1 : -1;
+    var next = (selectedIndex + step + records.length) % records.length;
+    selectRecord(next);
+    list.querySelector('[data-index="' + next + '"]').focus();
+  });
 
   // 붙여넣기는 서식 없는 순수 텍스트로만
   body.addEventListener('paste', function (e) {
@@ -619,9 +793,12 @@ body{overflow:auto;}
   });
 
   save.addEventListener('click', function () {
+    records[selectedIndex].content = body.innerText.replace(/\n+$/, '');
     flash.classList.add('on');
     setTimeout(function () { flash.classList.remove('on'); }, 1200);
   });
+
+  selectRecord(0);
 })();
 </script>
 </body>
