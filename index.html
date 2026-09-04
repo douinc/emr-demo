@@ -367,7 +367,7 @@ body{overflow:auto;}
       </div>
 
       <div class="tree record-list" id="recordList" role="listbox" aria-label="예시 진료기록">
-        <div class="record-list-title">예시 진료기록 (6건)</div>
+        <div class="record-list-title" id="recordListTitle">예시 진료기록</div>
       </div>
     </div>
 
@@ -715,6 +715,42 @@ P :
 7. 치료계획 : 신경외과 협진 의뢰 (척추 평가 및 치료 계획 수립)
     ; 올바른 보행법 교육 (노르딕 워킹 등) 및 운동 치료 권장
     ; 고관절 재수술은 불필요함을 설명`
+    },
+    {
+      department: '안과', summary: '좌안 충혈·부종·통증, 결막염 의증',
+      content: `타병원자료]  ▣무     □유
+특수환자]    ▣미해당 □미숙아   □산모   □정신질환자   □기타
+고/저혈압]   □유     ▣무
+당뇨병]      □유     ▣무
+결핵]        □유     ▣무
+갑상선 질환] □유     ▣무
+심장질환]    □유     ▣무
+호흡기질]    □유     ▣무
+신장질환]    □유     ▣무
+뇌질환]      □유     ▣무
+간질환]      □유     ▣무
+알레르기]    □유     ▣무
+특이체질]    □유     ▣무
+약물부작용]  □유     ▣무
+기타(질환)]  □유     ▣무
+C/C] 좌안 빨갛고 붓고 통증, 가려움 있어 내원
+P/I] 약 2주 전 증상 시작됨
+
+ROS] Ocular Discomfort
+P/E] .
+결막염으로 의심되고 바이러스 결막염일 경우에는 2주 정도 증상이 진행된 후 호전됩니다.
+
+IMP] .
+PLAN] .`
+    },
+    {
+      department: '안과', summary: '수술 후 경과관찰, 좌안 호전',
+      content: `C.C 수술 후 경과관찰
+양안 문제 없음, 좌안 호전됨.
+수술 경과 좋습니다.
+망막 이상 없음.
+비문증은 흔한 증상으로 특이 조치 없음.
+adv) 눈 세척 자주 시행하세요.`
     }
   ];
 
@@ -727,6 +763,9 @@ P :
   function recordId(index) {
     return 'DEMO-' + String(index + 1).padStart(2, '0');
   }
+
+  document.getElementById('recordListTitle').textContent =
+    '예시 진료기록 (' + records.length + '건)';
 
   records.forEach(function (record, index) {
     var button = document.createElement('button');
