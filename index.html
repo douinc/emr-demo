@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>[접속정보 : 배성준] 처방관리 Ver. 2.0.0.122</title>
+<link rel="stylesheet" href="ob-forms.css">
 <style>
 :root{
   --face:#f0efe8;
@@ -398,6 +399,7 @@ body{overflow:auto;}
         </div>
         <div style="display:flex;flex:1;min-height:0;">
           <div class="chart-body" id="chartBody" contenteditable="true" spellcheck="false" aria-label="선택된 진료기록 내용"></div>
+          <div class="form-view" id="formView" aria-label="선택된 구조화 서식지"></div>
           <div class="scrollv"><span>▲</span><span>▼</span></div>
         </div>
       </div>
@@ -578,6 +580,8 @@ body{overflow:auto;}
 </div>
 </div>
 
+<script src="ob-forms.js"></script>
+<script src="ob-forms-data.js"></script>
 <script>
 (function () {
   var records = [
@@ -754,7 +758,18 @@ adv) 눈 세척 자주 시행하세요.`
     }
   ];
 
+  // 산과 구조화 서식지(OB_FORMS)를 기록 목록에 추가
+  (window.OB_FORMS || []).forEach(function (form) {
+    records.push({
+      department: form.dept,
+      summary: '[서식] ' + form.title,
+      detail: form.summary,
+      form: form
+    });
+  });
+
   var body = document.getElementById('chartBody');
+  var formView = document.getElementById('formView');
   var list = document.getElementById('recordList');
   var save = document.getElementById('btnSave');
   var flash = document.getElementById('saveFlash');
@@ -789,7 +804,7 @@ adv) 눈 세척 자주 시행하세요.`
   });
 
   function selectRecord(index) {
-    if (selectedIndex >= 0) {
+    if (selectedIndex >= 0 && !records[selectedIndex].form) {
       records[selectedIndex].content = body.innerText.replace(/\n+$/, '');
     }
     selectedIndex = index;
@@ -805,9 +820,22 @@ adv) 눈 세척 자주 시행하세요.`
     document.getElementById('windowTitle').textContent = '[접속정보 : 배성준] 처방관리 Ver. 2.0.0.122 : [ 예시 진료기록 ' + (index + 1) + ' / ' + records.length + ' ]';
     document.getElementById('chartTitle').textContent = '차트 조회 : 예시 환자 ' + String(index + 1).padStart(2, '0') + ' (' + id + ')';
     document.getElementById('chartMetaTitle').textContent = '기록 ' + (index + 1) + ' · ' + record.department;
-    document.getElementById('chartMetaDetail').textContent = record.summary;
-    body.textContent = record.content;
-    body.scrollTop = 0;
+    document.getElementById('chartMetaDetail').textContent = record.detail || record.summary;
+
+    document.querySelector('.main').classList.toggle('form-mode', !!record.form);
+    if (record.form) {
+      // 구조화 서식지 : 폼 렌더러로 그리고 자유기술 영역은 숨긴다
+      body.style.display = 'none';
+      formView.classList.add('on');
+      window.OBForms.render(formView, record.form);
+      formView.scrollTop = 0;
+    } else {
+      formView.classList.remove('on');
+      formView.innerHTML = '';
+      body.style.display = '';
+      body.textContent = record.content;
+      body.scrollTop = 0;
+    }
   }
 
   list.addEventListener('click', function (event) {
@@ -832,7 +860,9 @@ adv) 눈 세척 자주 시행하세요.`
   });
 
   save.addEventListener('click', function () {
-    records[selectedIndex].content = body.innerText.replace(/\n+$/, '');
+    if (!records[selectedIndex].form) {
+      records[selectedIndex].content = body.innerText.replace(/\n+$/, '');
+    }
     flash.classList.add('on');
     setTimeout(function () { flash.classList.remove('on'); }, 1200);
   });
