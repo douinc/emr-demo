@@ -31,8 +31,9 @@
     labelW: 110,
     rows: [
       S.sec('임신력'),
-      S.row('', [lbl('G'), t(40, { val: '2' }), lbl('P'), t(40, { val: '1' }), t(40, { val: '0' }),
-                 lbl('D'), t(40, { val: '0' }), lbl('A'), t(40, { val: '0' })]),
+      S.row('', [lbl('G'), t(40, { val: '2' }), lbl('P'), t(40, { val: '1' }),
+                 lbl('L'), t(40, { val: '1' }), lbl('D'), t(40, { val: '0' }),
+                 lbl('A'), t(40, { val: '0' })]),
       S.row('임신주수', [t(50, { val: '39', hl: true }), lbl('(weeks)'),
                       t(50, { val: '2', hl: true }), lbl('(day)')]),
       S.grid({
