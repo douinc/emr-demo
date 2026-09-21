@@ -1,0 +1,80 @@
+/* ============================================================
+   구조화 서식지 (structured form) 스타일
+   기존 EMR 화면 톤에 맞춘 경량 폼 렌더러용 CSS
+   ============================================================ */
+.form-view{display:none;flex:1;min-height:0;overflow:auto;background:#fff;}
+.form-view.on{display:block;}
+
+.fm{font-size:11px;color:#111;padding:0 0 24px;}
+
+/* 서식 제목 바 */
+.fm-titlebar{position:sticky;top:0;z-index:3;background:linear-gradient(180deg,#f4f4f2,#e8e8e4);
+  border-bottom:2px solid #6f9bd1;padding:4px 8px;display:flex;align-items:center;gap:10px;}
+.fm-titlebar .fm-ttl{flex:1;text-align:center;font-weight:bold;font-size:12px;letter-spacing:.3px;}
+.fm-titlebar .fm-date{display:flex;align-items:center;gap:4px;white-space:nowrap;}
+
+/* 행 */
+.fm-row{display:flex;align-items:flex-start;gap:6px;padding:2px 8px;min-height:20px;}
+.fm-row.alt{background:#fafbfc;}
+.fm-label{flex:0 0 auto;padding-top:2px;color:#111;white-space:normal;word-break:keep-all;}
+.fm-ctrls{flex:1 1 auto;display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-width:0;}
+
+/* 구역 제목 */
+.fm-sec{padding:10px 8px 2px;font-weight:bold;color:#1a3c66;}
+.fm-sub{padding:5px 8px 1px;color:#333;font-weight:bold;}
+.fm-hr{height:1px;background:#dcdcdc;margin:6px 8px;}
+.fm-note{padding:1px 8px 3px;color:#555;}
+.fm-static{padding:3px 8px;color:#222;}
+
+/* 컨트롤 */
+.fm input[type=text],.fm input[type=date],.fm input[type=number]{
+  height:18px;border:1px solid #9aa4b1;background:#fff;font:inherit;padding:0 3px;color:#111;}
+.fm input[readonly]{background:#e9ebef;color:#333;}
+.fm input.hl{background:#c9d6e8;}
+.fm input.fill{background:#eceef2;}
+.fm textarea{border:1px solid #9aa4b1;background:#fff;font:inherit;padding:2px 3px;
+  resize:vertical;width:100%;max-width:520px;}
+.fm select{height:19px;border:1px solid #9aa4b1;background:#fff;font:inherit;color:#111;}
+.fm .unit{color:#333;}
+.fm .opt{display:inline-flex;align-items:center;gap:3px;white-space:nowrap;
+  border:1px solid transparent;padding:0 2px;}
+.fm .opt:hover{border-color:#b9c6d8;background:#eef4fb;}
+.fm .opt input{margin:0;}
+.fm .opt.on{background:#dbe7f6;border-color:#6f9bd1;}
+.fm .fbtn{border:1px solid #6d6d6d;background:linear-gradient(180deg,#6f6f6f,#4f4f4f);
+  color:#fff;font:inherit;padding:1px 7px;cursor:pointer;}
+.fm .fbtn:active{background:#3d3d3d;}
+.fm .fbtn.light{background:linear-gradient(180deg,#fdfdfd,#e3e1da);color:#111;border-color:#8a8a8a;}
+
+/* 그리드 (표 입력) */
+.fm-grid{margin:6px 8px;border:1px solid #9aa4b1;background:#fff;}
+.fm-grid-head{display:flex;align-items:center;gap:4px;background:#eef0f3;
+  border-bottom:1px solid #9aa4b1;padding:2px 4px;}
+.fm-grid-head .gt{flex:1;}
+.fm-grid table{border-collapse:collapse;width:100%;}
+.fm-grid th{background:#a8c6ea;border:1px solid #9aa4b1;font-weight:normal;padding:2px 3px;
+  white-space:nowrap;}
+.fm-grid td{border:1px solid #cfd5dd;padding:0;height:19px;}
+.fm-grid td.rn{background:#eef0f3;text-align:center;width:18px;color:#444;}
+.fm-grid td input[type=text]{width:100%;height:17px;border:none;background:transparent;font:inherit;padding:0 3px;}
+.fm-grid td input[type=text]:focus{background:#fffbe6;outline:1px solid #6f9bd1;}
+.fm-grid.peach td.v{background:#fbe6d2;}
+.fm-grid-wrap{overflow-x:auto;}
+
+/* 하위 블록 (Set 패널) */
+.fm-set{margin:4px 8px;border:1px solid #6f9bd1;background:#f7fbff;}
+.fm-set-head{background:#e4f0fb;border-bottom:1px solid #b9d3ec;padding:2px 6px;font-weight:bold;}
+.fm-set-body{padding:4px 0;}
+
+/* 그림 영역 */
+.fm-draw{margin:6px 8px;border:1px solid #6f9bd1;background:#f7f7e0;height:180px;
+  display:flex;align-items:center;justify-content:center;color:#8a8a70;}
+.fm-draw-label{background:#ffff00;border:1px solid #9aa4b1;border-bottom:none;
+  margin:6px 8px -6px;padding:1px 4px;}
+
+/* 서명부 */
+.fm-sign{margin:10px 8px 0;padding-top:8px;border-top:1px solid #dcdcdc;}
+
+/* 서식지 조회 시에는 차트 영역이 남는 폭을 먼저 가져간다 */
+.main.form-mode .colC{flex:1 1 860px;}
+.main.form-mode .colR{flex:0 0 430px;}
