@@ -8,8 +8,8 @@ spec: `docs/specs/2026-09-29-windows-ob-forms-design.md`
 ## 태스크
 
 - [x] 1. 내보내기 스크립트와 `Seed/forms.json` (6종, 빈 값, 키 523개 고유)
-- [ ] 2. Core `FormDefinition` 모델·로더 (TDD)
-- [ ] 3. Core `FormLayout` 배치 (TDD, 가짜 측정 함수)
+- [x] 2. Core `FormDefinition` 모델·로더 (TDD)
+- [x] 3. Core `FormLayout` 배치 (TDD, 가짜 측정 함수)
 - [ ] 4. Core `Patient.FormId`·`FormValues`, 시드 `DEMO-09`~`DEMO-14`, `EmrFields.Form` (TDD)
 - [ ] 5. App standard 서식 뷰(네이티브 컨트롤, AutomationId, 확정 규칙)
 - [ ] 6. App custom 서식 캔버스(그리기·입력·드롭다운·스크롤·opaque)

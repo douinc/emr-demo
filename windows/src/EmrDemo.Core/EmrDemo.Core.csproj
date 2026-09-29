@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Seed/records.json" LogicalName="EmrDemo.Core.Seed.records.json" />
+    <EmbeddedResource Include="Seed/forms.json" LogicalName="EmrDemo.Core.Seed.forms.json" />
   </ItemGroup>
 
 </Project>
