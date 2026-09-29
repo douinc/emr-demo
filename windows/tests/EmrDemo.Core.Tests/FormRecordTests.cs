@@ -106,4 +106,16 @@ public sealed class FormRecordTests : IDisposable
         Assert.Contains(items, i => i.GetProperty("kind").GetString() == "text" && i.TryGetProperty("readOnly", out var ro) && ro.GetBoolean());
         Assert.DoesNotContain(items, i => i.GetProperty("kind").GetString() == "text" && i.TryGetProperty("group", out _));
     }
+
+    [Fact]
+    public void LayoutFile_ListsSelectOptions()
+    {
+        var csec = FormCatalog.Get("csec");
+        var select = csec.Inputs().Select(i => i.Control).OfType<SelectControl>().First();
+        var path = FormLayoutFile.Write(_dir, csec.Id, FormLayout.Build(csec, t => t.Length * 7, 860));
+
+        using var doc = JsonDocument.Parse(File.ReadAllText(path));
+        var item = doc.RootElement.GetProperty("items").EnumerateArray().Single(i => i.GetProperty("key").GetString() == select.Key);
+        Assert.Equal(select.Options, item.GetProperty("options").EnumerateArray().Select(o => o.GetString()));
+    }
 }

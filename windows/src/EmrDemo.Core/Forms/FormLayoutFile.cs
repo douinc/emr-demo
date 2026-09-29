@@ -18,6 +18,7 @@ public static class FormLayoutFile
             text = i.Kind == LayoutKind.Option ? i.Text : null,
             group = i.Control switch { RadioControl => "radio", CheckControl => "check", _ => null },
             readOnly = i.Control is TextControl { ReadOnly: true } ? true : (bool?)null,
+            options = (i.Control as SelectControl)?.Options,
             x = i.Bounds.X,
             y = i.Bounds.Y,
             w = i.Bounds.W,
