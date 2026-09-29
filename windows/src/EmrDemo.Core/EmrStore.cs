@@ -60,7 +60,7 @@ public sealed class EmrStore(string dataDir)
             ?? throw new InvalidOperationException("시드 리소스가 없습니다");
         var records = JsonSerializer.Deserialize<List<SeedRecord>>(stream, EmrJson.Options)!;
 
-        return records.Select((record, i) =>
+        var charts = records.Select((record, i) =>
         {
             var patient = new Patient
             {
@@ -73,6 +73,21 @@ public sealed class EmrStore(string dataDir)
             };
             patient.Normalize();
             return patient;
-        }).ToList();
+        });
+        var forms = Forms.FormCatalog.All.Select((form, i) =>
+        {
+            var number = records.Count + i + 1;
+            var patient = new Patient
+            {
+                Id = $"DEMO-{number:00}",
+                Name = $"예시 환자 {number:00}",
+                Department = form.Department,
+                VisitDate = "2026-07-28",
+                FormId = form.Id,
+            };
+            patient.Normalize();
+            return patient;
+        });
+        return charts.Concat(forms).ToList();
     }
 }

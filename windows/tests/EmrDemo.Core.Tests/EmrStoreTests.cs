@@ -22,7 +22,7 @@ public sealed class EmrStoreTests : IDisposable
         var patients = store.LoadAll();
 
         Assert.True(File.Exists(Path.Combine(_dir, "store.json")));
-        Assert.Equal(8, patients.Count);
+        Assert.Equal(14, patients.Count);
         Assert.Equal("DEMO-01", patients[0].Id);
         Assert.Equal("예시 환자 01", patients[0].Name);
         Assert.Equal("안과", patients[0].Department);

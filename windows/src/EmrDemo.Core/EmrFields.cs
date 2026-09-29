@@ -12,5 +12,7 @@ public static class EmrFields
 
     public static string Order(int row, string property) => $"orders[{row}].{Camel(property)}";
 
+    public static string Form(string key) => $"form.{key}";
+
     static string Camel(string property) => JsonNamingPolicy.CamelCase.ConvertName(property);
 }

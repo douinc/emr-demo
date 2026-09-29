@@ -12,6 +12,8 @@ public sealed class Patient
     public string ChartText { get; set; } = "";
     public string MedicalMemo { get; set; } = "";
     public string PatientMemo { get; set; } = "";
+    public string? FormId { get; set; }
+    public Dictionary<string, string> FormValues { get; set; } = [];
     public List<VitalSign> Vitals { get; set; } = [];
     public List<Diagnosis> Diagnoses { get; set; } = [];
     public List<Order> Orders { get; set; } = [];
@@ -21,6 +23,7 @@ public sealed class Patient
         Vitals = (Vitals ?? []).Select(v => v ?? new VitalSign()).ToList();
         Orders = (Orders ?? []).Select(o => o ?? new Order()).ToList();
         Diagnoses = (Diagnoses ?? []).Where(d => d is not null).ToList();
+        FormValues ??= [];
 
         while (Vitals.Count < VitalRowCount)
         {
