@@ -63,8 +63,8 @@ dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -o o
   체크·라디오·드롭다운은 바뀌는 즉시, 텍스트·날짜·셀은 기존 규칙대로 기록한다.
 - 키는 `<서식id>.b<블록 번호>.<항목 번호>`(파생 입력은 `.other`·`.tail`·`.<선택지>.<번호>`, 작성일은
   `<서식id>.writtenOn`). standard 모드 AutomationId는 키이고, 라디오·체크 선택지는 `<키>#<선택지 번호>`다.
-- standard `DateTimePicker`는 UIA에서 ComboBox(Value·Toggle·ExpandCollapse)로 보인다. **체크 해제된 빈
-  날짜도 UIA Value는 날짜 문자열을 돌려준다** — 빈 값인지는 Toggle 상태로 판단해야 한다.
+- standard `DateTimePicker`는 UIA에서 ComboBox(Value·Toggle·ExpandCollapse)로 보인다. 빈 날짜(체크 해제)는
+  화면에 날짜를 감추고 UIA Value가 공백 한 칸(`" "`)이다. 날짜를 넣으려면 Toggle로 체크한 뒤 값을 바꾼다.
 - custom 모드는 서식 전체가 컨트롤 하나다. 클릭으로 요소를 고르고 `Tab`/`Shift+Tab`으로 이동, 체크·라디오는
   클릭 또는 `Space`(그룹 안은 화살표), 드롭다운은 클릭·`Space`로 열어 항목 클릭 또는 `↑↓`+`Enter`, `Esc`로
   닫는다. 휠로 세로, `Shift`+휠로 가로 스크롤(스크롤 막대는 표시만 하고 끌 수 없다).
