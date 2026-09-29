@@ -1,0 +1,67 @@
+name: windows-demo
+
+on:
+  pull_request:
+    paths:
+      - 'windows/**'
+      - '.github/workflows/windows-demo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-probe:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: windows
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: actions/setup-dotnet@v6.0.0
+        with:
+          global-json-file: windows/global.json
+
+      - name: Build
+        run: dotnet build EmrDemo.slnx -c Release -warnaserror
+
+      - name: Test
+        run: dotnet test --solution EmrDemo.slnx -c Release --no-build
+
+      - name: Publish (standard manifest)
+        run: dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -o artifacts/app
+
+      - name: Publish (requireAdministrator manifest)
+        run: dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -p:RequireAdmin=true -o artifacts/app-admin
+
+      - name: Check manifests
+        shell: pwsh
+        run: |
+          $normal = [IO.File]::ReadAllText("artifacts/app/EmrDemo.exe", [Text.Encoding]::ASCII)
+          $admin = [IO.File]::ReadAllText("artifacts/app-admin/EmrDemo.exe", [Text.Encoding]::ASCII)
+          if (-not $normal.Contains('level="asInvoker"')) { throw 'standard build lacks asInvoker' }
+          if (-not $admin.Contains('level="requireAdministrator"')) { throw 'admin build lacks requireAdministrator' }
+
+      - name: Set display resolution
+        continue-on-error: true
+        shell: powershell
+        run: Set-DisplayResolution -Width 1920 -Height 1080 -Force
+
+      - name: UIA probe (standard)
+        shell: powershell
+        run: .\probe\Probe-Uia.ps1 -ExePath artifacts\app\EmrDemo.exe -Mode standard -OutDir artifacts\probe-standard
+
+      - name: UIA probe (custom)
+        if: always()
+        shell: powershell
+        run: .\probe\Probe-Uia.ps1 -ExePath artifacts\app\EmrDemo.exe -Mode custom -OutDir artifacts\probe-custom
+
+      - uses: actions/upload-artifact@v7.0.1
+        if: always()
+        with:
+          name: probe-results
+          path: |
+            windows/artifacts/probe-standard
+            windows/artifacts/probe-custom

@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EmrDemo.App/EmrDemo.App.csproj" />
+    <Project Path="src/EmrDemo.Core/EmrDemo.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EmrDemo.Core.Tests/EmrDemo.Core.Tests.csproj" />
+  </Folder>
+</Solution>
