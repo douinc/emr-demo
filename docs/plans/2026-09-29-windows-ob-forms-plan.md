@@ -11,9 +11,9 @@ spec: `docs/specs/2026-09-29-windows-ob-forms-design.md`
 - [x] 2. Core `FormDefinition` 모델·로더 (TDD)
 - [x] 3. Core `FormLayout` 배치 (TDD, 가짜 측정 함수)
 - [x] 4. Core `Patient.FormId`·`FormValues`, 시드 `DEMO-09`~`DEMO-14`, `EmrFields.Form` (TDD)
-- [ ] 5. App standard 서식 뷰(네이티브 컨트롤, AutomationId, 확정 규칙)
-- [ ] 6. App custom 서식 캔버스(그리기·입력·드롭다운·스크롤·opaque)
-- [ ] 7. MainForm 서식 모드 전환(가운데 칸 확장), `layout-<formId>.json` 기록
+- [x] 5. App standard 서식 뷰(네이티브 컨트롤, AutomationId, 확정 규칙)
+- [x] 6. App custom 서식 캔버스(그리기·입력·드롭다운·스크롤·opaque)
+- [x] 7. MainForm 서식 모드 전환(가운데 칸 확장), `layout-<formId>.json` 기록
 - [ ] 8. 프로브 서식 검사, README
 - [ ] 9. CI 확인, 종료 전 `origin/main`·PR #2 델타 재감사
 

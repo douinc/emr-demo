@@ -88,7 +88,7 @@ public static class FormLayout
     {
         public readonly List<LayoutItem> Items = [];
         public int Y;
-        public int MaxRight = width;
+        public int MaxRight;
 
         void Add(LayoutItem item)
         {
@@ -99,6 +99,7 @@ public static class FormLayout
         public void Run()
         {
             const int band = 26;
+            MaxRight = width;
             Add(new LayoutItem(LayoutKind.TitleBand, new LayoutRect(0, 0, width, band)));
             var dateLabel = "작성일 :";
             var labelW = measure(dateLabel) + 2;
@@ -356,11 +357,23 @@ public static class FormLayout
             Y += 6;
         }
 
-        sealed class Flow(Builder owner, int left, int right, int top)
+        sealed class Flow
         {
-            int _x = left;
-            int _lineTop = top;
+            readonly Builder owner;
+            readonly int left;
+            readonly int right;
+            int _x;
+            int _lineTop;
             int _lineHeight = ControlHeight;
+
+            public Flow(Builder owner, int left, int right, int top)
+            {
+                this.owner = owner;
+                this.left = left;
+                this.right = right;
+                _x = left;
+                _lineTop = top;
+            }
 
             public int Bottom => _lineTop + _lineHeight;
             public int Available => right - left;

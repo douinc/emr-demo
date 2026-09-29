@@ -16,6 +16,8 @@ public static class FormLayoutFile
             kind = JsonNamingPolicy.CamelCase.ConvertName(i.Kind.ToString()),
             option = i.OptionIndex >= 0 ? i.OptionIndex : (int?)null,
             text = i.Kind == LayoutKind.Option ? i.Text : null,
+            group = i.Control switch { RadioControl => "radio", CheckControl => "check", _ => null },
+            readOnly = i.Control is TextControl { ReadOnly: true } ? true : (bool?)null,
             x = i.Bounds.X,
             y = i.Bounds.Y,
             w = i.Bounds.W,

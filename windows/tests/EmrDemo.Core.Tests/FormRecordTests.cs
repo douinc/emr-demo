@@ -92,4 +92,18 @@ public sealed class FormRecordTests : IDisposable
         Assert.Equal("date", first.GetProperty("kind").GetString());
         Assert.True(first.GetProperty("w").GetInt32() > 0);
     }
+
+    [Fact]
+    public void LayoutFile_MarksOptionGroupKindAndReadOnlyText()
+    {
+        var sono = FormCatalog.Get("sono23");
+        var path = FormLayoutFile.Write(_dir, sono.Id, FormLayout.Build(sono, t => t.Length * 7, 860));
+
+        using var doc = JsonDocument.Parse(File.ReadAllText(path));
+        var items = doc.RootElement.GetProperty("items").EnumerateArray().ToList();
+        Assert.Contains(items, i => i.GetProperty("kind").GetString() == "option" && i.GetProperty("group").GetString() == "radio");
+        Assert.Contains(items, i => i.GetProperty("kind").GetString() == "option" && i.GetProperty("group").GetString() == "check");
+        Assert.Contains(items, i => i.GetProperty("kind").GetString() == "text" && i.TryGetProperty("readOnly", out var ro) && ro.GetBoolean());
+        Assert.DoesNotContain(items, i => i.GetProperty("kind").GetString() == "text" && i.TryGetProperty("group", out _));
+    }
 }

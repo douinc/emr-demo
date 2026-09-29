@@ -1,5 +1,6 @@
 using System.Reflection;
 using EmrDemo.Core;
+using EmrDemo.Core.Forms;
 
 namespace EmrDemo.App;
 
@@ -38,6 +39,10 @@ sealed class MainForm : Form
     readonly List<Patient> _roster;
 
     readonly ITextField _chart;
+    readonly IFormView _formView;
+    readonly Panel _chartHost = new() { Dock = DockStyle.Fill, Margin = Padding.Empty };
+    TableLayoutPanel _main = null!;
+    Control _midColumn = null!;
     readonly ITextField _medicalMemo;
     readonly ITextField _patientMemo;
     readonly IGridField _vitals;
@@ -64,6 +69,7 @@ sealed class MainForm : Form
 
         var custom = options.UiMode == UiMode.Custom;
         _chart = custom ? new CustomTextField() : new StandardTextField("chartText", multiline: true);
+        _formView = custom ? new CustomFormCanvas() : new StandardFormView();
         _vitals = custom ? new CustomGridField(VitalColumns) : new StandardGridField("vitalGrid", VitalColumns, readOnly: false);
         _orders = custom ? new CustomGridField(OrderColumns) : new StandardGridField("orderGrid", OrderColumns, readOnly: false);
         _medicalMemo = new StandardTextField("medicalMemo", multiline: true);
@@ -87,7 +93,7 @@ sealed class MainForm : Form
 
     void BuildLayout()
     {
-        var main = new TableLayoutPanel
+        var main = _main = new TableLayoutPanel
         {
             Dock = DockStyle.Fill,
             ColumnCount = 4,
@@ -101,7 +107,8 @@ sealed class MainForm : Form
         main.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45));
         main.Controls.Add(BuildPatientColumn(), 0, 0);
         main.Controls.Add(BuildChartColumn(), 1, 0);
-        main.Controls.Add(BuildMidColumn(), 2, 0);
+        _midColumn = BuildMidColumn();
+        main.Controls.Add(_midColumn, 2, 0);
         main.Controls.Add(BuildOrderColumn(), 3, 0);
 
         Controls.Add(main);
@@ -246,7 +253,28 @@ sealed class MainForm : Form
         e.Graphics.DrawLine(line, e.Bounds.Left, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
     }
 
-    Control BuildChartColumn() => Stack((_chartTitle, 20), (_chart.Control, 0));
+    Control BuildChartColumn()
+    {
+        _chart.Control.Dock = DockStyle.Fill;
+        _formView.Control.Dock = DockStyle.Fill;
+        _formView.Control.Visible = false;
+        _chartHost.Controls.Add(_chart.Control);
+        _chartHost.Controls.Add(_formView.Control);
+        return Stack((_chartTitle, 20), (_chartHost, 0));
+    }
+
+    /// <summary>웹 데모의 form-mode처럼 서식을 띄울 때는 중간 열을 숨겨 가운데 칸을 넓힌다.</summary>
+    void SetFormMode(bool formMode)
+    {
+        _main.SuspendLayout();
+        _main.ColumnStyles[2].Width = formMode ? 0 : 280;
+        _midColumn.Visible = !formMode;
+        _main.ColumnStyles[1].Width = formMode ? 70 : 55;
+        _main.ColumnStyles[3].Width = formMode ? 30 : 45;
+        _chart.Control.Visible = !formMode;
+        _formView.Control.Visible = formMode;
+        _main.ResumeLayout();
+    }
 
     Control BuildMidColumn() => Stack(
         (SectionLabel("VitalSign"), 20),
@@ -335,6 +363,19 @@ sealed class MainForm : Form
     void WireFields()
     {
         _chart.Committed += value => CommitText(EmrFields.ChartText, value, p => p.ChartText = value);
+        _formView.Committed += (key, value) =>
+        {
+            if (value.Length == 0)
+            {
+                _current.FormValues.Remove(key);
+            }
+            else
+            {
+                _current.FormValues[key] = value;
+            }
+
+            _log.FieldCommit(_current.Id, EmrFields.Form(key), value);
+        };
         _medicalMemo.Committed += value => CommitText(EmrFields.MedicalMemo, value, p => p.MedicalMemo = value);
         _patientMemo.Committed += value => CommitText(EmrFields.PatientMemo, value, p => p.PatientMemo = value);
         _vitals.CellCommitted += (row, column, value) =>
@@ -375,6 +416,11 @@ sealed class MainForm : Form
         {
             grid.CommitPending();
         }
+
+        if (_current.FormId is not null)
+        {
+            _formView.CommitPending();
+        }
     }
 
     void SwitchPatient(string id)
@@ -397,13 +443,23 @@ sealed class MainForm : Form
     void ShowPatient(Patient patient)
     {
         _current = patient;
+        _savedStatus.Text = "";
         var index = _roster.FindIndex(p => p.Id == patient.Id);
         Text = $"[접속정보 : Tester1] 처방관리 Ver. 2.0.0.122 : [ 예시 환자 {index + 1:00} ]" + (_elevated ? " (관리자)" : "");
         _patientNo.Text = patient.Id;
         _patientName.Text = patient.Name;
         _department.Text = patient.Department;
         _visitDate.Text = patient.VisitDate;
-        _chartTitle.Text = $"차트 조회 : {patient.Name} ({patient.Id})";
+        _chartTitle.Text = patient.FormId is { } formId
+            ? $"서식 : {FormCatalog.Get(formId).Title} - {patient.Name} ({patient.Id})"
+            : $"차트 조회 : {patient.Name} ({patient.Id})";
+
+        SetFormMode(patient.FormId is not null);
+        if (patient.FormId is { } id)
+        {
+            var layout = _formView.Show(FormCatalog.Get(id), patient.FormValues);
+            WriteLayout(id, layout);
+        }
 
         _chart.Load(patient.ChartText);
         _medicalMemo.Load(patient.MedicalMemo);
@@ -411,7 +467,18 @@ sealed class MainForm : Form
         _vitals.Load(Rows(patient.Vitals, VitalColumns));
         _orders.Load(Rows(patient.Orders, OrderColumns));
         _diagnoses.Load(Rows(patient.Diagnoses, DiagnosisColumns));
-        _savedStatus.Text = "";
+    }
+
+    void WriteLayout(string formId, FormLayoutResult layout)
+    {
+        try
+        {
+            FormLayoutFile.Write(_options.DataDir, formId, layout);
+        }
+        catch (Exception e) when (e is IOException or UnauthorizedAccessException)
+        {
+            _savedStatus.Text = $"좌표 파일 기록 실패: {e.Message}";
+        }
     }
 
     void Save()
