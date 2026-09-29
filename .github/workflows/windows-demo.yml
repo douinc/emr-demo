@@ -24,6 +24,12 @@ jobs:
         with:
           global-json-file: windows/global.json
 
+      - name: Form schema is reproducible from the web demo
+        shell: pwsh
+        run: |
+          node tools/export-ob-forms.mjs
+          git diff --exit-code -- src/EmrDemo.Core/Seed/forms.json
+
       - name: Build
         run: dotnet build EmrDemo.slnx -c Release -warnaserror
 

@@ -81,7 +81,7 @@ public sealed record FormDefinition(
 
                 if (options.Other is { } other)
                 {
-                    yield return new FormInput(other.Key, new TextControl(other.Key, other.W));
+                    yield return new FormInput(other.Key, new TextControl(other.Key, other.W, Fill: true));
                 }
 
                 if (options.Tail is { } tail)

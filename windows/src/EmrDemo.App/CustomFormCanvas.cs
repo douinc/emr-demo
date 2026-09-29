@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+using System.Globalization;
 using EmrDemo.Core;
 using EmrDemo.Core.Forms;
 
@@ -8,7 +8,7 @@ namespace EmrDemo.App;
 /// 서식 전체를 컨트롤 하나에 직접 그린다(PowerBuilder DataWindow와 같은 모양). 값은 이 객체 안에만 있고
 /// Text·Name을 쓰지 않으며 접근성 객체도 비워 둔다(<see cref="CustomTextBox"/>와 같은 이유).
 /// </summary>
-sealed partial class CustomFormCanvas : Control, IFormView
+sealed class CustomFormCanvas : Control, IFormView
 {
     const TextFormatFlags Flags = TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine
         | TextFormatFlags.VerticalCenter;
@@ -23,6 +23,7 @@ sealed partial class CustomFormCanvas : Control, IFormView
     bool _dropdownOpen;
     int _scrollX;
     int _scrollY;
+    int _editShift;
 
     public CustomFormCanvas()
     {
@@ -61,7 +62,10 @@ sealed partial class CustomFormCanvas : Control, IFormView
         return _layout;
     }
 
-    /// <summary>Tab 순서에는 선택지 그룹마다 첫 선택지 하나만 두고, 그룹 안은 ←→로 옮긴다.</summary>
+    /// <summary>
+    /// Tab 순서에는 선택지 그룹마다 첫 선택지 하나만 두고, 그룹 안은 화살표로 옮긴다. standard 모드는 선택지마다
+    /// Tab 정지점이 있어 두 모드의 Tab 횟수가 다르다.
+    /// </summary>
     static bool IsFirstOption(LayoutItem item) => item.Kind == LayoutKind.Option && item.OptionIndex == 0;
 
     public void CommitPending() => CommitEdit();
@@ -115,6 +119,10 @@ sealed partial class CustomFormCanvas : Control, IFormView
             {
                 _edit.MoveTo(position);
             }
+            else if (item.Kind == LayoutKind.TextArea)
+            {
+                _edit.MoveTo(_edit.Text.Length);
+            }
             else
             {
                 _edit.SelectAll();
@@ -135,7 +143,8 @@ sealed partial class CustomFormCanvas : Control, IFormView
 
         var value = _edit.Text;
         _edit = null;
-        if (item.Kind == LayoutKind.Date && value.Length > 0 && !DateText().IsMatch(value))
+        if (item.Kind == LayoutKind.Date && value.Length > 0
+            && !DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
         {
             Invalidate();
             return;
@@ -144,9 +153,6 @@ sealed partial class CustomFormCanvas : Control, IFormView
         SetValue(item.Key!, value);
         Invalidate();
     }
-
-    [GeneratedRegex(@"^\d{4}-\d{2}-\d{2}$")]
-    private static partial Regex DateText();
 
     void Toggle(LayoutItem option)
     {
@@ -234,8 +240,14 @@ sealed partial class CustomFormCanvas : Control, IFormView
 
     void ClampScroll()
     {
+        var height = _layout.Height;
+        if (_dropdownOpen && FocusedItem is { Kind: LayoutKind.Select } select)
+        {
+            height = Math.Max(height, DropdownBounds(select).Bottom + 8);
+        }
+
         _scrollX = Math.Clamp(_scrollX, 0, Math.Max(0, _layout.Width - ClientSize.Width));
-        _scrollY = Math.Clamp(_scrollY, 0, Math.Max(0, _layout.Height - ClientSize.Height));
+        _scrollY = Math.Clamp(_scrollY, 0, Math.Max(0, height - ClientSize.Height));
     }
 
     protected override void OnResize(EventArgs e)
@@ -273,8 +285,9 @@ sealed partial class CustomFormCanvas : Control, IFormView
 
     void PaintItem(Graphics g, LayoutItem item, Rectangle r)
     {
-        var focused = FocusedItem is { } f && (f == item || item.Kind == LayoutKind.Option && f.Kind == LayoutKind.Option
-            && f.Key == item.Key && item.OptionIndex == _optionCursor);
+        var focused = FocusedItem is { } f && (f.Kind == LayoutKind.Option
+            ? item.Kind == LayoutKind.Option && f.Key == item.Key && item.OptionIndex == _optionCursor
+            : f == item);
         switch (item.Kind)
         {
             case LayoutKind.Title:
@@ -370,7 +383,7 @@ sealed partial class CustomFormCanvas : Control, IFormView
         }
 
         g.Restore(state);
-        if (focused)
+        if (focused && Focused)
         {
             using var focusPen = new Pen(Theme.Selection);
             g.DrawRectangle(focusPen, r.X, r.Y, r.Width - 1, r.Height - 1);
@@ -384,6 +397,7 @@ sealed partial class CustomFormCanvas : Control, IFormView
         {
             var caretX = FormMetrics.Measure(text[.._edit!.Caret]);
             shift = Math.Max(0, caretX - inner.Width + 2);
+            _editShift = shift;
         }
 
         var origin = inner with { X = inner.X - shift, Width = inner.Width + shift };
@@ -424,6 +438,25 @@ sealed partial class CustomFormCanvas : Control, IFormView
         foreach (var line in text.Split('\n'))
         {
             TextRenderer.DrawText(g, line, Theme.Font, new Point(inner.X, y), Color.Black, lineFlags);
+            if (editing && _edit!.HasSelection)
+            {
+                var (selStart, selEnd) = _edit.Selection;
+                var from = Math.Clamp(selStart - start, 0, line.Length);
+                var to = Math.Clamp(selEnd - start, 0, line.Length);
+                if (selStart <= start + line.Length && selEnd >= start && to >= from)
+                {
+                    var x1 = inner.X + FormMetrics.Measure(line[..from]);
+                    var x2 = inner.X + FormMetrics.Measure(line[..to]) + (selEnd > start + line.Length ? 4 : 0);
+                    var highlight = new Rectangle(x1, y, Math.Max(1, x2 - x1), lineHeight);
+                    using var selection = new SolidBrush(Theme.Selection);
+                    g.FillRectangle(selection, highlight);
+                    var clip = g.Save();
+                    g.SetClip(highlight, System.Drawing.Drawing2D.CombineMode.Intersect);
+                    TextRenderer.DrawText(g, line, Theme.Font, new Point(inner.X, y), Color.White, lineFlags);
+                    g.Restore(clip);
+                }
+            }
+
             if (editing && _edit!.Caret >= start && _edit.Caret <= start + line.Length)
             {
                 caretPoint = new Point(inner.X + FormMetrics.Measure(line[..(_edit.Caret - start)]), y);
@@ -528,6 +561,7 @@ sealed partial class CustomFormCanvas : Control, IFormView
 
         var x = e.X + _scrollX;
         var y = e.Y + _scrollY;
+        var wasOpen = _dropdownOpen;
         if (_dropdownOpen && FocusedItem is { Kind: LayoutKind.Select } select)
         {
             var bounds = DropdownBounds(select);
@@ -555,13 +589,21 @@ sealed partial class CustomFormCanvas : Control, IFormView
                 Toggle(hit);
                 break;
             case LayoutKind.Select:
-                var reopen = FocusedItem != hit || !_dropdownOpen;
+                var reopen = FocusedItem != hit || !wasOpen;
                 FocusItem(hit);
                 if (reopen)
                 {
                     OpenDropdown(hit);
                 }
 
+                break;
+            case var _ when hit == FocusedItem && _edit is not null:
+                if (hit.Kind != LayoutKind.TextArea)
+                {
+                    _edit.MoveTo(CaretAt(hit, x));
+                }
+
+                Invalidate();
                 break;
             default:
                 FocusItem(hit, IsTextLike(hit) && hit.Kind != LayoutKind.TextArea ? CaretAt(hit, x) : null);
@@ -576,8 +618,9 @@ sealed partial class CustomFormCanvas : Control, IFormView
 
     int CaretAt(LayoutItem item, int x)
     {
-        var text = Value(item.Key!);
-        var local = x - item.Bounds.X - 3;
+        var editing = item == FocusedItem && _edit is not null;
+        var text = editing ? _edit!.Text : Value(item.Key!);
+        var local = x - item.Bounds.X - 3 + (editing ? _editShift : 0);
         var best = 0;
         var bestDistance = int.MaxValue;
         for (var p = 0; p <= text.Length; p++)
@@ -608,6 +651,16 @@ sealed partial class CustomFormCanvas : Control, IFormView
 
         ClampScroll();
         Invalidate();
+    }
+
+    protected override void OnEnter(EventArgs e)
+    {
+        base.OnEnter(e);
+        if (MouseButtons == MouseButtons.None && _focusable.Count > 0)
+        {
+            _optionCursor = 0;
+            FocusItem(ModifierKeys.HasFlag(Keys.Shift) ? _focusable[^1] : _focusable[0]);
+        }
     }
 
     protected override void OnLeave(EventArgs e)

@@ -355,26 +355,36 @@ try {
             Save-Captures $hwnd 'form'
             $layout = Read-FormLayout $dataDir 'csec'
             Check ($null -ne $layout) 'layout-csec.json written'
-            if ($layout) {
-                $t = Get-FormTargets $layout
-                (Find-ById $root $t.Text.key).GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).SetValue('PROBE FORM')
+            # DEMO-10 is the csec form (FormCatalog order); it has every input kind near the top.
+            $t = if ($layout) { Get-FormTargets $layout } else { $null }
+            $complete = $t -and $t.Text -and $t.Radio -and $t.Check -and $t.Select -and $t.Cell
+            Check $complete 'csec layout has text, radio, check, select and grid targets'
+            if ($complete) {
+                $text = Find-ById $root $t.Text.key
+                Check ($null -ne $text) "text $($t.Text.key) reachable"
+                if ($text) { $text.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).SetValue('PROBE FORM') }
                 $radio = Find-ById $root "$($t.Radio.key)#1"
                 Check ($null -ne $radio) "radio option $($t.Radio.key)#1 reachable"
-                $radio.GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern).Select()
+                if ($radio) { $radio.GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern).Select() }
                 $check = Find-ById $root "$($t.Check.key)#0"
                 Check ($null -ne $check) "check option $($t.Check.key)#0 reachable"
-                $check.GetCurrentPattern([System.Windows.Automation.TogglePattern]::Pattern).Toggle()
+                if ($check) { $check.GetCurrentPattern([System.Windows.Automation.TogglePattern]::Pattern).Toggle() }
                 $combo = Find-ById $root $t.Select.key
-                $combo.GetCurrentPattern([System.Windows.Automation.ExpandCollapsePattern]::Pattern).Expand()
-                Start-Sleep -Milliseconds 300
-                $listCondition = New-Object System.Windows.Automation.PropertyCondition $AE::ControlTypeProperty, ([System.Windows.Automation.ControlType]::ListItem)
-                $choice = @($combo.FindAll([System.Windows.Automation.TreeScope]::Descendants, $listCondition)) |
-                    Where-Object { $_.Current.Name -eq $t.Select.options[0] } | Select-Object -First 1
-                Check ($null -ne $choice) "select $($t.Select.key) lists '$($t.Select.options[0])'"
-                if ($choice) { $choice.GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern).Select() }
-                $combo.GetCurrentPattern([System.Windows.Automation.ExpandCollapsePattern]::Pattern).Collapse()
+                Check ($null -ne $combo) "select $($t.Select.key) reachable"
+                if ($combo) {
+                    $combo.GetCurrentPattern([System.Windows.Automation.ExpandCollapsePattern]::Pattern).Expand()
+                    Start-Sleep -Milliseconds 300
+                    $listCondition = New-Object System.Windows.Automation.PropertyCondition $AE::ControlTypeProperty, ([System.Windows.Automation.ControlType]::ListItem)
+                    $choice = @($combo.FindAll([System.Windows.Automation.TreeScope]::Descendants, $listCondition)) |
+                        Where-Object { $_.Current.Name -eq $t.Select.options[0] } | Select-Object -First 1
+                    Check ($null -ne $choice) "select $($t.Select.key) lists '$($t.Select.options[0])'"
+                    if ($choice) { $choice.GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern).Select() }
+                    $combo.GetCurrentPattern([System.Windows.Automation.ExpandCollapsePattern]::Pattern).Collapse()
+                }
                 $gridKey = $t.Cell.key.Substring(0, $t.Cell.key.IndexOf('['))
-                $cell = Get-GridCell (Find-ById $root $gridKey) 0 1
+                $gridElement = Find-ById $root $gridKey
+                # Column 0 of the standard grid is the row-number column, so form column 0 is grid column 1.
+                $cell = if ($gridElement) { Get-GridCell $gridElement 0 1 } else { $null }
                 Check ($null -ne $cell) "form grid $gridKey exposes cell (0,1)"
                 if ($cell) { $cell.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).SetValue('PROBECELL') }
                 $save.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
@@ -422,10 +432,13 @@ try {
             $formTitle = Find-Text $root '(DEMO-10)'
             $canvas = if ($formTitle) { $walker.GetNextSibling($formTitle) } else { $null }
             Check (Test-OpaquePane $canvas) 'form canvas is a pane with no name, stable id, patterns or children'
-            if ($layout -and $canvas) {
-                $t = Get-FormTargets $layout
+            $t = if ($layout) { Get-FormTargets $layout } else { $null }
+            $complete = $t -and $t.Text -and $t.Radio -and $t.Check -and $t.Select -and $t.Cell
+            Check $complete 'csec layout has text, radio, check, select and grid targets'
+            if ($complete -and $canvas) {
                 $origin = $canvas.Current.BoundingRectangle
-                $hidden = @(@($t.Text, $t.Radio, $t.Check, $t.Cell) | Where-Object { $_.y + $_.h + 10 -gt $origin.Height })
+                $hidden = @(@($t.Text, $t.Radio, $t.Check, $t.Cell, $t.Select) |
+                    Where-Object { $_.y + $_.h + 10 -gt $origin.Height -or $_.x + $_.w + 10 -gt $origin.Width })
                 $dropdownBottom = $t.Select.y + $t.Select.h + 20 * (@($t.Select.options).Count + 1)
                 Check ($hidden.Count -eq 0 -and $dropdownBottom -lt $origin.Height) 'form probe targets are inside the visible canvas'
                 function Click-Form($item, [int]$dx = -1, [int]$dy = -1) {
@@ -441,7 +454,8 @@ try {
                 Click-Form $t.Radio 6
                 Click-Form $t.Check 6
                 Click-Form $t.Select
-                # The drop-down opens under the select: row 0 is the blank choice, row 1 the first option.
+                # The drop-down opens under the select (CustomFormCanvas.DropdownBounds): 1px border, 20px rows,
+                # row 0 is the blank choice and row 1 the first option.
                 Click-Form $t.Select 10 ($t.Select.h + 1 + 20 + 10)
                 Click-Form $t.Cell
                 Send-Keys 'PROBECELL'

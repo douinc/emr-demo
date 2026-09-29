@@ -80,10 +80,15 @@ public static class FormLayout
     /// <summary>네이티브 Label·RadioButton·CheckBox가 글자 폭 외에 쓰는 여백. 두 모드가 같은 폭을 쓴다.</summary>
     public const int TextSlack = 8;
 
+    /// <summary>행 라벨이 라벨 열보다 길 때 추가하는 줄의 높이(최대 3줄).</summary>
+    public const int LabelLineHeight = 14;
+
     public static FormLayoutResult Build(FormDefinition form, Func<string, int> measure, int width)
     {
         var builder = new Builder(form, measure, Math.Max(width, 200));
         builder.Run();
+        var band = builder.Items[0];
+        builder.Items[0] = band with { Bounds = band.Bounds with { W = builder.MaxRight } };
         return new FormLayoutResult(builder.Items, builder.MaxRight, builder.Y + Pad);
     }
 
@@ -96,7 +101,7 @@ public static class FormLayout
         void Add(LayoutItem item)
         {
             Items.Add(item);
-            MaxRight = Math.Max(MaxRight, item.Bounds.Right + Pad);
+            MaxRight = Math.Max(MaxRight, item.Kind == LayoutKind.TitleBand ? item.Bounds.Right : item.Bounds.Right + Pad);
         }
 
         public void Run()
@@ -179,7 +184,11 @@ public static class FormLayout
             Y += 4;
             Blocks(blocks, left + 8, right - 8);
             Y += 4;
-            Items[box] = new LayoutItem(kind, new LayoutRect(left, top, right - left, Y - top));
+            var childRight = Items.Skip(box + 1).Where(i => i.Kind != LayoutKind.SetHeader)
+                .Select(i => i.Bounds.Right + 8).DefaultIfEmpty(right).Max();
+            var boxRight = Math.Max(right, childRight);
+            Items[box] = new LayoutItem(kind, new LayoutRect(left, top, boxRight - left, Y - top));
+            MaxRight = Math.Max(MaxRight, boxRight + Pad);
             Y += Gap;
         }
 
@@ -187,10 +196,14 @@ public static class FormLayout
         {
             var indent = row.Indent * IndentStep;
             var labelWidth = form.LabelWidth;
+            var labelBottom = Y;
             if (row.Label.Length > 0)
             {
-                Add(new LayoutItem(LayoutKind.RowLabel,
-                    new LayoutRect(left + indent, Y, Math.Max(20, labelWidth - indent - Gap), ControlHeight), Text: row.Label));
+                var labelW = Math.Max(20, labelWidth - indent - Gap);
+                var lines = Math.Clamp((measure(row.Label) + labelW - 1) / labelW, 1, 3);
+                var labelH = ControlHeight + (lines - 1) * LabelLineHeight;
+                Add(new LayoutItem(LayoutKind.RowLabel, new LayoutRect(left + indent, Y, labelW, labelH), Text: row.Label));
+                labelBottom = Y + labelH;
             }
 
             var flow = new Flow(this, left + labelWidth + 2, right, Y);
@@ -199,7 +212,7 @@ public static class FormLayout
                 Control(item, flow);
             }
 
-            Y = flow.Bottom + 2;
+            Y = Math.Max(flow.Bottom, labelBottom) + 2;
         }
 
         void Control(FormControl control, Flow flow)
@@ -215,11 +228,8 @@ public static class FormLayout
                 case OptionControl options:
                     for (var i = 0; i < options.AllOptions.Count; i++)
                     {
-                        flow.Place(OptionItem(options, i));
-                        foreach (var inline in InlineFor(options, i))
-                        {
-                            Control(inline, flow);
-                        }
+                        List<LayoutItem> unit = [OptionItem(options, i), .. InlineFor(options, i).Select(Leaf)];
+                        flow.PlaceTogether(ShrinkFill(unit, flow.Available));
                     }
 
                     if (options.Tail is { } tail)
@@ -281,7 +291,10 @@ public static class FormLayout
             }
         }
 
-        /// <summary>웹의 .fill처럼, 줄이 가용 폭을 넘으면 fill 입력칸을 줄인다(최소 40px).</summary>
+        /// <summary>
+        /// 줄이 가용 폭을 넘으면 fill 입력칸을 최소 40px까지 줄인다. 웹 CSS의 .fill은 배경색만 바꾸며,
+        /// 이 축소는 이 앱의 규칙이다.
+        /// </summary>
         static List<LayoutItem> ShrinkFill(List<LayoutItem> line, int available)
         {
             var overflow = line.Sum(i => i.Bounds.W) + Gap * (line.Count - 1) - available;
@@ -292,7 +305,7 @@ public static class FormLayout
                     return item;
                 }
 
-                var shrink = Math.Min(overflow, item.Bounds.W - 40);
+                var shrink = Math.Max(0, Math.Min(overflow, item.Bounds.W - 40));
                 overflow -= shrink;
                 return item with { Bounds = item.Bounds with { W = item.Bounds.W - shrink } };
             }).ToList();
@@ -319,7 +332,7 @@ public static class FormLayout
 
         void Grid(GridBlock grid, int left, int right)
         {
-            var widths = grid.Columns.Select(c => c.W ?? 80).ToArray();
+            var widths = GridColumnWidths(grid, right - left);
             var tableWidth = GridRowNumberWidth + widths.Sum();
             var boxWidth = Math.Max(right - left, tableWidth + 2);
             Add(new LayoutItem(LayoutKind.GridTitle, new LayoutRect(left, Y, boxWidth, 22), Text: grid.Title));
@@ -358,6 +371,28 @@ public static class FormLayout
             }
 
             Y += 6;
+        }
+
+        /// <summary>너비가 없는 열은 웹의 width:100% 표처럼 남은 폭을 나눠 갖는다(최소 80px).</summary>
+        static int[] GridColumnWidths(GridBlock grid, int boxWidth)
+        {
+            var fixedSum = grid.Columns.Sum(c => c.W ?? 0);
+            var flexible = grid.Columns.Count(c => c.W is null);
+            if (flexible == 0)
+            {
+                return grid.Columns.Select(c => c.W!.Value).ToArray();
+            }
+
+            var remaining = boxWidth - 2 - GridRowNumberWidth - fixedSum;
+            var share = Math.Max(80, remaining / flexible);
+            var widths = grid.Columns.Select(c => c.W ?? share).ToArray();
+            var lastFlexible = Array.FindLastIndex(grid.Columns.ToArray(), c => c.W is null);
+            if (share * flexible < remaining)
+            {
+                widths[lastFlexible] += remaining - share * flexible;
+            }
+
+            return widths;
         }
 
         sealed class Flow
@@ -401,10 +436,18 @@ public static class FormLayout
                 return origin;
             }
 
-            public void Place(LayoutItem item)
+            public void Place(LayoutItem item) => PlaceTogether([item]);
+
+            /// <summary>선택지와 그 인라인 입력처럼 줄바꿈으로 떨어지면 안 되는 요소를 한 덩어리로 놓는다.</summary>
+            public void PlaceTogether(IReadOnlyList<LayoutItem> items)
             {
-                var (x, y) = Reserve(item.Bounds.W, item.Bounds.H);
-                owner.Add(item with { Bounds = item.Bounds with { X = x, Y = y } });
+                var width = items.Sum(i => i.Bounds.W) + Gap * (items.Count - 1);
+                var (x, y) = Reserve(width, items.Max(i => i.Bounds.H));
+                foreach (var item in items)
+                {
+                    owner.Add(item with { Bounds = item.Bounds with { X = x, Y = y } });
+                    x += item.Bounds.W + Gap;
+                }
             }
         }
     }

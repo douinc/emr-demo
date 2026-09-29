@@ -27,6 +27,12 @@ function control(spec, key) {
     case 'r':
     case 'k': {
       const out = { c: spec.c === 'r' ? 'radio' : 'check', key, options: spec.opts };
+      for (const option of Object.keys(spec.inlineFields || {})) {
+        if (!spec.opts.includes(option)) throw new Error(`${key}: inline field for unknown option "${option}"`);
+      }
+      if (spec.other && spec.opts.includes(spec.otherLabel || 'Other')) {
+        throw new Error(`${key}: other label duplicates an option`);
+      }
       if (spec.stack) out.stack = true;
       if (spec.inlineFields) {
         out.inline = Object.fromEntries(Object.entries(spec.inlineFields).map(([option, items]) =>

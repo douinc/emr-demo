@@ -53,7 +53,7 @@ dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -o o
 | 스키마 | standard | custom | 저장 값 |
 |---|---|---|---|
 | text(읽기 전용 포함)·textarea | `TextBox` | 직접 그림 | 문자열 |
-| date | `DateTimePicker`(체크 해제 = 빈 값) | 한 줄 입력 `YYYY-MM-DD`(형식이 틀리면 되돌림) | `yyyy-MM-dd` 또는 없음 |
+| date | `DateTimePicker`(체크 해제 = 빈 값, 날짜 글자를 감춤) | 한 줄 입력 `YYYY-MM-DD`(형식이 틀리면 되돌림) | `yyyy-MM-dd` 또는 없음 |
 | select | `ComboBox`(첫 항목 빈 값) | 캔버스 안에 그린 목록 | 선택지 |
 | radio | `RadioButton` | 직접 그림 | 선택지 |
 | check | `CheckBox` | 직접 그림 | 선택지를 스키마 순서로 `|`로 이음 |
@@ -67,10 +67,13 @@ dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -o o
   날짜도 UIA Value는 날짜 문자열을 돌려준다** — 빈 값인지는 Toggle 상태로 판단해야 한다.
 - custom 모드는 서식 전체가 컨트롤 하나다. 클릭으로 요소를 고르고 `Tab`/`Shift+Tab`으로 이동, 체크·라디오는
   클릭 또는 `Space`(그룹 안은 화살표), 드롭다운은 클릭·`Space`로 열어 항목 클릭 또는 `↑↓`+`Enter`, `Esc`로
-  닫는다. 휠로 세로, `Shift`+휠로 가로 스크롤.
+  닫는다. 휠로 세로, `Shift`+휠로 가로 스크롤(스크롤 막대는 표시만 하고 끌 수 없다).
+- Tab 정지점은 두 모드가 다르다: standard는 라디오·체크 선택지마다, custom은 선택지 그룹마다 하나다.
+  "Tab을 N번" 같은 절차는 모드마다 다른 칸에 닿는다.
 - 두 모드는 같은 배치 좌표를 쓴다(Core `FormLayout`, 배치 폭 860px 고정). 서식을 띄울 때마다 데이터
   디렉터리에 **정답 좌표** `layout-<서식id>.json`(입력 요소별 키·종류·선택지·사각형, 서식 콘텐츠 좌표·스크롤 0
-  기준)을 쓴다. 비전 에이전트 채점과 프로브 클릭에 쓰며, 에이전트 입력으로 주면 안 된다.
+  기준)을 쓴다. 비전 에이전트 채점과 프로브 클릭에 쓰며, 에이전트 입력으로 주면 안 된다. 이 파일과
+  `events.jsonl`은 정답이므로, 시험하는 에이전트가 데이터 디렉터리를 읽을 수 없게 둔다.
 
 ## 동작 규칙
 

@@ -222,7 +222,6 @@ sealed class StandardFormView : IFormView
                 BorderStyle = BorderStyle.FixedSingle,
                 Multiline = multiline,
                 AcceptsReturn = multiline,
-                ScrollBars = multiline ? ScrollBars.Vertical : ScrollBars.None,
             };
             Place(box, item);
             _loaders.Add(values =>
@@ -265,6 +264,8 @@ sealed class StandardFormView : IFormView
             };
             Place(picker, item);
             string Current() => picker.Checked ? picker.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) : "";
+            // 체크 해제(빈 값)일 때 회색 날짜가 보이면 입력된 값처럼 읽힌다. custom 모드의 빈 칸과 맞춘다.
+            void ShowBlankState() => picker.CustomFormat = picker.Checked ? "yyyy-MM-dd" : " ";
             _loaders.Add(values =>
             {
                 Remember(key, values);
@@ -279,8 +280,19 @@ sealed class StandardFormView : IFormView
                     picker.Value = new DateTime(2026, 7, 28);
                     picker.Checked = false;
                 }
+
+                ShowBlankState();
             });
-            picker.ValueChanged += (_, _) => Commit(key, Current());
+            picker.ValueChanged += (_, _) =>
+            {
+                ShowBlankState();
+                if (!picker.Focused)
+                {
+                    Commit(key, Current());
+                }
+            };
+            picker.Leave += (_, _) => Commit(key, Current());
+            picker.CloseUp += (_, _) => Commit(key, Current());
             _pending.Add(() => Commit(key, Current()));
         }
 
@@ -370,7 +382,8 @@ sealed class StandardFormView : IFormView
             var firstCell = cells.First(c => c.Key == GridBlock.CellKey(gridKey, 0, 0));
             var top = firstCell.Bounds.Y - FormLayout.GridRowHeight;
             var left = firstCell.Bounds.X - FormLayout.GridRowNumberWidth;
-            var widths = grid.Columns.Select(c => c.W ?? 80).ToArray();
+            var widths = Enumerable.Range(0, grid.Columns.Count)
+                .Select(c => cells.Single(i => i.Key == GridBlock.CellKey(gridKey, 0, c)).Bounds.W).ToArray();
             var view = new DataGridView
             {
                 Name = gridKey,
@@ -504,6 +517,15 @@ static class FormDecorations
                 case LayoutKind.GridTitle:
                     g.FillRectangle(gridTitle, r);
                     g.DrawRectangle(line, r.X, r.Y, r.Width - 1, r.Height - 1);
+                    break;
+                case LayoutKind.GridRowNumber when item.Text == "1":
+                    using (var head = new SolidBrush(FormMetrics.GridHeader))
+                    {
+                        var corner = r with { Y = r.Y - r.Height };
+                        g.FillRectangle(head, corner);
+                        g.DrawRectangle(line, corner.X, corner.Y, corner.Width - 1, corner.Height - 1);
+                    }
+
                     break;
                 case LayoutKind.SetBox or LayoutKind.SignBox:
                     g.DrawRectangle(line, r.X, r.Y, r.Width - 1, r.Height - 1);

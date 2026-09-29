@@ -260,8 +260,8 @@ sealed class MainForm : Form
     }
 
     /// <summary>
-    /// 웹 데모의 form-mode처럼 서식을 띄울 때는 중간 열을 숨겨 가운데 칸을 넓힌다. 차트와 서식은 같은 칸에
-    /// 바꿔 끼운다 — 감싸는 패널을 두면 그 패널이 앞 라벨 글자를 UIA 이름으로 얻어 UIA 구조가 달라진다.
+    /// 차트와 서식은 같은 칸에 바꿔 끼운다 — 감싸는 패널을 두면 그 패널이 앞 라벨 글자를 UIA 이름으로 얻어
+    /// UIA 구조가 달라진다.
     /// </summary>
     void SetFormMode(bool formMode)
     {
@@ -443,7 +443,10 @@ sealed class MainForm : Form
     {
         CommitAllPending();
         ShowPatient(EmrStore.SeedFor(_current.Id));
-        _savedStatus.Text = "초기화됨 (저장 전)";
+        if (string.IsNullOrEmpty(_savedStatus.Text))
+        {
+            _savedStatus.Text = "초기화됨 (저장 전)";
+        }
     }
 
     void ShowPatient(Patient patient)

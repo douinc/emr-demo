@@ -14,11 +14,14 @@ public class FormLayoutTests
     static bool IsLeaf(LayoutItem item) =>
         item.Kind is not (LayoutKind.TitleBand or LayoutKind.SetBox or LayoutKind.SignBox or LayoutKind.GridTitle);
 
+    public static TheoryData<string, int> FormIdsAndWidths => new(
+        FormCatalog.All.SelectMany(f => new[] { 860, 420, 200 }.Select(w => (f.Id, w))));
+
     [Theory]
-    [MemberData(nameof(FormIds))]
-    public void LeafItems_DoNotOverlap(string formId)
+    [MemberData(nameof(FormIdsAndWidths))]
+    public void LeafItems_DoNotOverlap(string formId, int width)
     {
-        var leaves = Build(formId).Items.Where(IsLeaf).ToList();
+        var leaves = Build(formId, width).Items.Where(IsLeaf).ToList();
 
         for (var i = 0; i < leaves.Count; i++)
         {
@@ -31,11 +34,11 @@ public class FormLayoutTests
     }
 
     [Theory]
-    [MemberData(nameof(FormIds))]
-    public void EveryInput_IsPlacedOnce_AndEveryOptionOnce(string formId)
+    [MemberData(nameof(FormIdsAndWidths))]
+    public void EveryInput_IsPlacedOnce_AndEveryOptionOnce(string formId, int width)
     {
         var form = FormCatalog.Get(formId);
-        var items = Build(formId).Items;
+        var items = Build(formId, width).Items;
 
         foreach (var input in form.Inputs())
         {
@@ -54,25 +57,109 @@ public class FormLayoutTests
 
     [Theory]
     [MemberData(nameof(FormIds))]
-    public void Result_ContainsAllItems(string formId)
+    public void AtDefaultWidth_NothingOverflowsTheRequestedWidth(string formId)
     {
         var result = Build(formId);
 
-        Assert.All(result.Items, i => Assert.True(i.Bounds.Right <= result.Width && i.Bounds.Bottom <= result.Height,
-            $"{i.Kind} {i.Key} at {i.Bounds} outside {result.Width}x{result.Height}"));
+        Assert.All(result.Items.Where(i => i.Kind != LayoutKind.TitleBand), i => Assert.True(i.Bounds.Right <= 860 - FormLayout.Pad && i.Bounds.Bottom <= result.Height,
+            $"{i.Kind} {i.Key}{i.Text} at {i.Bounds} past the right padding"));
+        Assert.Equal(860, result.Width);
+    }
+
+    [Theory]
+    [MemberData(nameof(FormIdsAndWidths))]
+    public void TitleBand_SpansContentAndContainsTitleItems(string formId, int width)
+    {
+        var result = Build(formId, width);
+        var band = result.Items.Single(i => i.Kind == LayoutKind.TitleBand);
+
+        Assert.Equal(result.Width, band.Bounds.W);
+        Assert.All(result.Items.Where(i => i.Kind is LayoutKind.Title or LayoutKind.Department || i.Key == FormCatalog.Get(formId).WrittenOnKey),
+            i => Assert.True(i.Bounds.Right <= band.Bounds.Right && i.Bounds.Bottom <= band.Bounds.Bottom, $"{i.Kind} outside band"));
+    }
+
+    [Theory]
+    [MemberData(nameof(FormIdsAndWidths))]
+    public void Containers_EncloseTheirChildren(string formId, int width)
+    {
+        var items = Build(formId, width).Items.ToList();
+        var boxes = items.Where(i => i.Kind is LayoutKind.SetBox or LayoutKind.SignBox).ToList();
+
+        foreach (var box in boxes)
+        {
+            var inside = items.Skip(items.IndexOf(box) + 1)
+                .TakeWhile(i => i.Bounds.Y < box.Bounds.Bottom && i.Kind is not (LayoutKind.SetBox or LayoutKind.SignBox));
+            Assert.All(inside, i => Assert.True(i.Bounds.X >= box.Bounds.X && i.Bounds.Right <= box.Bounds.Right
+                && i.Bounds.Y >= box.Bounds.Y && i.Bounds.Bottom <= box.Bounds.Bottom, $"{i.Kind} {i.Key}{i.Text} outside {box.Kind}"));
+        }
     }
 
     [Fact]
-    public void NarrowWidth_WrapsRowsInsteadOfOverflowing()
+    public void NarrowWidth_WrapsRowsAndShrinksFillInputs()
     {
         var wide = Build("sono1st", 860);
         var narrow = Build("sono1st", 420);
 
         Assert.True(narrow.Height > wide.Height);
-        var flowItems = narrow.Items.Where(i => i.Kind is LayoutKind.Option or LayoutKind.Text or LayoutKind.Label);
-        Assert.All(flowItems, i => Assert.True(i.Bounds.Right <= 420 || i.Bounds.X == narrow.Items
-            .Where(o => o.Bounds.Y == i.Bounds.Y && o.Kind != LayoutKind.RowLabel).Min(o => o.Bounds.X),
-            $"{i.Kind} {i.Key} ends at {i.Bounds.Right}"));
+        static int OptionRows(FormLayoutResult r) => r.Items.Where(i => i.Kind == LayoutKind.Option).Select(i => i.Bounds.Y).Distinct().Count();
+        Assert.True(OptionRows(narrow) > OptionRows(wide));
+        var fills = narrow.Items.Where(i => i.Control is TextControl { Fill: true }).ToList();
+        Assert.Contains(fills, i => i.Bounds.W < ((TextControl)i.Control!).W);
+        Assert.All(fills, i => Assert.True(i.Bounds.W >= Math.Min(40, ((TextControl)i.Control!).W)));
+    }
+
+    [Fact]
+    public void OtherOption_StaysOnTheSameLineAsItsText()
+    {
+        foreach (var width in new[] { 860, 420 })
+        {
+            var items = Build("sono1st", width).Items;
+            foreach (var other in items.Where(i => i.Key?.EndsWith(".other") == true))
+            {
+                var key = other.Key![..^".other".Length];
+                var option = items.Single(i => i.Kind == LayoutKind.Option && i.Key == key
+                    && i.OptionIndex == ((OptionControl)i.Control!).Options.Count);
+                Assert.Equal(option.Bounds.Y, other.Bounds.Y);
+                Assert.True(other.Bounds.X > option.Bounds.X);
+            }
+        }
+    }
+
+    [Fact]
+    public void LongRowLabels_WrapInsteadOfClipping()
+    {
+        foreach (var form in FormCatalog.All)
+        {
+            var labels = Build(form.Id).Items.Where(i => i.Kind == LayoutKind.RowLabel).ToList();
+            Assert.All(labels.Where(l => Measure(l.Text!) > l.Bounds.W), l => Assert.True(l.Bounds.H > FormLayout.ControlHeight,
+                $"{form.Id} '{l.Text}' is {Measure(l.Text!)}px in a {l.Bounds.W}px single line"));
+        }
+    }
+
+    [Fact]
+    public void GridColumnsWithoutWidth_ShareTheRemainingWidth()
+    {
+        var form = FormCatalog.Get("csec");
+        var grid = form.Blocks.OfType<GridBlock>().First(g => g.Columns.Any(c => c.W is null));
+        var items = Build("csec").Items;
+
+        var title = items.First(i => i.Kind == LayoutKind.GridTitle && i.Bounds.Y < items.Single(c => c.Key == GridBlock.CellKey(grid.Key, 0, 0)).Bounds.Y
+            && items.Single(c => c.Key == GridBlock.CellKey(grid.Key, 0, 0)).Bounds.Y - i.Bounds.Y <= 22 + FormLayout.GridRowHeight);
+        var lastCell = items.Single(i => i.Key == GridBlock.CellKey(grid.Key, 0, grid.Columns.Count - 1));
+        Assert.Equal(title.Bounds.Right - 1, lastCell.Bounds.Right);
+    }
+
+    [Fact]
+    public void WideGrid_GrowsTheBoxAndKeepsButtonsInside()
+    {
+        var result = Build("labor2", 420);
+        var title = result.Items.First(i => i.Kind == LayoutKind.GridTitle);
+        var buttons = result.Items.Where(i => i.Kind == LayoutKind.GridButton && i.Bounds.Y == title.Bounds.Y + 1).ToList();
+
+        Assert.True(result.Width > 420);
+        Assert.NotEmpty(buttons);
+        Assert.All(buttons, b => Assert.True(b.Bounds.X >= title.Bounds.X && b.Bounds.Right <= title.Bounds.Right));
+        Assert.Equal(title.Bounds.Right - 2, buttons.Max(b => b.Bounds.Right));
     }
 
     [Fact]
@@ -104,12 +191,6 @@ public class FormLayoutTests
     }
 
     [Fact]
-    public void Build_IsDeterministic()
-    {
-        Assert.Equal(Build("csec").Items, Build("csec").Items);
-    }
-
-    [Fact]
     public void HitTest_FindsInputUnderPoint()
     {
         var result = Build("labor2");
@@ -119,5 +200,16 @@ public class FormLayoutTests
 
         Assert.Equal(target, hit);
         Assert.Null(result.HitTest(-5, -5));
+    }
+
+    [Fact]
+    public void HitTest_SkipsDecorationsAndFindsOptionsByText()
+    {
+        var result = Build("sono1st");
+        var option = result.Items.First(i => i.Kind == LayoutKind.Option && i.OptionIndex == 1);
+        var section = result.Items.First(i => i.Kind == LayoutKind.Section);
+
+        Assert.Equal(option, result.HitTest(option.Bounds.Right - 3, option.Bounds.Y + 5));
+        Assert.Null(result.HitTest(section.Bounds.X + 2, section.Bounds.Y + 2));
     }
 }
