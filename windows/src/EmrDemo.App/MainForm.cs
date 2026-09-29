@@ -40,8 +40,8 @@ sealed class MainForm : Form
 
     readonly ITextField _chart;
     readonly IFormView _formView;
-    readonly Panel _chartHost = new() { Dock = DockStyle.Fill, Margin = Padding.Empty };
     TableLayoutPanel _main = null!;
+    TableLayoutPanel _chartColumn = null!;
     Control _midColumn = null!;
     readonly ITextField _medicalMemo;
     readonly ITextField _patientMemo;
@@ -255,24 +255,30 @@ sealed class MainForm : Form
 
     Control BuildChartColumn()
     {
-        _chart.Control.Dock = DockStyle.Fill;
         _formView.Control.Dock = DockStyle.Fill;
-        _formView.Control.Visible = false;
-        _chartHost.Controls.Add(_chart.Control);
-        _chartHost.Controls.Add(_formView.Control);
-        return Stack((_chartTitle, 20), (_chartHost, 0));
+        return _chartColumn = Stack((_chartTitle, 20), (_chart.Control, 0));
     }
 
-    /// <summary>웹 데모의 form-mode처럼 서식을 띄울 때는 중간 열을 숨겨 가운데 칸을 넓힌다.</summary>
+    /// <summary>
+    /// 웹 데모의 form-mode처럼 서식을 띄울 때는 중간 열을 숨겨 가운데 칸을 넓힌다. 차트와 서식은 같은 칸에
+    /// 바꿔 끼운다 — 감싸는 패널을 두면 그 패널이 앞 라벨 글자를 UIA 이름으로 얻어 UIA 구조가 달라진다.
+    /// </summary>
     void SetFormMode(bool formMode)
     {
+        var show = formMode ? _formView.Control : _chart.Control;
+        var hide = formMode ? _chart.Control : _formView.Control;
+        if (!_chartColumn.Controls.Contains(show))
+        {
+            _chartColumn.Controls.Remove(hide);
+            show.Margin = Padding.Empty;
+            _chartColumn.Controls.Add(show, 0, 1);
+        }
+
         _main.SuspendLayout();
         _main.ColumnStyles[2].Width = formMode ? 0 : 280;
         _midColumn.Visible = !formMode;
         _main.ColumnStyles[1].Width = formMode ? 70 : 55;
         _main.ColumnStyles[3].Width = formMode ? 30 : 45;
-        _chart.Control.Visible = !formMode;
-        _formView.Control.Visible = formMode;
         _main.ResumeLayout();
     }
 

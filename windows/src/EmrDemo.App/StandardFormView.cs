@@ -206,7 +206,8 @@ sealed class StandardFormView : IFormView
                 ForeColor = fore ?? (item.Kind == LayoutKind.Section ? FormMetrics.SectionText : Color.Black),
                 BackColor = item.Kind is LayoutKind.SetHeader ? Theme.Face2 : Color.Transparent,
                 TextAlign = item.Kind == LayoutKind.DrawArea ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleLeft,
-                AutoEllipsis = true,
+                AutoEllipsis = item.Kind is LayoutKind.RowLabel or LayoutKind.SetHeader,
+                Padding = Padding.Empty,
                 BorderStyle = border,
                 UseMnemonic = false,
             }, item);
@@ -309,7 +310,6 @@ sealed class StandardFormView : IFormView
             button.Text = item.Text;
             button.Font = Theme.Font;
             button.UseMnemonic = false;
-            button.AutoEllipsis = true;
             Place(button, item);
 
             if (!groups.TryGetValue(key, out var group))

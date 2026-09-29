@@ -77,6 +77,9 @@ public static class FormLayout
     public const int GridRowNumberWidth = 24;
     public const int DateWidth = 110;
 
+    /// <summary>네이티브 Label·RadioButton·CheckBox가 글자 폭 외에 쓰는 여백. 두 모드가 같은 폭을 쓴다.</summary>
+    public const int TextSlack = 8;
+
     public static FormLayoutResult Build(FormDefinition form, Func<string, int> measure, int width)
     {
         var builder = new Builder(form, measure, Math.Max(width, 200));
@@ -102,12 +105,12 @@ public static class FormLayout
             MaxRight = width;
             Add(new LayoutItem(LayoutKind.TitleBand, new LayoutRect(0, 0, width, band)));
             var dateLabel = "작성일 :";
-            var labelW = measure(dateLabel) + 2;
+            var labelW = measure(dateLabel) + TextSlack;
             Add(new LayoutItem(LayoutKind.Label, new LayoutRect(Pad, 3, labelW, ControlHeight), Text: dateLabel));
             Add(new LayoutItem(LayoutKind.Date, new LayoutRect(Pad + labelW + Gap, 3, DateWidth, ControlHeight),
                 form.WrittenOnKey, Control: new DateControl(form.WrittenOnKey)));
-            var titleW = measure(form.Title) + 4;
-            var deptW = measure(form.Department) + 4;
+            var titleW = measure(form.Title) + TextSlack * 2;
+            var deptW = measure(form.Department) + TextSlack * 2;
             var titleX = Math.Max(Pad + labelW + Gap + DateWidth + Gap, (width - titleW) / 2);
             Add(new LayoutItem(LayoutKind.Title, new LayoutRect(titleX, 3, titleW, ControlHeight), Text: form.Title));
             var deptX = Math.Max(titleX + titleW + Gap, width - Pad - deptW);
@@ -298,13 +301,13 @@ public static class FormLayout
         LayoutItem OptionItem(OptionControl options, int index)
         {
             var text = options.AllOptions[index];
-            return new LayoutItem(LayoutKind.Option, new LayoutRect(0, 0, OptionBox + 4 + measure(text) + 6, ControlHeight),
+            return new LayoutItem(LayoutKind.Option, new LayoutRect(0, 0, OptionBox + 6 + measure(text) + TextSlack * 2, ControlHeight),
                 options.Key, text, index, options);
         }
 
         LayoutItem Leaf(FormControl control) => control switch
         {
-            LabelControl l => new LayoutItem(LayoutKind.Label, new LayoutRect(0, 0, measure(l.Text) + 2, ControlHeight), Text: l.Text),
+            LabelControl l => new LayoutItem(LayoutKind.Label, new LayoutRect(0, 0, measure(l.Text) + TextSlack, ControlHeight), Text: l.Text),
             ButtonControl b => new LayoutItem(LayoutKind.Button, new LayoutRect(0, 0, measure(b.Text) + 16, ControlHeight), Text: b.Text),
             TextControl t => new LayoutItem(LayoutKind.Text, new LayoutRect(0, 0, t.W, ControlHeight), t.Key, Control: t),
             DateControl d => new LayoutItem(LayoutKind.Date, new LayoutRect(0, 0, DateWidth, ControlHeight), d.Key, Control: d),
