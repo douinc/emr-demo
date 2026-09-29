@@ -1,0 +1,6691 @@
+[
+ {
+  "id": "labor2",
+  "title": "Labor record Ⅱ-OB",
+  "department": "산부인과",
+  "summary": "분만 진행 경과 기록 (내진·태아심음·자궁수축)",
+  "labelWidth": 110,
+  "writtenOnKey": "labor2.writtenOn",
+  "blocks": [
+   {
+    "type": "sec",
+    "text": "임신력"
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "G"
+     },
+     {
+      "c": "text",
+      "key": "labor2.b1.1",
+      "w": 40
+     },
+     {
+      "c": "label",
+      "text": "P"
+     },
+     {
+      "c": "text",
+      "key": "labor2.b1.3",
+      "w": 40
+     },
+     {
+      "c": "label",
+      "text": "L"
+     },
+     {
+      "c": "text",
+      "key": "labor2.b1.5",
+      "w": 40
+     },
+     {
+      "c": "label",
+      "text": "D"
+     },
+     {
+      "c": "text",
+      "key": "labor2.b1.7",
+      "w": 40
+     },
+     {
+      "c": "label",
+      "text": "A"
+     },
+     {
+      "c": "text",
+      "key": "labor2.b1.9",
+      "w": 40
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "임신주수",
+    "indent": 0,
+    "items": [
+     {
+      "c": "text",
+      "key": "labor2.b2.0",
+      "w": 50,
+      "highlight": true
+     },
+     {
+      "c": "label",
+      "text": "(weeks)"
+     },
+     {
+      "c": "text",
+      "key": "labor2.b2.2",
+      "w": 50,
+      "highlight": true
+     },
+     {
+      "c": "label",
+      "text": "(day)"
+     }
+    ]
+   },
+   {
+    "type": "grid",
+    "key": "labor2.b3",
+    "title": "Labor record",
+    "buttons": [
+     "추가",
+     "삭제"
+    ],
+    "columns": [
+     {
+      "header": "Date/Time",
+      "w": 110
+     },
+     {
+      "header": "P",
+      "w": 44
+     },
+     {
+      "header": "Dil",
+      "w": 50
+     },
+     {
+      "header": "Eff",
+      "w": 50
+     },
+     {
+      "header": "St",
+      "w": 44
+     },
+     {
+      "header": "ROM",
+      "w": 60
+     },
+     {
+      "header": "FHB",
+      "w": 54
+     },
+     {
+      "header": "Ut. Cont.",
+      "w": 190
+     },
+     {
+      "header": "Mx",
+      "w": 150
+     }
+    ],
+    "rows": 7
+   },
+   {
+    "type": "grid",
+    "key": "labor2.b4",
+    "title": "labor record-기타",
+    "buttons": [
+     "추가",
+     "삭제"
+    ],
+    "columns": [
+     {
+      "header": "Date/Time",
+      "w": 110
+     },
+     {
+      "header": "Remark",
+      "w": 190
+     },
+     {
+      "header": "Other",
+      "w": 260
+     },
+     {
+      "header": "기록자명",
+      "w": 90
+     }
+    ],
+    "rows": 5
+   }
+  ]
+ },
+ {
+  "id": "csec",
+  "title": "수술기록-OB C/sec",
+  "department": "산부인과",
+  "summary": "제왕절개 수술기록 (마취·절개·봉합·출혈량)",
+  "labelWidth": 200,
+  "writtenOnKey": "csec.writtenOn",
+  "blocks": [
+   {
+    "type": "row",
+    "label": "수술일",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "csec.b0.0"
+     }
+    ]
+   },
+   {
+    "type": "note",
+    "text": "* 같은 수술에 집도의가 2명인 경우에만 체크해 주세요."
+   },
+   {
+    "type": "row",
+    "label": "집도의",
+    "indent": 0,
+    "items": [
+     {
+      "c": "text",
+      "key": "csec.b2.0",
+      "w": 160,
+      "highlight": true
+     },
+     {
+      "c": "button",
+      "text": "직원선택"
+     },
+     {
+      "c": "label",
+      "text": "/"
+     },
+     {
+      "c": "text",
+      "key": "csec.b2.3",
+      "w": 130
+     },
+     {
+      "c": "button",
+      "text": "직원선택"
+     },
+     {
+      "c": "check",
+      "key": "csec.b2.5",
+      "options": [
+       "집도의 추가"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 0,
+    "items": [
+     {
+      "c": "select",
+      "key": "csec.b3.0",
+      "options": [
+       "주집도의",
+       "공동집도의"
+      ],
+      "w": 100
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "보조의",
+    "indent": 0,
+    "items": [
+     {
+      "c": "text",
+      "key": "csec.b4.0",
+      "w": 330
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "수술진료지원간호사",
+    "indent": 0,
+    "items": [
+     {
+      "c": "text",
+      "key": "csec.b5.0",
+      "w": 330
+     }
+    ]
+   },
+   {
+    "type": "grid",
+    "key": "csec.b6",
+    "title": "수술전 진단명",
+    "buttons": [
+     "추가",
+     "삭제"
+    ],
+    "columns": [
+     {
+      "header": "진단명"
+     }
+    ],
+    "rows": 2,
+    "peach": true
+   },
+   {
+    "type": "row",
+    "label": "진단 부가 설명",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "csec.b7.0",
+      "h": 56,
+      "w": 450
+     }
+    ]
+   },
+   {
+    "type": "grid",
+    "key": "csec.b8",
+    "title": "수술후 진단명",
+    "buttons": [
+     "OCS진단",
+     "추가",
+     "삭제"
+    ],
+    "columns": [
+     {
+      "header": "진단명"
+     }
+    ],
+    "rows": 2,
+    "peach": true
+   },
+   {
+    "type": "row",
+    "label": "진단 부가 설명",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "csec.b9.0",
+      "h": 56,
+      "w": 450
+     }
+    ]
+   },
+   {
+    "type": "grid",
+    "key": "csec.b10",
+    "title": "수술명",
+    "buttons": [
+     "추가",
+     "삭제"
+    ],
+    "columns": [
+     {
+      "header": "수술명"
+     }
+    ],
+    "rows": 3,
+    "peach": true
+   },
+   {
+    "type": "row",
+    "label": "수술 부가 설명",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "csec.b11.0",
+      "h": 72,
+      "w": 470
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Level",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b12.0",
+      "options": [
+       "elective",
+       "level A",
+       "level B",
+       "level C"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Cesarean section indication",
+    "indent": 0,
+    "items": [
+     {
+      "c": "text",
+      "key": "csec.b13.0",
+      "w": 470,
+      "highlight": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Anesthesia",
+    "indent": 0,
+    "items": [
+     {
+      "c": "check",
+      "key": "csec.b14.0",
+      "options": [
+       "General",
+       "Spinal",
+       "Epidural",
+       "Failed regional"
+      ]
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "check",
+      "key": "csec.b14.2",
+      "options": [
+       "Other"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "csec.b14.3",
+      "w": 230,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "PCA",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b15.0",
+      "options": [
+       "IV",
+       "Epidural",
+       "Not done"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Skin Incision",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b16.0",
+      "options": [
+       "Pfannenstiel",
+       "Low midline"
+      ],
+      "other": {
+       "key": "csec.b16.0.other",
+       "w": 250,
+       "text": "Other"
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Old Scar Revision",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b17.0",
+      "options": [
+       "Not done",
+       "Done"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Type of uterine incision",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b18.0",
+      "options": [
+       "Low flap transverse",
+       "Vertical",
+       "Inverted-T",
+       "Classical"
+      ],
+      "other": {
+       "key": "csec.b18.0.other",
+       "w": 250,
+       "text": "Other"
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Amniotic fluid",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b19.0",
+      "options": [
+       "clear",
+       "meconium stained",
+       "bloody"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "note",
+    "text": "* Meconium stained 가 있을 경우"
+   },
+   {
+    "type": "row",
+    "label": "Meconium stained",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b21.0",
+      "options": [
+       "mild",
+       "moderate",
+       "severe"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Uterine low flap thickness",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b22.0",
+      "options": [
+       ">3mm",
+       "≤3mm"
+      ],
+      "other": {
+       "key": "csec.b22.0.other",
+       "w": 200,
+       "text": "Other"
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "Endomyometrial layer and myofascial layer were repaired in"
+     },
+     {
+      "c": "select",
+      "key": "csec.b23.1",
+      "options": [
+       "one-layered",
+       "two-layered"
+      ],
+      "w": 110
+     },
+     {
+      "c": "label",
+      "text": "fashion"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "by"
+     },
+     {
+      "c": "select",
+      "key": "csec.b24.1",
+      "options": [
+       "continuous running and locking suture",
+       "continuous running suture",
+       "interrupted suture"
+      ],
+      "w": 240
+     },
+     {
+      "c": "label",
+      "text": "using"
+     },
+     {
+      "c": "select",
+      "key": "csec.b24.3",
+      "options": [
+       "Vicryl",
+       "Monosyn",
+       "PDS"
+      ],
+      "w": 90
+     },
+     {
+      "c": "text",
+      "key": "csec.b24.4",
+      "w": 60
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Serosal repair",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b25.0",
+      "options": [
+       "not done",
+       "done in a continuous running suture using"
+      ]
+     },
+     {
+      "c": "label",
+      "text": "Vicryl #2-0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Tubal sterilization",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b26.0",
+      "options": [
+       "Not done",
+       "Done"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Tubal sterilization method",
+    "indent": 0,
+    "items": [
+     {
+      "c": "text",
+      "key": "csec.b27.0",
+      "w": 250
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Operative findings"
+   },
+   {
+    "type": "row",
+    "label": "Other organs",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "both ovaries"
+     },
+     {
+      "c": "radio",
+      "key": "csec.b29.1",
+      "options": [
+       "normal",
+       "abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "csec.b29.2",
+      "w": 230,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "Others　　　　　"
+     },
+     {
+      "c": "radio",
+      "key": "csec.b30.1",
+      "options": [
+       "normal",
+       "abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "csec.b30.2",
+      "w": 230,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Uterine Contraction",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b31.0",
+      "options": [
+       "firm",
+       "atonic"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Antiadhesive used",
+    "indent": 0,
+    "items": [
+     {
+      "c": "check",
+      "key": "csec.b32.0",
+      "options": [
+       "Seprafilm",
+       "Medicurtain",
+       "Protad",
+       "Hyalobarrier",
+       "Guardix"
+      ]
+     },
+     {
+      "c": "check",
+      "key": "csec.b32.1",
+      "options": [
+       "Other"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "csec.b32.2",
+      "w": 110,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Closure"
+   },
+   {
+    "type": "static",
+    "text": "The abdominal wall was closed in layers ;"
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "Peritoneal repair : continuous sutures of"
+     },
+     {
+      "c": "select",
+      "key": "csec.b35.1",
+      "options": [
+       "Vicryl #1-0",
+       "Vicryl #2-0"
+      ],
+      "w": 110
+     },
+     {
+      "c": "label",
+      "text": "for the peritoneum and the rectus muscle"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "Fascia layer repair :"
+     },
+     {
+      "c": "select",
+      "key": "csec.b36.1",
+      "options": [
+       "continous running",
+       "interrupted"
+      ],
+      "w": 130
+     },
+     {
+      "c": "label",
+      "text": "sutures of"
+     },
+     {
+      "c": "select",
+      "key": "csec.b36.3",
+      "options": [
+       "Vicryl #1-0",
+       "PDS #1-0"
+      ],
+      "w": 110
+     },
+     {
+      "c": "label",
+      "text": "for the fascia"
+     }
+    ]
+   },
+   {
+    "type": "static",
+    "text": "Subcutaneous layer repair including Scarpa's fascia :"
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b38.0",
+      "options": [
+       "Not done",
+       "Done"
+      ]
+     },
+     {
+      "c": "label",
+      "text": "( by"
+     },
+     {
+      "c": "select",
+      "key": "csec.b38.2",
+      "options": [
+       "inverted knot buried",
+       "simple interrupted"
+      ],
+      "w": 160
+     },
+     {
+      "c": "label",
+      "text": "sutures using"
+     },
+     {
+      "c": "select",
+      "key": "csec.b38.4",
+      "options": [
+       "Vicryl #1-0",
+       "Vicryl #2-0",
+       "Vicryl #3-0"
+      ],
+      "w": 110
+     },
+     {
+      "c": "label",
+      "text": ")"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "The skin was closed with"
+     },
+     {
+      "c": "select",
+      "key": "csec.b39.1",
+      "options": [
+       "continuous subcuticular",
+       "interrupted",
+       "staple"
+      ],
+      "w": 180
+     },
+     {
+      "c": "select",
+      "key": "csec.b39.2",
+      "options": [
+       "Nylon",
+       "Monosyn",
+       "Skin stapler"
+      ],
+      "w": 110
+     },
+     {
+      "c": "select",
+      "key": "csec.b39.3",
+      "options": [
+       "#3-0",
+       "#4-0",
+       "#5-0"
+      ],
+      "w": 70
+     },
+     {
+      "c": "text",
+      "key": "csec.b39.4",
+      "w": 150
+     }
+    ]
+   },
+   {
+    "type": "static",
+    "text": "Hemostasis was assured in all steps."
+   },
+   {
+    "type": "sec",
+    "text": "Operative summary"
+   },
+   {
+    "type": "row",
+    "label": "Estimated blood loss (cc)",
+    "indent": 0,
+    "items": [
+     {
+      "c": "text",
+      "key": "csec.b42.0",
+      "w": 140,
+      "highlight": true
+     },
+     {
+      "c": "button",
+      "text": "재조회"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Remarkable Operation Findings",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "csec.b43.0",
+      "h": 56,
+      "w": 470
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "수술과정 중 특이사항",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b44.0",
+      "options": [
+       "No",
+       "Yes"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "csec.b44.0.tail",
+       "w": 160,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Placenta",
+    "indent": 0,
+    "items": [
+     {
+      "c": "text",
+      "key": "csec.b45.0",
+      "w": 70
+     },
+     {
+      "c": "label",
+      "text": "(gram)"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Placenta gross finding",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b46.0",
+      "options": [
+       "normal",
+       "other"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "csec.b46.0.tail",
+       "w": 260,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Use of medication during the surgery",
+    "indent": 0,
+    "items": [
+     {
+      "c": "check",
+      "key": "csec.b47.0",
+      "options": [
+       "duratocin",
+       "pitocin",
+       "methylergonovine"
+      ]
+     },
+     {
+      "c": "check",
+      "key": "csec.b47.1",
+      "options": [
+       "Other"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "csec.b47.2",
+      "w": 110,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "NEONATE RECORD"
+   },
+   {
+    "type": "note",
+    "text": "Refer to Delivery-Discharge Note"
+   },
+   {
+    "type": "row",
+    "label": "Tissue to Pathology",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b50.0",
+      "options": [
+       "No",
+       "Yes"
+      ]
+     },
+     {
+      "c": "label",
+      "text": "("
+     },
+     {
+      "c": "check",
+      "key": "csec.b50.2",
+      "options": [
+       "Placenta",
+       "Other"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "csec.b50.3",
+      "w": 110,
+      "fill": true
+     },
+     {
+      "c": "label",
+      "text": ")"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Drains",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b51.0",
+      "options": [
+       "No",
+       "Yes"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "csec.b51.0.tail",
+       "w": 130,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Sponge count correct",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "csec.b52.0",
+      "options": [
+       "Yes",
+       "No"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "csec.b52.0.tail",
+       "w": 180,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "그림"
+   },
+   {
+    "type": "draw",
+    "text": "Text"
+   },
+   {
+    "type": "row",
+    "label": "기록자명",
+    "indent": 0,
+    "items": [
+     {
+      "c": "text",
+      "key": "csec.b55.0",
+      "w": 150,
+      "highlight": true
+     },
+     {
+      "c": "button",
+      "text": "직원선택"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "sono1st",
+  "title": "산전초음파 1st trimester (single)-OB",
+  "department": "산부인과",
+  "summary": "임신 초기 초음파 판독 (CRL·NT·NB)",
+  "labelWidth": 150,
+  "writtenOnKey": "sono1st.writtenOn",
+  "blocks": [
+   {
+    "type": "row",
+    "label": "Date of examination",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "sono1st.b0.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "EDC ( by LNMP )",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "sono1st.b1.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "EDC ( by sono )",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "sono1st.b2.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Image quality",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono1st.b3.0",
+      "options": [
+       "Poor Quality due to maternal obesity",
+       "Poor Quality due to fetal position",
+       "Moderate Quality",
+       "Good Quality"
+      ],
+      "stack": true,
+      "other": {
+       "key": "sono1st.b3.0.other",
+       "w": 230,
+       "text": "Other"
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Impression",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "IUP"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b4.1",
+      "w": 44
+     },
+     {
+      "c": "label",
+      "text": "weeks"
+     },
+     {
+      "c": "button",
+      "text": "서술문선택"
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "textarea",
+      "key": "sono1st.b4.5",
+      "h": 80,
+      "w": 460
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Recommendation",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono1st.b5.0",
+      "h": 72,
+      "w": 460
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Early fetal measurement"
+   },
+   {
+    "type": "row",
+    "label": "G-sac",
+    "indent": 1,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono1st.b7.0",
+      "options": [
+       "+"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b7.1",
+      "w": 80
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b7.3",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b7.5",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "d"
+     },
+     {
+      "c": "check",
+      "key": "sono1st.b7.7",
+      "options": [
+       "-"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "CRL",
+    "indent": 1,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono1st.b8.0",
+      "options": [
+       "+"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b8.1",
+      "w": 80
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b8.3",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b8.5",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "d"
+     },
+     {
+      "c": "check",
+      "key": "sono1st.b8.7",
+      "options": [
+       "-"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Y-sac",
+    "indent": 1,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono1st.b9.0",
+      "options": [
+       "+"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b9.1",
+      "w": 80
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "check",
+      "key": "sono1st.b9.3",
+      "options": [
+       "-"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "FHB",
+    "indent": 1,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono1st.b10.0",
+      "options": [
+       "+"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b10.1",
+      "w": 60,
+      "fill": true
+     },
+     {
+      "c": "label",
+      "text": "bpm"
+     },
+     {
+      "c": "check",
+      "key": "sono1st.b10.3",
+      "options": [
+       "-"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "NT",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono1st.b11.0",
+      "options": [
+       "measured",
+       "failed"
+      ],
+      "inline": {
+       "measured": [
+        {
+         "c": "text",
+         "key": "sono1st.b11.0.0.0",
+         "w": 60,
+         "fill": true
+        },
+        {
+         "c": "label",
+         "text": "cm"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "NB",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono1st.b12.0",
+      "options": [
+       "present",
+       "not checked",
+       "absent"
+      ],
+      "inline": {
+       "present": [
+        {
+         "c": "text",
+         "key": "sono1st.b12.0.0.0",
+         "w": 60,
+         "fill": true
+        },
+        {
+         "c": "label",
+         "text": "cm"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Fetal biometry"
+   },
+   {
+    "type": "row",
+    "label": "BPD",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono1st.b14.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b14.2",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b14.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "HC",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono1st.b15.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b15.2",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b15.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "AC",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono1st.b16.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b16.2",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b16.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "FL",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono1st.b17.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b17.2",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b17.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "HL",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono1st.b18.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b18.2",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b18.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other Significant Findings",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono1st.b19.0",
+      "h": 48,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Placenta"
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 1,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono1st.b21.0",
+      "options": [
+       "Anterior",
+       "Posterior",
+       "Rt. lateral",
+       "Lt. lateral",
+       "Fundal"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Previa",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono1st.b22.0",
+      "options": [
+       "Yes",
+       "No"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 2,
+    "items": [
+     {
+      "c": "label",
+      "text": "-"
+     },
+     {
+      "c": "check",
+      "key": "sono1st.b23.1",
+      "options": [
+       "low-lying",
+       "totalis",
+       "partialis",
+       "marginalis"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Internal os ~ placenta",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono1st.b24.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Accreta",
+    "indent": 2,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono1st.b25.0",
+      "options": [
+       "Definite",
+       "Likely",
+       "Less likely",
+       "No"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Note",
+    "indent": 2,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono1st.b26.0",
+      "h": 48,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Maternal anatomy"
+   },
+   {
+    "type": "row",
+    "label": "Uterus",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono1st.b28.0",
+      "options": [
+       "not significant finding",
+       "significant finding"
+      ],
+      "stack": true,
+      "tail": {
+       "c": "text",
+       "key": "sono1st.b28.0.tail",
+       "w": 120,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Rt ovary",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono1st.b29.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b29.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Lt ovary",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono1st.b30.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono1st.b30.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Cervix",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono1st.b31.0",
+      "options": [
+       "not significant finding",
+       "significant finding"
+      ],
+      "stack": true,
+      "tail": {
+       "c": "text",
+       "key": "sono1st.b31.0.tail",
+       "w": 120,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other findings",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono1st.b32.0",
+      "h": 48,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Cervix length"
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono1st.b34.0",
+      "options": [
+       "checked",
+       "not checked"
+      ],
+      "stack": true,
+      "inline": {
+       "checked": [
+        {
+         "c": "text",
+         "key": "sono1st.b34.0.0.0",
+         "w": 66,
+         "fill": true
+        },
+        {
+         "c": "label",
+         "text": "cm"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Funneling",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono1st.b35.0",
+      "options": [
+       "No",
+       "Yes"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "sono1st.b35.0.tail",
+       "w": 66,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "sign",
+    "blocks": [
+     {
+      "type": "row",
+      "label": "기록자명",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "sono1st.b37.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "판독의",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "sono1st.b38.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "전문의",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "sono1st.b39.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "sono23",
+  "title": "산전초음파 2nd & 3rd trimester (single)-OB",
+  "department": "산부인과",
+  "summary": "정밀 초음파 판독 (태아 계측·기관별 소견·도플러)",
+  "labelWidth": 190,
+  "writtenOnKey": "sono23.writtenOn",
+  "blocks": [
+   {
+    "type": "row",
+    "label": "Date of examination",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "sono23.b0.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "EDC ( by LNMP )",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "sono23.b1.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "EDC ( by sono )",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "sono23.b2.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Image quality",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b3.0",
+      "options": [
+       "Poor Quality due to maternal obesity",
+       "Poor Quality due to fetal position",
+       "Moderate Quality",
+       "Good Quality"
+      ],
+      "stack": true,
+      "other": {
+       "key": "sono23.b3.0.other",
+       "w": 230,
+       "text": "Other"
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Impression",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "IUP"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b4.1",
+      "w": 44
+     },
+     {
+      "c": "label",
+      "text": "weeks"
+     },
+     {
+      "c": "button",
+      "text": "서술문선택"
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "textarea",
+      "key": "sono23.b4.5",
+      "h": 80,
+      "w": 460
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Recommendation",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono23.b5.0",
+      "h": 72,
+      "w": 460
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Fetal biometry"
+   },
+   {
+    "type": "row",
+    "label": "BPD",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b7.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b7.2",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b7.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "HC",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b8.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b8.2",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b8.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "AC",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b9.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b9.2",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b9.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "FL",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b10.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b10.2",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b10.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "HL",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b11.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b11.2",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "w"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b11.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "EBW",
+    "indent": 1,
+    "items": [
+     {
+      "c": "label",
+      "text": "Min"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b12.1",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(gm)"
+     },
+     {
+      "c": "label",
+      "text": "~"
+     },
+     {
+      "c": "label",
+      "text": "Max"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b12.5",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(gm)"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Percentile",
+    "indent": 1,
+    "items": [
+     {
+      "c": "label",
+      "text": "Min"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b13.1",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(%ile)"
+     },
+     {
+      "c": "label",
+      "text": "~"
+     },
+     {
+      "c": "label",
+      "text": "Max"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b13.5",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(%ile)"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Heart activity",
+    "indent": 0,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono23.b14.0",
+      "options": [
+       "+"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b14.1",
+      "w": 60,
+      "fill": true
+     },
+     {
+      "c": "label",
+      "text": "bpm"
+     },
+     {
+      "c": "check",
+      "key": "sono23.b14.3",
+      "options": [
+       "-"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Presentation",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b15.0",
+      "options": [
+       "Vertex",
+       "Breech",
+       "T-lie",
+       "Oblique",
+       "Not checked"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Head & Neck"
+   },
+   {
+    "type": "row",
+    "label": "Ventricle",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b17.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b17.1",
+      "w": 160,
+      "fill": true
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "label",
+      "text": "Rt"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b17.4",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "label",
+      "text": "Lt"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b17.7",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Cerebellum",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b18.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b18.1",
+      "w": 160,
+      "fill": true
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b18.3",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b18.5",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "wk"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b18.7",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "d"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Cisterna magna",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b19.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b19.1",
+      "w": 160,
+      "fill": true
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b19.3",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Nasal bone",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b20.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b20.1",
+      "w": 160,
+      "fill": true
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b20.3",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Nuchal fold thickness",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b21.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b21.1",
+      "w": 160,
+      "fill": true
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b21.3",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Cavum septum pellucidum",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b22.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b22.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Nose/Lips",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b23.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b23.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Orbits",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b24.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b24.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Others",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono23.b25.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Thorax"
+   },
+   {
+    "type": "row",
+    "label": "Lungs",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b27.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b27.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Diaphragm",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b28.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b28.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Others",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono23.b29.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Heart"
+   },
+   {
+    "type": "row",
+    "label": "Cardiac axis",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b31.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b31.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Cardiac position",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b32.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b32.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "4CV",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b33.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b33.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "3VV",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b34.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b34.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Long axis",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b35.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b35.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Short axis",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b36.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b36.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Aortic arch",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b37.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b37.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Ductal arch",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b38.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b38.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Others",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono23.b39.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Abdomen"
+   },
+   {
+    "type": "row",
+    "label": "Abdominal wall",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b41.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b41.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Stomach",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b42.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b42.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Umbilical cord",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b43.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b43.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Others",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono23.b44.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Genitourinary"
+   },
+   {
+    "type": "row",
+    "label": "Kidney",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b46.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b46.1",
+      "w": 160,
+      "fill": true
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "label",
+      "text": "Renal pelvis　Rt"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b46.4",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     },
+     {
+      "c": "label",
+      "text": "Lt"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b46.7",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Bladder",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b47.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b47.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Genitalia",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b48.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b48.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Others",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono23.b49.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Skeletal system"
+   },
+   {
+    "type": "row",
+    "label": "Spine",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b51.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b51.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Extremities and presence of hand"
+   },
+   {
+    "type": "row",
+    "label": "Rt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b53.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b53.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Lt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b54.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b54.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Extremities and presence of foot"
+   },
+   {
+    "type": "row",
+    "label": "Rt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b56.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b56.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Lt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b57.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b57.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Long bone",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b58.0",
+      "options": [
+       "Not checked",
+       "Checked"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "set",
+    "text": "Long bone",
+    "blocks": [
+     {
+      "type": "row",
+      "label": "Humerus",
+      "indent": 1,
+      "items": [
+       {
+        "c": "label",
+        "text": "Rt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b60.1",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b60.3",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b60.5",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b60.7",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       },
+       {
+        "c": "break"
+       },
+       {
+        "c": "label",
+        "text": "Lt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b60.11",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b60.13",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b60.15",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b60.17",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "Radius",
+      "indent": 1,
+      "items": [
+       {
+        "c": "label",
+        "text": "Rt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b61.1",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b61.3",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b61.5",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b61.7",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       },
+       {
+        "c": "break"
+       },
+       {
+        "c": "label",
+        "text": "Lt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b61.11",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b61.13",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b61.15",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b61.17",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "Ulna",
+      "indent": 1,
+      "items": [
+       {
+        "c": "label",
+        "text": "Rt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b62.1",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b62.3",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b62.5",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b62.7",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       },
+       {
+        "c": "break"
+       },
+       {
+        "c": "label",
+        "text": "Lt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b62.11",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b62.13",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b62.15",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b62.17",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "Femur",
+      "indent": 1,
+      "items": [
+       {
+        "c": "label",
+        "text": "Rt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b63.1",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b63.3",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b63.5",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b63.7",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       },
+       {
+        "c": "break"
+       },
+       {
+        "c": "label",
+        "text": "Lt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b63.11",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b63.13",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b63.15",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b63.17",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "Tibia",
+      "indent": 1,
+      "items": [
+       {
+        "c": "label",
+        "text": "Rt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b64.1",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b64.3",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b64.5",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b64.7",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       },
+       {
+        "c": "break"
+       },
+       {
+        "c": "label",
+        "text": "Lt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b64.11",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b64.13",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b64.15",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b64.17",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "Fibula",
+      "indent": 1,
+      "items": [
+       {
+        "c": "label",
+        "text": "Rt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b65.1",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b65.3",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b65.5",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b65.7",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       },
+       {
+        "c": "break"
+       },
+       {
+        "c": "label",
+        "text": "Lt"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b65.11",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "cm"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b65.13",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "wk"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b65.15",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "d"
+       },
+       {
+        "c": "text",
+        "key": "sono23.b65.17",
+        "w": 56
+       },
+       {
+        "c": "label",
+        "text": "%ile"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "",
+      "indent": 1,
+      "items": [
+       {
+        "c": "textarea",
+        "key": "sono23.b66.0",
+        "h": 40,
+        "w": 330
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Others",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono23.b67.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Amniotic fluid"
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 1,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono23.b69.0",
+      "options": [
+       "Amniotic fluid index",
+       "Deep pocket"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "set",
+    "text": "Deep pocket",
+    "blocks": [
+     {
+      "type": "row",
+      "label": "Deep pocket",
+      "indent": 1,
+      "items": [
+       {
+        "c": "text",
+        "key": "sono23.b71.0",
+        "w": 60
+       },
+       {
+        "c": "label",
+        "text": "(cm)"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Amount",
+    "indent": 1,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono23.b72.0",
+      "options": [
+       "Adequate",
+       "Oligohydramnios (AFI<5cm or deep pocket<2cm)",
+       "Decreased (5~10cm)",
+       "Increased (20~24cm)",
+       "Hydramnios (AFI>24cm or deep pocket>8cm)"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Placenta"
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 1,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono23.b74.0",
+      "options": [
+       "Anterior",
+       "Posterior",
+       "Rt. lateral",
+       "Lt. lateral",
+       "Fundal"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Previa",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b75.0",
+      "options": [
+       "Yes",
+       "No"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 2,
+    "items": [
+     {
+      "c": "label",
+      "text": "-"
+     },
+     {
+      "c": "check",
+      "key": "sono23.b76.1",
+      "options": [
+       "low-lying",
+       "totalis",
+       "partialis",
+       "marginalis"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Internal os ~ placenta",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b77.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "cm"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Accreta",
+    "indent": 2,
+    "items": [
+     {
+      "c": "check",
+      "key": "sono23.b78.0",
+      "options": [
+       "Definite",
+       "Likely",
+       "Less likely",
+       "No"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Note",
+    "indent": 2,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono23.b79.0",
+      "h": 48,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Doppler ultrasound"
+   },
+   {
+    "type": "sub",
+    "text": "Umbilical artery"
+   },
+   {
+    "type": "row",
+    "label": "Systolic velocity",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b82.0",
+      "w": 66
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Diastolic velocity",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b83.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "PI"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b83.2",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "S/D"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b83.4",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "NEDV",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b84.0",
+      "options": [
+       "No",
+       "Yes"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "sono23.b84.0.tail",
+       "w": 280,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Uterine artery"
+   },
+   {
+    "type": "row",
+    "label": "Right　Systolic velocity",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b86.0",
+      "w": 66
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "　　　 Diastolic velocity",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b87.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "PI"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b87.2",
+      "w": 80,
+      "readOnly": true
+     },
+     {
+      "c": "label",
+      "text": "S/D"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b87.4",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "　　　 Early-diastolic notch",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b88.0",
+      "options": [
+       "No",
+       "Yes"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "sono23.b88.0.tail",
+       "w": 260,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Left 　Systolic velocity",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b89.0",
+      "w": 66
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "　　　 Diastolic velocity",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b90.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "PI"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b90.2",
+      "w": 80,
+      "readOnly": true
+     },
+     {
+      "c": "label",
+      "text": "S/D"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b90.4",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "　　　 Early-diastolic notch",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b91.0",
+      "options": [
+       "No",
+       "Yes"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "sono23.b91.0.tail",
+       "w": 260,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Middle cerebral artery"
+   },
+   {
+    "type": "row",
+    "label": "Systolic velocity",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b93.0",
+      "w": 66
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Diastolic velocity",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b94.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "PI"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b94.2",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "S/D"
+     },
+     {
+      "c": "text",
+      "key": "sono23.b94.4",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Cerebroplacental ratio",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "sono23.b95.0",
+      "w": 66,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Maternal anatomy"
+   },
+   {
+    "type": "row",
+    "label": "Uterus",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b97.0",
+      "options": [
+       "not significant finding",
+       "significant finding"
+      ],
+      "stack": true,
+      "tail": {
+       "c": "text",
+       "key": "sono23.b97.0.tail",
+       "w": 120,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Rt ovary",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b98.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b98.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Lt ovary",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b99.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "sono23.b99.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Cervix",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b100.0",
+      "options": [
+       "not significant finding",
+       "significant finding"
+      ],
+      "stack": true,
+      "tail": {
+       "c": "text",
+       "key": "sono23.b100.0.tail",
+       "w": 120,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other Findings",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "sono23.b101.0",
+      "h": 48,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Cervix length"
+   },
+   {
+    "type": "row",
+    "label": "",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b103.0",
+      "options": [
+       "checked",
+       "not checked"
+      ],
+      "stack": true,
+      "inline": {
+       "checked": [
+        {
+         "c": "text",
+         "key": "sono23.b103.0.0.0",
+         "w": 66,
+         "fill": true
+        },
+        {
+         "c": "label",
+         "text": "cm"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Funneling",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "sono23.b104.0",
+      "options": [
+       "No",
+       "Yes"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "sono23.b104.0.tail",
+       "w": 66,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "sign",
+    "blocks": [
+     {
+      "type": "row",
+      "label": "기록자명",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "sono23.b106.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "판독의",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "sono23.b107.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "전문의",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "sono23.b108.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fetalecho",
+  "title": "Fetal echocardiography (single)-OB",
+  "department": "산부인과",
+  "summary": "태아 심장초음파 판독 (구조·리듬·도플러)",
+  "labelWidth": 190,
+  "writtenOnKey": "fetalecho.writtenOn",
+  "blocks": [
+   {
+    "type": "row",
+    "label": "Date of examination",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "fetalecho.b0.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "EDC ( by LNMP )",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "fetalecho.b1.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "EDC ( by sono )",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "fetalecho.b2.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Indication",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "fetalecho.b3.0",
+      "h": 56,
+      "w": 440
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Impression",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "IUP"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b4.1",
+      "w": 44
+     },
+     {
+      "c": "label",
+      "text": "weeks"
+     },
+     {
+      "c": "button",
+      "text": "서술문선택"
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "textarea",
+      "key": "fetalecho.b4.5",
+      "h": 80,
+      "w": 460
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Recommendation",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "fetalecho.b5.0",
+      "h": 72,
+      "w": 460
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Cardiac position & size"
+   },
+   {
+    "type": "row",
+    "label": "Heart axis",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b7.0",
+      "options": [
+       "Levocardia(normal)",
+       "Extreme levocardia",
+       "Dextrocardia",
+       "Mesocardia"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Heart position",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b8.0",
+      "options": [
+       "normal",
+       "dextroposition",
+       "levoposition"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Heart size",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b9.0",
+      "options": [
+       "Normal",
+       "Enlarged"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Heart/chest circumference",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "fetalecho.b10.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(cm)"
+     },
+     {
+      "c": "label",
+      "text": "/"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b10.3",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(cm)"
+     },
+     {
+      "c": "label",
+      "text": "="
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b10.6",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Heart /chest area",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "fetalecho.b11.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(cm²)"
+     },
+     {
+      "c": "label",
+      "text": "/"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b11.3",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(cm²)"
+     },
+     {
+      "c": "label",
+      "text": "="
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b11.6",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Chamber size",
+    "indent": 0,
+    "items": []
+   },
+   {
+    "type": "row",
+    "label": "RA / LA",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "fetalecho.b13.0",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "(cm)"
+     },
+     {
+      "c": "label",
+      "text": "/"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b13.3",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "(cm)"
+     },
+     {
+      "c": "label",
+      "text": "="
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b13.6",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "RV / LV",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "fetalecho.b14.0",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "(cm)"
+     },
+     {
+      "c": "label",
+      "text": "/"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b14.3",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "(cm)"
+     },
+     {
+      "c": "label",
+      "text": "="
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b14.6",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Vessel size",
+    "indent": 0,
+    "items": []
+   },
+   {
+    "type": "row",
+    "label": "PA / Ao",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "fetalecho.b16.0",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "(cm)"
+     },
+     {
+      "c": "label",
+      "text": "/"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b16.3",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "(cm)"
+     },
+     {
+      "c": "label",
+      "text": "="
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b16.6",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Structure"
+   },
+   {
+    "type": "row",
+    "label": "Four chamber view",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b18.0",
+      "options": [
+       "Normal",
+       "Abnormal"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Three vessels view",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b19.0",
+      "options": [
+       "Normal",
+       "Abnormal"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Long axis view",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b20.0",
+      "options": [
+       "Normal",
+       "Abnormal"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Short axis view",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b21.0",
+      "options": [
+       "Normal",
+       "Abnormal"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Aortic arch view",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b22.0",
+      "options": [
+       "Normal",
+       "Abnormal"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Ductal arch view",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b23.0",
+      "options": [
+       "Normal",
+       "Abnormal"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Abnormal finding",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "fetalecho.b24.0",
+      "h": 48,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Rhythm"
+   },
+   {
+    "type": "row",
+    "label": "Rhythm",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b26.0",
+      "options": [
+       "Regular",
+       "Irregular"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Baseline heart rate",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b27.0",
+      "options": [
+       "Normal",
+       "Bradycardia",
+       "Tachycardia"
+      ]
+     },
+     {
+      "c": "label",
+      "text": "(Bradycardia ≤100 bpm / Tachycardia ≥180 bpm)"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "M mode",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b28.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other M mode finding",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "fetalecho.b29.0",
+      "h": 48,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Pericardial effusion",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b30.0",
+      "options": [
+       "absent",
+       "present"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "fetalecho.b30.0.tail",
+       "w": 120,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Doppler"
+   },
+   {
+    "type": "row",
+    "label": "Aorta",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "fetalecho.b32.0",
+      "w": 90
+     },
+     {
+      "c": "label",
+      "text": "cm/sec"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Pulmonary artery",
+    "indent": 1,
+    "items": [
+     {
+      "c": "text",
+      "key": "fetalecho.b33.0",
+      "w": 90
+     },
+     {
+      "c": "label",
+      "text": "cm/sec"
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Atrioventricular valves"
+   },
+   {
+    "type": "row",
+    "label": "TV",
+    "indent": 2,
+    "items": [
+     {
+      "c": "label",
+      "text": "E"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b35.1",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "/"
+     },
+     {
+      "c": "label",
+      "text": "A"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b35.4",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "="
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b35.6",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "MV",
+    "indent": 2,
+    "items": [
+     {
+      "c": "label",
+      "text": "E"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b36.1",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "/"
+     },
+     {
+      "c": "label",
+      "text": "A"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b36.4",
+      "w": 60
+     },
+     {
+      "c": "label",
+      "text": "="
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b36.6",
+      "w": 80,
+      "readOnly": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Ductus venosus",
+    "indent": 2,
+    "items": [
+     {
+      "c": "label",
+      "text": "S"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b37.1",
+      "w": 90
+     },
+     {
+      "c": "label",
+      "text": "D"
+     },
+     {
+      "c": "text",
+      "key": "fetalecho.b37.3",
+      "w": 90
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "label",
+      "text": "A"
+     },
+     {
+      "c": "radio",
+      "key": "fetalecho.b37.6",
+      "options": [
+       "normal",
+       "not checked",
+       "abnormal"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "fetalecho.b37.6.tail",
+       "w": 150,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Other"
+   },
+   {
+    "type": "row",
+    "label": "Inferior vena cava",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b39.0",
+      "options": [
+       "Not checked",
+       "Checked"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "fetalecho.b39.0.tail",
+       "w": 120,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Superior vena cava",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b40.0",
+      "options": [
+       "Not checked",
+       "Checked"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "fetalecho.b40.0.tail",
+       "w": 120,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Pulmonary veins",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b41.0",
+      "options": [
+       "Not checked",
+       "Checked"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "fetalecho.b41.0.tail",
+       "w": 120,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Hepatic veins",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "fetalecho.b42.0",
+      "options": [
+       "Not checked",
+       "Checked"
+      ],
+      "tail": {
+       "c": "text",
+       "key": "fetalecho.b42.0.tail",
+       "w": 120,
+       "fill": true
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other Doppler findings",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "fetalecho.b43.0",
+      "h": 48,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sign",
+    "blocks": [
+     {
+      "type": "row",
+      "label": "기록자명",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "fetalecho.b45.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "판독의",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "fetalecho.b46.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "전문의",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "fetalecho.b47.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "neurosono",
+  "title": "Fetal Neurosonography (single)-OB",
+  "department": "산부인과",
+  "summary": "태아 신경초음파 판독 (뇌실·중심구조·후두와·척추)",
+  "labelWidth": 190,
+  "writtenOnKey": "neurosono.writtenOn",
+  "blocks": [
+   {
+    "type": "row",
+    "label": "Date of examination",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "neurosono.b0.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "EDC ( by LNMP )",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "neurosono.b1.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "EDC ( by sono )",
+    "indent": 0,
+    "items": [
+     {
+      "c": "date",
+      "key": "neurosono.b2.0"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Image quality",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b3.0",
+      "options": [
+       "Poor Quality due to maternal obesity",
+       "Poor Quality due to fetal position",
+       "Moderate Quality",
+       "Good Quality"
+      ],
+      "stack": true,
+      "other": {
+       "key": "neurosono.b3.0.other",
+       "w": 230,
+       "text": "Other"
+      }
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Indication",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "neurosono.b4.0",
+      "h": 56,
+      "w": 440
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Impression",
+    "indent": 0,
+    "items": [
+     {
+      "c": "label",
+      "text": "IUP"
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b5.1",
+      "w": 44
+     },
+     {
+      "c": "label",
+      "text": "weeks"
+     },
+     {
+      "c": "button",
+      "text": "서술문선택"
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "textarea",
+      "key": "neurosono.b5.5",
+      "h": 80,
+      "w": 460
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Recommendation",
+    "indent": 0,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "neurosono.b6.0",
+      "h": 72,
+      "w": 460
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Presentation",
+    "indent": 0,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b7.0",
+      "options": [
+       "Vertex",
+       "Breech",
+       "T-lie",
+       "Oblique",
+       "Not checked"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Cranium"
+   },
+   {
+    "type": "row",
+    "label": "Size",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b9.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b9.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "BPD",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b10.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b10.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "HC",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b11.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b11.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Shape",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b12.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b12.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Integrity",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b13.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b13.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "neurosono.b14.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Ventricular system"
+   },
+   {
+    "type": "sub",
+    "text": "Anterior horn"
+   },
+   {
+    "type": "row",
+    "label": "Rt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b17.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b17.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Lt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b18.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b18.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Lateral ventricle"
+   },
+   {
+    "type": "row",
+    "label": "Rt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b20.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b20.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Lt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b21.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b21.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Atrial diameter"
+   },
+   {
+    "type": "row",
+    "label": "Rt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "neurosono.b23.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(mm)"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Lt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "neurosono.b24.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(mm)"
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Choroid plexus"
+   },
+   {
+    "type": "row",
+    "label": "Rt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b26.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b26.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Lt",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b27.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b27.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "3rd ventricle",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b28.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b28.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "4th ventricle",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b29.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b29.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "neurosono.b30.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Midline structure"
+   },
+   {
+    "type": "row",
+    "label": "Falx",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b32.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b32.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "CSP",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b33.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b33.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Corpus callosum"
+   },
+   {
+    "type": "row",
+    "label": "Shape",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b35.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b35.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Length",
+    "indent": 2,
+    "items": [
+     {
+      "c": "text",
+      "key": "neurosono.b36.0",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(cm)"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Pericallosal flow",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b37.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b37.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Thalami",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b38.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b38.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "neurosono.b39.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Cerebrum"
+   },
+   {
+    "type": "row",
+    "label": "Symmetry",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b41.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b41.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Echogenicity",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b42.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b42.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Periventricular",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b43.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b43.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "sub",
+    "text": "Sulcus and fissure (for GA)"
+   },
+   {
+    "type": "row",
+    "label": "Sylvian",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b45.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b45.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Parieto-occipital",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b46.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b46.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Calcarine",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b47.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b47.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Cingulate",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b48.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b48.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Frontal",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b49.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b49.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Central",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b50.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b50.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Temporal",
+    "indent": 2,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b51.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b51.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "neurosono.b52.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Posterior fossa"
+   },
+   {
+    "type": "row",
+    "label": "Cerebellum",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b54.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b54.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Cisterna magna",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b55.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b55.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Vermis",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b56.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b56.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Fastigium",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b57.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b57.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Brainstem-to-vermis angle",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b58.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b58.1",
+      "w": 160,
+      "fill": true
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b58.3",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "degrees"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Brainstem-to-tentorium angle",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b59.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b59.1",
+      "w": 160,
+      "fill": true
+     },
+     {
+      "c": "break"
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b59.3",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "degrees"
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "neurosono.b60.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Vasculature"
+   },
+   {
+    "type": "row",
+    "label": "Sinus",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b62.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b62.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Circle of Willis",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b63.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b63.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Vein of Galen",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b64.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b64.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "neurosono.b65.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sec",
+    "text": "Spine"
+   },
+   {
+    "type": "row",
+    "label": "Canal integrity",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b67.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b67.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Skin integrity",
+    "indent": 1,
+    "items": [
+     {
+      "c": "radio",
+      "key": "neurosono.b68.0",
+      "options": [
+       "Normal",
+       "Not checked",
+       "Abnormal"
+      ]
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b68.1",
+      "w": 160,
+      "fill": true
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Conus medullaris position",
+    "indent": 1,
+    "items": [
+     {
+      "c": "label",
+      "text": "Level"
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b69.1",
+      "w": 44
+     },
+     {
+      "c": "label",
+      "text": ":"
+     },
+     {
+      "c": "text",
+      "key": "neurosono.b69.3",
+      "w": 66
+     },
+     {
+      "c": "label",
+      "text": "(cm)"
+     },
+     {
+      "c": "check",
+      "key": "neurosono.b69.5",
+      "options": [
+       "Not checked"
+      ]
+     }
+    ]
+   },
+   {
+    "type": "row",
+    "label": "Other",
+    "indent": 1,
+    "items": [
+     {
+      "c": "textarea",
+      "key": "neurosono.b70.0",
+      "h": 44,
+      "w": 420
+     }
+    ]
+   },
+   {
+    "type": "sign",
+    "blocks": [
+     {
+      "type": "row",
+      "label": "기록자명",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "neurosono.b72.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "판독의",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "neurosono.b73.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     },
+     {
+      "type": "row",
+      "label": "전문의",
+      "indent": 0,
+      "items": [
+       {
+        "c": "text",
+        "key": "neurosono.b74.0",
+        "w": 150,
+        "highlight": true
+       },
+       {
+        "c": "button",
+        "text": "직원선택"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+]

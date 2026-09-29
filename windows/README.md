@@ -43,6 +43,38 @@ dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -o o
 표준 모드 AutomationId: `chartText` `medicalMemo` `patientMemo` `vitalGrid` `orderGrid`
 `diagnosisGrid` `patientList` `saveButton` `refreshButton` `resetButton`
 
+## 구조화 서식지
+
+환자 목록의 `DEMO-09`~`DEMO-14`는 산과 서식 기록이다(Labor record Ⅱ, 수술기록 C/sec, 산전초음파 1st·
+2nd&3rd, Fetal echocardiography, Fetal Neurosonography). 고르면 차트 칸 자리에 서식이 뜨고 중간 열이 숨는다.
+서식 정의는 루트의 `ob-forms*.js`에서 `node windows/tools/export-ob-forms.mjs`로 만든
+`src/EmrDemo.Core/Seed/forms.json`이다. 구조만 가져오고 예시 값은 버려 **모든 서식이 빈 상태로 시작**한다.
+
+| 스키마 | standard | custom | 저장 값 |
+|---|---|---|---|
+| text(읽기 전용 포함)·textarea | `TextBox` | 직접 그림 | 문자열 |
+| date | `DateTimePicker`(체크 해제 = 빈 값, 날짜 글자를 감춤) | 한 줄 입력 `YYYY-MM-DD`(형식이 틀리면 되돌림) | `yyyy-MM-dd` 또는 없음 |
+| select | `ComboBox`(첫 항목 빈 값) | 캔버스 안에 그린 목록 | 선택지 |
+| radio | `RadioButton` | 직접 그림 | 선택지 |
+| check | `CheckBox` | 직접 그림 | 선택지를 스키마 순서로 `|`로 이음 |
+| grid | `DataGridView`(첫 열은 행 번호) | 직접 그린 셀 | 셀별 `<키>[행][열]` |
+
+- 값은 저장 스냅샷의 `patient.formValues`(키 → 문자열)에 들어가고, `field_commit`의 field는 `form.<키>`다.
+  체크·라디오·드롭다운은 바뀌는 즉시, 텍스트·날짜·셀은 기존 규칙대로 기록한다.
+- 키는 `<서식id>.b<블록 번호>.<항목 번호>`(파생 입력은 `.other`·`.tail`·`.<선택지>.<번호>`, 작성일은
+  `<서식id>.writtenOn`). standard 모드 AutomationId는 키이고, 라디오·체크 선택지는 `<키>#<선택지 번호>`다.
+- standard `DateTimePicker`는 UIA에서 ComboBox(Value·Toggle·ExpandCollapse)로 보인다. 빈 날짜(체크 해제)는
+  화면에 날짜를 감추고 UIA Value가 공백 한 칸(`" "`)이다. 날짜를 넣으려면 Toggle로 체크한 뒤 값을 바꾼다.
+- custom 모드는 서식 전체가 컨트롤 하나다. 클릭으로 요소를 고르고 `Tab`/`Shift+Tab`으로 이동, 체크·라디오는
+  클릭 또는 `Space`(그룹 안은 화살표), 드롭다운은 클릭·`Space`로 열어 항목 클릭 또는 `↑↓`+`Enter`, `Esc`로
+  닫는다. 휠로 세로, `Shift`+휠로 가로 스크롤(스크롤 막대는 표시만 하고 끌 수 없다).
+- Tab 정지점은 두 모드가 다르다: standard는 라디오·체크 선택지마다, custom은 선택지 그룹마다 하나다.
+  "Tab을 N번" 같은 절차는 모드마다 다른 칸에 닿는다.
+- 두 모드는 같은 배치 좌표를 쓴다(Core `FormLayout`, 배치 폭 860px 고정). 서식을 띄울 때마다 데이터
+  디렉터리에 **정답 좌표** `layout-<서식id>.json`(입력 요소별 키·종류·선택지·사각형, 서식 콘텐츠 좌표·스크롤 0
+  기준)을 쓴다. 비전 에이전트 채점과 프로브 클릭에 쓰며, 에이전트 입력으로 주면 안 된다. 이 파일과
+  `events.jsonl`은 정답이므로, 시험하는 에이전트가 데이터 디렉터리를 읽을 수 없게 둔다.
+
 ## 동작 규칙
 
 - `저장`: 현재 환자를 `store.json`에 쓰고 `events.jsonl`에 `save` 스냅샷을 남긴다.
@@ -105,9 +137,11 @@ powershell -File probe\Probe-Uia.ps1 -ProcessName <프로세스 이름>
 
 검사 내용 — standard: AutomationId 도달, `chartText` ValuePattern 읽기, UIA로 쓴 차트 텍스트와
 처방 셀이 저장 스냅샷·`field_commit`에 한 번씩 들어가는지, 환자 전환 시 저장 안 한 편집이 버려지고
-불러오기가 `field_commit`을 남기지 않는지, `초기화`가 화면만 되돌리는지.
+불러오기가 `field_commit`을 남기지 않는지, `초기화`가 화면만 되돌리는지, 서식(`DEMO-10`)에서 UIA
+ValuePattern·SelectionItem·Toggle·ExpandCollapse·GridPattern으로 넣은 값이 저장·기록되는지.
 custom: 세 AutomationId가 없고 세 영역이 이름·패턴·자식 없는 Pane(AutomationId는 숫자뿐)인지, UIA 트리와 자식 창
 `WM_GETTEXT` 어디에서도 차트 텍스트가 읽히지 않는지, 키보드로 입력한 차트 텍스트·처방 셀이
-저장·기록되고 그 뒤에도 읽히지 않는지. EmrDemo 모드에서는 `<OutDir>\data-<시각>`을 새로 만들어 쓰고
+저장·기록되고 그 뒤에도 읽히지 않는지, 서식 캔버스가 opaque Pane이고 `layout-csec.json` 좌표로
+클릭·입력한 텍스트·라디오·체크·드롭다운·표 셀 값이 저장·기록되며 UIA·`WM_GETTEXT`로 읽히지 않는지. EmrDemo 모드에서는 `<OutDir>\data-<시각>`을 새로 만들어 쓰고
 아무것도 지우지 않는다. CI(`.github/workflows/windows-demo.yml`)가 Windows 러너에서 두 모드를
 돌리고 결과를 `probe-results` 아티팩트로 올린다.

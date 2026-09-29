@@ -129,7 +129,7 @@ function Dump-Tree($root, [string]$path) {
     return $all
 }
 
-function Save-Captures([IntPtr]$hwnd) {
+function Save-Captures([IntPtr]$hwnd, [string]$suffix = '') {
     $rect = New-Object ProbeNative+RECT
     [void][ProbeNative]::GetWindowRect($hwnd, [ref]$rect)
     $width = $rect.Right - $rect.Left
@@ -139,7 +139,8 @@ function Save-Captures([IntPtr]$hwnd) {
     $g = [System.Drawing.Graphics]::FromImage($screen)
     $g.CopyFromScreen($rect.Left, $rect.Top, 0, 0, $screen.Size)
     $g.Dispose()
-    $screen.Save((Join-Path $OutDir 'capture-screen.png'))
+    $name = if ($suffix) { "-$suffix" } else { '' }
+    $screen.Save((Join-Path $OutDir "capture-screen$name.png"))
     $screen.Dispose()
 
     $printed = New-Object System.Drawing.Bitmap $width, $height
@@ -148,7 +149,7 @@ function Save-Captures([IntPtr]$hwnd) {
     $ok = [ProbeNative]::PrintWindow($hwnd, $hdc, 2)
     $g.ReleaseHdc($hdc)
     $g.Dispose()
-    $printed.Save((Join-Path $OutDir 'capture-printwindow.png'))
+    $printed.Save((Join-Path $OutDir "capture-printwindow$name.png"))
     $printed.Dispose()
     Write-Host "INFO  captures ${width}x${height}, PrintWindow returned $ok"
 }
@@ -220,6 +221,48 @@ function Select-Patient($root, [string]$id) {
         }
     }
     return $false
+}
+
+function Read-FormLayout([string]$dataDir, [string]$formId) {
+    $path = Join-Path $dataDir "layout-$formId.json"
+    if (-not (Test-Path $path)) { return $null }
+    return Get-Content $path -Raw -Encoding UTF8 | ConvertFrom-Json
+}
+
+function Get-FormValue($save, [string]$key) {
+    if ($null -eq $save) { return $null }
+    $property = $save.patient.formValues.PSObject.Properties[$key]
+    if ($null -eq $property) { return $null }
+    return $property.Value
+}
+
+# Picks one input of each kind from the form layout: an editable text box, option 1 of the first radio
+# group, option 0 of the first check group, the first select, and the first grid cell.
+function Get-FormTargets($layout) {
+    $items = @($layout.items)
+    return [pscustomobject]@{
+        Text   = $items | Where-Object { $_.kind -eq 'text' -and -not $_.readOnly } | Select-Object -First 1
+        Radio  = $items | Where-Object { $_.group -eq 'radio' -and $_.option -eq 1 } | Select-Object -First 1
+        Check  = $items | Where-Object { $_.group -eq 'check' -and $_.option -eq 0 } | Select-Object -First 1
+        Select = $items | Where-Object { $_.kind -eq 'select' } | Select-Object -First 1
+        Cell   = $items | Where-Object { $_.kind -eq 'gridCell' } | Select-Object -First 1
+    }
+}
+
+function Test-FormSave($dataDir, $targets, [string]$textValue, [string]$selectValue, [string]$cellValue, [string]$label) {
+    $last = Read-LastSave $dataDir
+    $expected = [ordered]@{
+        $targets.Text.key   = $textValue
+        $targets.Radio.key  = $targets.Radio.text
+        $targets.Check.key  = $targets.Check.text
+        $targets.Select.key = $selectValue
+        $targets.Cell.key   = $cellValue
+    }
+    $commits = @(Read-Events $dataDir | Where-Object { $_.type -eq 'field_commit' })
+    foreach ($key in $expected.Keys) {
+        Check ((Get-FormValue $last $key) -eq $expected[$key]) "[$label] form value $key = '$($expected[$key])' in save snapshot"
+        Check (@($commits | Where-Object { $_.field -eq "form.$key" -and $_.value -eq $expected[$key] }).Count -eq 1) "[$label] form.$key field_commit logged once"
+    }
 }
 
 function Get-GridCell($grid, [int]$row, [int]$column) {
@@ -305,6 +348,49 @@ try {
             Check ((Get-ValueText (Find-ById $root 'chartText')).Contains($chartMarker)) 'reset shows the seed chart'
             $last = Read-LastSave $dataDir
             Check ($null -ne $last -and $last.patient.chartText -eq $written) 'reset does not touch the store'
+
+            Check (Select-Patient $root 'DEMO-10') 'form record DEMO-10 selectable'
+            Start-Sleep -Milliseconds 800
+            [void](Dump-Tree $root (Join-Path $OutDir 'uia-tree-form.txt'))
+            Save-Captures $hwnd 'form'
+            $layout = Read-FormLayout $dataDir 'csec'
+            Check ($null -ne $layout) 'layout-csec.json written'
+            # DEMO-10 is the csec form (FormCatalog order); it has every input kind near the top.
+            $t = if ($layout) { Get-FormTargets $layout } else { $null }
+            $complete = $t -and $t.Text -and $t.Radio -and $t.Check -and $t.Select -and $t.Cell
+            Check $complete 'csec layout has text, radio, check, select and grid targets'
+            if ($complete) {
+                $text = Find-ById $root $t.Text.key
+                Check ($null -ne $text) "text $($t.Text.key) reachable"
+                if ($text) { $text.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).SetValue('PROBE FORM') }
+                $radio = Find-ById $root "$($t.Radio.key)#1"
+                Check ($null -ne $radio) "radio option $($t.Radio.key)#1 reachable"
+                if ($radio) { $radio.GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern).Select() }
+                $check = Find-ById $root "$($t.Check.key)#0"
+                Check ($null -ne $check) "check option $($t.Check.key)#0 reachable"
+                if ($check) { $check.GetCurrentPattern([System.Windows.Automation.TogglePattern]::Pattern).Toggle() }
+                $combo = Find-ById $root $t.Select.key
+                Check ($null -ne $combo) "select $($t.Select.key) reachable"
+                if ($combo) {
+                    $combo.GetCurrentPattern([System.Windows.Automation.ExpandCollapsePattern]::Pattern).Expand()
+                    Start-Sleep -Milliseconds 300
+                    $listCondition = New-Object System.Windows.Automation.PropertyCondition $AE::ControlTypeProperty, ([System.Windows.Automation.ControlType]::ListItem)
+                    $choice = @($combo.FindAll([System.Windows.Automation.TreeScope]::Descendants, $listCondition)) |
+                        Where-Object { $_.Current.Name -eq $t.Select.options[0] } | Select-Object -First 1
+                    Check ($null -ne $choice) "select $($t.Select.key) lists '$($t.Select.options[0])'"
+                    if ($choice) { $choice.GetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern).Select() }
+                    $combo.GetCurrentPattern([System.Windows.Automation.ExpandCollapsePattern]::Pattern).Collapse()
+                }
+                $gridKey = $t.Cell.key.Substring(0, $t.Cell.key.IndexOf('['))
+                $gridElement = Find-ById $root $gridKey
+                # Column 0 of the standard grid is the row-number column, so form column 0 is grid column 1.
+                $cell = if ($gridElement) { Get-GridCell $gridElement 0 1 } else { $null }
+                Check ($null -ne $cell) "form grid $gridKey exposes cell (0,1)"
+                if ($cell) { $cell.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).SetValue('PROBECELL') }
+                $save.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
+                Start-Sleep -Milliseconds 800
+                Test-FormSave $dataDir $t 'PROBE FORM' $t.Select.options[0] 'PROBECELL' 'standard'
+            }
         } else {
             foreach ($id in $ids) {
                 Check ($null -eq (Find-ById $root $id)) "AutomationId '$id' is not exposed"
@@ -336,6 +422,47 @@ try {
                 Check (@($commits | Where-Object { $_.field -eq 'chartText' }).Count -eq 1) 'chartText field_commit logged once'
                 Check (@($commits | Where-Object { $_.field -eq 'orders[0].name' -and $_.value -eq 'TYLENOL' }).Count -eq 1) 'orders[0].name field_commit logged once'
                 Test-Leak $root $hwnd @('PROBE CUSTOM', 'TYLENOL') 'after-typing'
+            }
+
+            Check (Select-Patient $root 'DEMO-10') 'form record DEMO-10 selectable'
+            Start-Sleep -Milliseconds 800
+            Save-Captures $hwnd 'form'
+            $layout = Read-FormLayout $dataDir 'csec'
+            Check ($null -ne $layout) 'layout-csec.json written'
+            $formTitle = Find-Text $root '(DEMO-10)'
+            $canvas = if ($formTitle) { $walker.GetNextSibling($formTitle) } else { $null }
+            Check (Test-OpaquePane $canvas) 'form canvas is a pane with no name, stable id, patterns or children'
+            $t = if ($layout) { Get-FormTargets $layout } else { $null }
+            $complete = $t -and $t.Text -and $t.Radio -and $t.Check -and $t.Select -and $t.Cell
+            Check $complete 'csec layout has text, radio, check, select and grid targets'
+            if ($complete -and $canvas) {
+                $origin = $canvas.Current.BoundingRectangle
+                $hidden = @(@($t.Text, $t.Radio, $t.Check, $t.Cell, $t.Select) |
+                    Where-Object { $_.y + $_.h + 10 -gt $origin.Height -or $_.x + $_.w + 10 -gt $origin.Width })
+                $dropdownBottom = $t.Select.y + $t.Select.h + 20 * (@($t.Select.options).Count + 1)
+                Check ($hidden.Count -eq 0 -and $dropdownBottom -lt $origin.Height) 'form probe targets are inside the visible canvas'
+                function Click-Form($item, [int]$dx = -1, [int]$dy = -1) {
+                    $x = if ($dx -ge 0) { $item.x + $dx } else { $item.x + [int]($item.w / 2) }
+                    $y = if ($dy -ge 0) { $item.y + $dy } else { $item.y + [int]($item.h / 2) }
+                    [ProbeNative]::Click([int]$origin.Left + $x, [int]$origin.Top + $y)
+                    Start-Sleep -Milliseconds 300
+                }
+                [void][ProbeNative]::SetForegroundWindow($hwnd)
+                Click-Form $t.Text
+                Send-Keys '^a'
+                Send-Keys 'PROBE FORM'
+                Click-Form $t.Radio 6
+                Click-Form $t.Check 6
+                Click-Form $t.Select
+                # The drop-down opens under the select (CustomFormCanvas.DropdownBounds): 1px border, 20px rows,
+                # row 0 is the blank choice and row 1 the first option.
+                Click-Form $t.Select 10 ($t.Select.h + 1 + 20 + 10)
+                Click-Form $t.Cell
+                Send-Keys 'PROBECELL'
+                Send-Keys '^s'
+                Start-Sleep -Milliseconds 800
+                Test-FormSave $dataDir $t 'PROBE FORM' $t.Select.options[0] 'PROBECELL' 'custom'
+                Test-Leak $root $hwnd @('PROBE FORM', 'PROBECELL') 'form'
             }
         }
     }

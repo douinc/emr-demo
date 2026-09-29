@@ -22,7 +22,7 @@ public sealed class EmrStoreTests : IDisposable
         var patients = store.LoadAll();
 
         Assert.True(File.Exists(Path.Combine(_dir, "store.json")));
-        Assert.Equal(8, patients.Count);
+        Assert.Equal(8 + Forms.FormCatalog.All.Count, patients.Count);
         Assert.Equal("DEMO-01", patients[0].Id);
         Assert.Equal("예시 환자 01", patients[0].Name);
         Assert.Equal("안과", patients[0].Department);
@@ -128,7 +128,7 @@ public sealed class EmrStoreTests : IDisposable
     {
         WriteStore("""[{"id":"DEMO-01","vitals":null,"orders":[null],"diagnoses":null}]""");
 
-        var patient = Assert.Single(new EmrStore(_dir).LoadAll());
+        var patient = new EmrStore(_dir).LoadAll().Single(p => p.Id == "DEMO-01");
 
         Assert.Equal(Patient.VitalRowCount, patient.Vitals.Count);
         Assert.Equal(Patient.OrderRowCount, patient.Orders.Count);

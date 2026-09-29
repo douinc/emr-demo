@@ -22,6 +22,15 @@ public sealed class EmrStore(string dataDir)
         var patients = JsonSerializer.Deserialize<List<Patient>>(File.ReadAllText(StorePath), EmrJson.Options)
             ?? throw new InvalidDataException($"{StorePath}가 비어 있습니다");
         patients.ForEach(p => p.Normalize());
+        var unknown = patients.FirstOrDefault(p => p.FormId is not null && Forms.FormCatalog.All.All(f => f.Id != p.FormId));
+        if (unknown is not null)
+        {
+            throw new InvalidDataException($"{StorePath}: {unknown.Id}의 서식 '{unknown.FormId}'을 알 수 없습니다");
+        }
+
+        // 서식 기록이 생기기 전 버전이 만든 저장소에는 새 시드 기록이 없다.
+        var known = patients.Select(p => p.Id).ToHashSet();
+        patients.AddRange(Seed.Value.Where(p => !known.Contains(p.Id)).Select(EmrJson.Clone));
         return patients;
     }
 
@@ -60,7 +69,7 @@ public sealed class EmrStore(string dataDir)
             ?? throw new InvalidOperationException("시드 리소스가 없습니다");
         var records = JsonSerializer.Deserialize<List<SeedRecord>>(stream, EmrJson.Options)!;
 
-        return records.Select((record, i) =>
+        var charts = records.Select((record, i) =>
         {
             var patient = new Patient
             {
@@ -73,6 +82,21 @@ public sealed class EmrStore(string dataDir)
             };
             patient.Normalize();
             return patient;
-        }).ToList();
+        });
+        var forms = Forms.FormCatalog.All.Select((form, i) =>
+        {
+            var number = records.Count + i + 1;
+            var patient = new Patient
+            {
+                Id = $"DEMO-{number:00}",
+                Name = $"예시 환자 {number:00}",
+                Department = form.Department,
+                VisitDate = "2026-07-28",
+                FormId = form.Id,
+            };
+            patient.Normalize();
+            return patient;
+        });
+        return charts.Concat(forms).ToList();
     }
 }
