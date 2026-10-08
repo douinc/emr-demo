@@ -119,6 +119,47 @@ dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -p:R
 `SendInput`·`WM_SETTEXT`·UIA 쓰기가 UIPI로 막히는지 확인하는 용도다. 관리자 계정으로
 로그인했더라도 UAC가 켜져 있으면 일반 실행 프로세스는 일반 권한이다.
 
+`tests/EmrDemo.Wpf.Tests`는 Windows에서만 돈다(net10.0-windows).
+
+## WPF판 (EmrDemoWpf)
+
+`src/EmrDemo.Wpf`는 같은 화면·데이터를 표준 WPF 컨트롤로 만든 판이다. BESTCare 2.0 같은 WPF EMR의
+UIA 구조에서 에이전트를 시험하려는 용도다. 설계: [`docs/specs/2026-10-08-windows-wpf-target-design.md`](../docs/specs/2026-10-08-windows-wpf-target-design.md)
+
+```powershell
+cd windows
+dotnet run --project src/EmrDemo.Wpf -- --data-dir=C:\emr-test\wpf1
+dotnet publish src/EmrDemo.Wpf -c Release -r win-x64 --self-contained false -o out/app-wpf
+dotnet publish src/EmrDemo.Wpf -c Release -r win-x64 --self-contained false -p:RequireAdmin=true -o out/app-wpf-admin
+.\out\app-wpf\EmrDemoWpf.exe --data-dir=C:\emr-test\wpf1
+```
+
+- 실행 파일·프로세스 이름은 `EmrDemoWpf`다. 기본 데이터 디렉터리는 `%LOCALAPPDATA%\EmrDemoWpf`다.
+- standard 모드만 있다. `--ui=custom`은 오류 창을 띄우고 종료 코드 2로 끝난다.
+- 창 제목, 환자·서식, 저장·새로고침·초기화, `store.json`·`events.jsonl`·`layout-<서식id>.json`은 WinForms판과 같다.
+  AutomationId도 같다(서식 키, `<키>#<선택지 번호>`, `patientList`·`chartText` 등).
+- 날짜는 OS 언어와 상관없이 `yyyy-MM-dd`로 보이고 읽는다. 앱이 ko-KR 문화권을 복제해 짧은 날짜 형식만 바꿔 쓴다.
+  .NET 10의 ICU ko-KR 기본값은 `yyyy. M. d.`다.
+- 배치 좌표는 같은 규칙(`FormLayout`, 폭 860px)이지만 글자 폭을 WPF로 재므로 WinForms판과 몇 px 다를 수 있다.
+  정답 좌표는 각 앱이 쓴 `layout-<서식id>.json`을 본다.
+
+WinForms판과 UIA가 다른 점:
+
+- 창 핸들(HWND)은 주 창과 팝업(메뉴·드롭다운·달력)에만 있다. 칸마다 창이 아니어서 `WM_SETTEXT`·`CB_*`
+  메시지·창 스타일 읽기가 통하지 않는다. UIA 패턴만 쓸 수 있다.
+- `Grid`·`Canvas`·`StackPanel`·`Border` 같은 배치 요소는 UIA 트리에 없다. 서식 칸의 UIA 부모는 서식 전체를 감싼
+  `ScrollViewer`(Pane)다. 메뉴 막대는 `MenuBar`가 아니라 `Menu`다.
+- 서식 컨트롤:
+
+  | 스키마 | WPF 컨트롤 | 비고 |
+  |---|---|---|
+  | text·textarea | `TextBox` | ValuePattern. 포커스 없이 값이 바뀌면 바로, 아니면 포커스를 잃을 때 기록 |
+  | date | `DatePicker` | 빈 값 = 날짜 없음. 안에 `DatePickerTextBox`(Edit)와 달력 단추가 있다. 친 글자는 포커스를 잃거나 Enter를 칠 때 날짜가 되고 그때 기록 |
+  | select | `ComboBox`(편집 불가, 첫 항목 빈 값) | 선택이 바뀌는 즉시 기록 |
+  | radio | `RadioButton`(GroupName = 키) | SelectionItem. 고르는 즉시 기록 |
+  | check | `CheckBox` | Toggle. 바뀌는 즉시 기록 |
+  | grid | `DataGrid`(첫 열은 읽기 전용 행 번호) | Grid·Table. 셀 값이 바뀌면(편집 확정·UIA 셀 SetValue) 기록 |
+
 ## UIA 프로브
 
 `probe/Probe-Uia.ps1`은 창의 UIA 트리 덤프(`uia-tree.txt`, 전체 순회 시간 포함)와 두 가지 캡처
