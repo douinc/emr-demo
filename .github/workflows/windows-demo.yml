@@ -42,6 +42,9 @@ jobs:
       - name: Publish (requireAdministrator manifest)
         run: dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -p:RequireAdmin=true -o artifacts/app-admin
 
+      - name: Publish (WPF)
+        run: dotnet publish src/EmrDemo.Wpf -c Release -r win-x64 --self-contained false -o artifacts/app-wpf
+
       - name: Check manifests
         shell: pwsh
         run: |

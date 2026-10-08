@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <AssemblyName>EmrDemoWpf</AssemblyName>
+    <RootNamespace>EmrDemo.Wpf</RootNamespace>
+    <RequireAdmin Condition="'$(RequireAdmin)' == ''">false</RequireAdmin>
+    <ApplicationManifest Condition="'$(RequireAdmin)' == 'true'">../EmrDemo.App/app.admin.manifest</ApplicationManifest>
+    <!-- WPF 빌드는 manifest만 바뀌면 dll을 다시 만들지 않아 실행 파일에 이전 manifest가 남는다. 상수를 바꿔 다시 만들게 한다. -->
+    <DefineConstants Condition="'$(RequireAdmin)' == 'true'">$(DefineConstants);REQUIRE_ADMIN</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../EmrDemo.Core/EmrDemo.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="EmrDemo.Wpf.Tests" />
+  </ItemGroup>
+
+</Project>

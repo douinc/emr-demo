@@ -2,8 +2,10 @@
   <Folder Name="/src/">
     <Project Path="src/EmrDemo.App/EmrDemo.App.csproj" />
     <Project Path="src/EmrDemo.Core/EmrDemo.Core.csproj" />
+    <Project Path="src/EmrDemo.Wpf/EmrDemo.Wpf.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/EmrDemo.Core.Tests/EmrDemo.Core.Tests.csproj" />
+    <Project Path="tests/EmrDemo.Wpf.Tests/EmrDemo.Wpf.Tests.csproj" />
   </Folder>
 </Solution>

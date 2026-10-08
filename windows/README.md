@@ -119,6 +119,63 @@ dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -p:R
 `SendInput`·`WM_SETTEXT`·UIA 쓰기가 UIPI로 막히는지 확인하는 용도다. 관리자 계정으로
 로그인했더라도 UAC가 켜져 있으면 일반 실행 프로세스는 일반 권한이다.
 
+`tests/EmrDemo.Wpf.Tests`는 Windows에서만 돈다(net10.0-windows).
+
+## WPF판 (EmrDemoWpf)
+
+`src/EmrDemo.Wpf`는 같은 화면·데이터를 표준 WPF 컨트롤로 만든 판이다. BESTCare 2.0 같은 WPF EMR의
+UIA 구조에서 에이전트를 시험하려는 용도다. 설계: [`docs/specs/2026-10-08-windows-wpf-target-design.md`](../docs/specs/2026-10-08-windows-wpf-target-design.md)
+
+```powershell
+cd windows
+dotnet run --project src/EmrDemo.Wpf -- --data-dir=C:\emr-test\wpf1
+dotnet publish src/EmrDemo.Wpf -c Release -r win-x64 --self-contained false -o out/app-wpf
+dotnet publish src/EmrDemo.Wpf -c Release -r win-x64 --self-contained false -p:RequireAdmin=true -o out/app-wpf-admin
+.\out\app-wpf\EmrDemoWpf.exe --data-dir=C:\emr-test\wpf1
+```
+
+- 실행 파일·프로세스 이름은 `EmrDemoWpf`다. 기본 데이터 디렉터리는 `%LOCALAPPDATA%\EmrDemoWpf`다.
+- standard 모드만 있다. `--ui=custom`은 오류 창을 띄우고 종료 코드 2로 끝난다.
+- 창 제목, 환자·서식, 저장·새로고침·초기화, `store.json`·`events.jsonl`·`layout-<서식id>.json`은 WinForms판과 같다.
+  AutomationId도 같다(서식 키, `<키>#<선택지 번호>`, `patientList`·`chartText` 등).
+- 날짜는 OS 언어와 상관없이 `yyyy-MM-dd`로 보이고 읽는다. 앱이 ko-KR 문화권을 복제해 짧은 날짜 형식만 바꿔 쓴다.
+  .NET 10의 ICU ko-KR 기본값은 `yyyy. M. d.`다.
+- 배치 좌표는 같은 규칙(`FormLayout`, 폭 860px)이지만 글자 폭을 WPF로 재므로 WinForms판과 몇 px 다를 수 있다.
+  정답 좌표는 각 앱이 쓴 `layout-<서식id>.json`을 본다.
+
+WinForms판과 UIA가 다른 점:
+
+- 창 핸들(HWND)은 주 창과 팝업(메뉴·드롭다운·달력)에만 있다. 칸마다 창이 아니어서 `WM_SETTEXT`·`CB_*`
+  메시지·창 스타일 읽기가 통하지 않는다. UIA 패턴만 쓸 수 있다.
+- `Grid`·`Canvas`·`StackPanel`·`Border` 같은 배치 요소는 UIA 트리에 없다. 서식 칸의 UIA 부모는 서식 전체를 감싼
+  `ScrollViewer`(Pane)다. 메뉴 막대는 `MenuBar`가 아니라 `Menu`다.
+- 서식 컨트롤:
+
+  | 스키마 | WPF 컨트롤 | 비고 |
+  |---|---|---|
+  | text·textarea | `TextBox` | ValuePattern. 포커스 없이 값이 바뀌면 바로, 아니면 포커스를 잃을 때 기록 |
+  | date | `DatePicker` | 빈 값 = 날짜 없음. 안에 `DatePickerTextBox`(Edit)와 달력 단추가 있다. 친 글자는 포커스를 잃거나 Enter를 칠 때 날짜가 되고 그때 기록 |
+  | select | `ComboBox`(편집 불가, 첫 항목 빈 값) | 선택이 바뀌는 즉시 기록 |
+  | radio | `RadioButton`(GroupName = 키) | SelectionItem. 고르는 즉시 기록 |
+  | check | `CheckBox` | Toggle. 바뀌는 즉시 기록 |
+  | grid | `DataGrid`(첫 열은 읽기 전용 행 번호) | Grid·Table. 셀 값이 바뀌면(편집 확정·UIA 셀 SetValue) 기록 |
+
+원격 UI 테스트 VM에서 본 것(2026-10-08, emr-form-pilot 실측):
+
+- 다녀온 서식 페이지는 접어(`Collapsed`) 둔다. WPF는 접은 요소도 UIA 트리에 남긴다. 그래서 서식을 여러 개
+  다녀오면 트리가 커진다. 6종을 다녀온 뒤 창 전체는 3,670개였다. 접은 페이지는 크기가 0이고 `IsOffscreen`이다.
+  숨긴 부모 안의 요소는 숨기기 전 크기를 그대로 알린다. 숨은 서식을 화면의 서식으로 잘못 고르지 않는지 시험할 때 쓴다.
+- 큰 하위 트리를 캐시 요청 한 번으로 받아도 잘리지 않았다. 창 전체 3,670개를 한 번에 받았다. WinForms판은 약 530개에서 잘린다.
+- `ComboBox`(편집 불가)
+  - 값 패턴이 없다. 고른 값은 선택 패턴으로 읽는다.
+  - 닫힌 목록의 항목은 UIA 자식으로 나오지 않는다. 항목 컨테이너 패턴으로는 훑을 수 있다.
+  - 한 번도 펼치지 않은 목록의 항목은 고르면 `ElementNotAvailable`로 실패한다. 항목을 실현하면 목록이 펼쳐진 채 남는다.
+- `DatePicker`
+  - UIA 종류는 `Custom`, 클래스는 `DatePicker`다.
+  - UIA 값은 날짜와 시각(`2026-09-16 오전 12:00:00`)이고, 화면의 날짜는 안쪽 `PART_TextBox` 값이다.
+  - UIA 값 쓰기로 날짜를 넣고 지울 수 있다. 읽지 못하는 날짜(`2026-13-45`)는 받지 않고 앞 값을 남긴다.
+- 창이 뜨기까지 7초에서 20초 넘게 걸렸다. 처음 UIA로 읽을 때도 몇 초 더 걸린다.
+
 ## UIA 프로브
 
 `probe/Probe-Uia.ps1`은 창의 UIA 트리 덤프(`uia-tree.txt`, 전체 순회 시간 포함)와 두 가지 캡처
