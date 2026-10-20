@@ -144,6 +144,7 @@
         node.value = spec.val || '';
         if (spec.hl) node.classList.add('hl');
         if (spec.fill) node.classList.add('fill');
+        if (spec.grow) node.classList.add('grow');
         if (spec.ro) node.readOnly = true;
         if (spec.ph) node.placeholder = spec.ph;
         break;
@@ -160,6 +161,7 @@
         node.style.height = px(spec.h);
         if (spec.w) node.style.width = px(spec.w);
         node.value = spec.val || '';
+        if (spec.grow) node.classList.add('grow');
         break;
       }
       case 's': {
@@ -339,7 +341,7 @@
     container.appendChild(fm);
   }
 
-  global.OBForms = { render: render };
+  global.OBForms = { render: render, renderCtrl: renderCtrl };
   global.OBFormDSL = { S: S, t: t, d: d, ta: ta, r: r, k: k, sel: sel, btn: btn, lbl: lbl, br: br,
     nna: nna, staff: staff, signBlock: signBlock, sonoHeader: sonoHeader,
     imageQuality: imageQuality, biometry: biometry, impression: impression,

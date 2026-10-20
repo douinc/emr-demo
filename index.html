@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>[접속정보 : 배성준] 처방관리 Ver. 2.0.0.122</title>
 <link rel="stylesheet" href="ob-forms.css">
+<link rel="stylesheet" href="paper-forms.css">
 <style>
 :root{
   --face:#f0efe8;
@@ -582,6 +583,8 @@ body{overflow:auto;}
 
 <script src="ob-forms.js"></script>
 <script src="ob-forms-data.js"></script>
+<script src="paper-forms.js"></script>
+<script src="surgery-forms-data.js"></script>
 <script>
 (function () {
   var records = [
@@ -758,8 +761,8 @@ adv) 눈 세척 자주 시행하세요.`
     }
   ];
 
-  // 산과 구조화 서식지(OB_FORMS)를 기록 목록에 추가
-  (window.OB_FORMS || []).forEach(function (form) {
+  // 구조화 서식지(산과 OB_FORMS, 정형외과·마취 SURGERY_FORMS)를 기록 목록에 추가
+  (window.OB_FORMS || []).concat(window.SURGERY_FORMS || []).forEach(function (form) {
     records.push({
       department: form.dept,
       summary: '[서식] ' + form.title,
@@ -827,7 +830,12 @@ adv) 눈 세척 자주 시행하세요.`
       // 구조화 서식지 : 폼 렌더러로 그리고 자유기술 영역은 숨긴다
       body.style.display = 'none';
       formView.classList.add('on');
-      window.OBForms.render(formView, record.form);
+      if (record.form.paper) {
+        window.PaperForms.render(formView, record.form,
+          { id: id, name: '예시 환자 ' + String(index + 1).padStart(2, '0'), dept: record.department });
+      } else {
+        window.OBForms.render(formView, record.form);
+      }
       formView.scrollTop = 0;
     } else {
       formView.classList.remove('on');
