@@ -1,0 +1,82 @@
+/* ============================================================
+   종이 서식형 서식지 스타일 (paper-forms.js)
+   흰 바탕 · 검은 칸선 · 회색 입력칸 · 포커스 시 노란 입력칸
+   ============================================================ */
+.fm.pf{padding:12px 0 28px;background:#fff;}
+.pf-page{margin:0 auto;padding:0 12px;}
+.pf-title{text-align:center;font-size:20px;font-weight:bold;letter-spacing:1px;margin:2px 0 10px;}
+.pf-line{display:flex;align-items:center;gap:6px;margin:0 0 3px;flex-wrap:wrap;}
+
+/* 표 */
+.pf-tbl{border-collapse:collapse;table-layout:fixed;margin:0 0 6px;}
+.pf-tbl td{border:1px solid #6b6b6b;padding:2px 4px;height:22px;vertical-align:middle;}
+.pf-tbl td.lb{background:#f5f5f3;text-align:center;word-break:keep-all;white-space:pre-line;}
+.pf-tbl td.l{text-align:left;}
+.pf-tbl td.plain{background:#fff;}
+.pf-tbl td.pf-big{font-size:24px;letter-spacing:1px;}
+.pf-tbl td.b{font-weight:bold;}
+.pf-tbl td.nb{border:none;}
+.pf-tbl td .cell{display:flex;flex-wrap:wrap;align-items:center;gap:3px 5px;}
+.pf-tbl td.c .cell{justify-content:center;}
+.pf-tbl td.top{vertical-align:top;}
+.pf-tbl.nob td{border:none;}
+
+/* 상자형 칸 (머리줄 + 입력) */
+.pf-tbl td.bh{background:#fff;text-align:left;font-weight:bold;height:18px;padding:1px 6px;}
+.pf-tbl td.bb{padding:3px 4px;}
+
+/* 입력 컨트롤 : 테두리 없는 회색 칸 */
+.fm.pf input[type=text],.fm.pf input[type=date],.fm.pf textarea,.fm.pf select{
+  background:#e6e6e6;border:1px solid #e6e6e6;}
+.fm.pf input[type=text]:focus,.fm.pf input[type=date]:focus,.fm.pf textarea:focus{
+  background:#f4efc6;border-color:#c8bb6a;outline:none;}
+.fm.pf input.pf-pt{background:#fff;border-color:transparent;}
+.fm.pf textarea{display:block;max-width:none;width:100%;resize:none;line-height:1.45;}
+.fm.pf .grow{flex:1 1 40px;min-width:24px;width:auto!important;}
+.fm.pf .opt.on{background:transparent;border-color:transparent;}
+.fm.pf .opt:hover{background:#eef4fb;}
+
+/* 묶음 */
+.pf-ln{display:flex;align-items:center;gap:3px 5px;flex-wrap:wrap;min-height:20px;}
+.pf-ln.c{justify-content:center;}
+.pf-vb{display:flex;flex-direction:column;gap:2px;}
+.pf-hb{display:flex;gap:10px;align-items:flex-start;width:100%;}
+.pf-hb.spread{justify-content:space-around;}
+.pf-lw{display:inline-block;flex:0 0 auto;}
+.pf-tbl td.spread .optset{display:flex;width:100%;}
+.pf-tbl td.spread .optset .opt{flex:1;}
+.pf-tbl td.k5 .optset{display:grid;grid-template-columns:repeat(5,1fr);width:100%;gap:2px 0;}
+
+/* Mallampati 그림 */
+.pf-mp{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.pf-mp .opt{flex-direction:column-reverse;gap:2px;font-weight:bold;}
+
+/* 로고 · 서명 */
+.pf-logo{display:inline-flex;align-items:center;gap:5px;font-size:17px;font-weight:bold;color:#3e4a5a;}
+.pf-sign{display:inline-block;min-width:80px;border-bottom:1px solid #999;color:#999;text-align:center;}
+.pf-foot{display:flex;align-items:center;gap:14px;margin-top:8px;}
+
+/* 마취기록지 시간 칸 : 15분 칸 안에 5분 보조선 */
+.pf-tbl td.tg{padding:0;height:17px;border-left:1.5px solid #222;
+  background-image:linear-gradient(90deg,transparent calc(33.33% - 1px),#b7b7b7 calc(33.33% - 1px) 33.33%,
+    transparent 33.33% calc(66.67% - 1px),#b7b7b7 calc(66.67% - 1px) 66.67%,transparent 66.67%);}
+.fm.pf td.tg input[type=text]{width:100%!important;height:16px;background:transparent;border-color:transparent;
+  text-align:center;font-size:10px;padding:0;}
+.fm.pf td.tg input[type=text]:focus{background:#f4efc6;}
+.pf-tbl td.dl{height:17px;padding:0 3px;font-size:10.5px;}
+.pf-tbl td.dl .cell{flex-wrap:nowrap;gap:2px;}
+.fm.pf td.dl input[type=text]{height:15px;font-size:10px;}
+.pf-tbl td.ch{padding:0;}
+.pf-tbl td.ch .cell{display:block;}
+.pf-tbl td.fill{position:relative;padding:0;}
+.fm.pf td.fill textarea{position:absolute;inset:2px;width:auto;height:auto!important;}
+.pf-legend{position:relative;width:100%;font-size:10.5px;}
+.pf-legend-keys{position:absolute;left:4px;top:6px;bottom:6px;display:flex;flex-direction:column;
+  justify-content:space-around;}
+.pf-legend-tick{position:absolute;right:4px;font-size:10px;line-height:14px;}
+.pf-vchart svg{display:block;}
+.pf-method{font-size:10px;}
+.pf-method .pf-ln.c{justify-content:center;}
+.pf-vb{flex:1;gap:1px;}
+.pf-method .pf-ln{min-height:17px;}
+.fm.pf .pf-method input[type=text]{height:15px;font-size:10px;}

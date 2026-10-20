@@ -466,7 +466,8 @@ sealed class MainForm : Form
         SetFormMode(patient.FormId is not null);
         if (patient.FormId is { } id)
         {
-            var layout = _formView.Show(FormCatalog.Get(id), patient.FormValues);
+            var form = FormCatalog.Get(id);
+            var layout = _formView.Show(form, patient.FormValues, form.PatientFields(patient.Id, patient.Name, patient.Department));
             WriteLayout(id, layout);
         }
 

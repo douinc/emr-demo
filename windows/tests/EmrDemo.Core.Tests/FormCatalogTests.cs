@@ -5,13 +5,55 @@ namespace EmrDemo.Core.Tests;
 public class FormCatalogTests
 {
     [Fact]
-    public void Load_ReturnsSixObFormsInOrder()
+    public void Load_ReturnsObFormsThenSurgeryFormsInOrder()
     {
         var forms = FormCatalog.All;
 
-        Assert.Equal(["labor2", "csec", "sono1st", "sono23", "fetalecho", "neurosono"], forms.Select(f => f.Id));
-        Assert.All(forms, f => Assert.Equal("산부인과", f.Department));
+        Assert.Equal(["labor2", "csec", "sono1st", "sono23", "fetalecho", "neurosono",
+                      "osfirst", "preanes", "anesrec", "pacu"], forms.Select(f => f.Id));
+        Assert.All(forms.Take(6), f => Assert.Equal("산부인과", f.Department));
+        Assert.Equal(["정형외과", "마취통증의학과", "마취통증의학과", "마취통증의학과"], forms.Skip(6).Select(f => f.Department));
         Assert.Equal("Labor record Ⅱ-OB", FormCatalog.Get("labor2").Title);
+        Assert.Equal("마취기록지", FormCatalog.Get("anesrec").Title);
+    }
+
+    [Fact]
+    public void SurgeryForms_AreTablesWithInputsInsideCellsAndContainers()
+    {
+        var preanes = FormCatalog.Get("preanes");
+        var table = preanes.Blocks.OfType<TableBlock>().Single();
+        var keys = preanes.Inputs().Select(i => i.Key).ToList();
+
+        Assert.Contains(table.Rows.SelectMany(r => r), c => c.RowSpan == 3 && c.Label == "마취관련 과거력");
+        Assert.All(table.Rows, row => Assert.All(row, c => Assert.True(c.Label is null != (c.Items is null))));
+        // Mallampati 1~4 는 그림 아래 체크박스(세로 묶음 안)
+        var classes = preanes.Inputs().Select(i => i.Control).OfType<CheckControl>()
+            .Where(c => c.Options is [var o] && o.StartsWith("Class ")).ToList();
+        Assert.Equal(["Class 1", "Class 2", "Class 3", "Class 4"], classes.Select(c => c.Options[0]));
+        Assert.Contains(keys, k => k.StartsWith("preanes.b2.r"));
+        Assert.Equal(keys.Count, keys.Distinct().Count());
+    }
+
+    [Fact]
+    public void SurgeryForms_KeepNoExampleValues()
+    {
+        using var stream = typeof(FormCatalog).Assembly.GetManifestResourceStream("EmrDemo.Core.Seed.forms.json")!;
+        var json = new StreamReader(stream).ReadToEnd();
+
+        Assert.DoesNotContain("Medial meniscus tear", json);
+        Assert.DoesNotContain("\"val\"", json);
+    }
+
+    [Fact]
+    public void PatientFields_ComeFromTheRecordAndTheFormDefaults()
+    {
+        var fields = FormCatalog.Get("osfirst").PatientFields("DEMO-15", "예시 환자 15", "정형외과");
+
+        Assert.Equal("DEMO-15", fields["id"]);
+        Assert.Equal("예시 환자 15", fields["name"]);
+        Assert.Equal("정형외과", fields["dept"]);
+        Assert.Equal("M / 54", fields["sexAge"]);
+        Assert.Equal("", FormCatalog.Get("labor2").PatientFields("DEMO-09", "x", "y")["sexAge"]);
     }
 
     [Fact]

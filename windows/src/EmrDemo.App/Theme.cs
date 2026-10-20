@@ -17,4 +17,5 @@ static class Theme
 
     public static readonly Font Font = new("Malgun Gothic", 8.25f);
     public static readonly Font Bold = new("Malgun Gothic", 8.25f, FontStyle.Bold);
+    public static readonly Font Heading = new("Malgun Gothic", 14f, FontStyle.Bold);
 }

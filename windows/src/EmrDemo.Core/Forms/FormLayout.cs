@@ -40,6 +40,29 @@ public enum LayoutKind
     SetHeader,
     SetBox,
     SignBox,
+    Heading,
+    TableCell,
+    PatientField,
+    Image,
+    Chart,
+    Legend,
+}
+
+/// <summary>종이 서식 표 칸(<see cref="LayoutKind.TableCell"/>)의 모양.</summary>
+[Flags]
+public enum CellStyle
+{
+    None = 0,
+
+    /// <summary>회색 바탕의 라벨 칸.</summary>
+    Label = 1,
+    Left = 2,
+    Bold = 4,
+    Big = 8,
+    NoBorder = 16,
+
+    /// <summary>상자 머리줄(흰 바탕, 굵게, 왼쪽 정렬).</summary>
+    Head = 32,
 }
 
 /// <summary>
@@ -52,7 +75,8 @@ public sealed record LayoutItem(
     string? Key = null,
     string? Text = null,
     int OptionIndex = -1,
-    FormControl? Control = null)
+    FormControl? Control = null,
+    CellStyle Style = CellStyle.None)
 {
     public bool IsInteractive => Key is not null;
 }
@@ -82,6 +106,21 @@ public static class FormLayout
 
     /// <summary>행 라벨이 라벨 열보다 길 때 추가하는 줄의 높이(최대 3줄).</summary>
     public const int LabelLineHeight = 14;
+
+    public const int HeadingHeight = 30;
+    public const int CellPadX = 4;
+    public const int CellPadY = 2;
+
+    /// <summary>머리글 환자 칸의 폭. 값은 환자마다 다르므로 배치는 필드별 고정 폭을 쓴다.</summary>
+    public static int PatientFieldWidth(string field) => field switch
+    {
+        "id" => 70,
+        "name" => 84,
+        "dept" => 104,
+        "sex" or "age" => 34,
+        "sexAge" => 60,
+        _ => 80,
+    };
 
     public static FormLayoutResult Build(FormDefinition form, Func<string, int> measure, int width)
     {
@@ -165,6 +204,21 @@ public static class FormLayout
                         break;
                     case SignBlock sign:
                         Container(LayoutKind.SignBox, null, sign.Blocks, left, right);
+                        break;
+                    case HeadingBlock h:
+                        Add(new LayoutItem(LayoutKind.Heading, new LayoutRect(left, Y, right - left, HeadingHeight), Text: h.Text));
+                        Y += HeadingHeight + 4;
+                        break;
+                    case LineBlock line:
+                        var placed = Content(line.Items, right - left);
+                        Emit(placed, left, Y);
+                        Y += placed.H + 4;
+                        break;
+                    case GapBlock gap:
+                        Y += gap.H;
+                        break;
+                    case TableBlock table:
+                        Table(table, left);
                         break;
                 }
             }
@@ -320,7 +374,8 @@ public static class FormLayout
 
         LayoutItem Leaf(FormControl control) => control switch
         {
-            LabelControl l => new LayoutItem(LayoutKind.Label, new LayoutRect(0, 0, measure(l.Text) + TextSlack, ControlHeight), Text: l.Text),
+            LabelControl l => new LayoutItem(LayoutKind.Label,
+                new LayoutRect(0, 0, l.W ?? measure(l.Text) + TextSlack, ControlHeight), Text: l.Text),
             ButtonControl b => new LayoutItem(LayoutKind.Button, new LayoutRect(0, 0, measure(b.Text) + 16, ControlHeight), Text: b.Text),
             TextControl t => new LayoutItem(LayoutKind.Text, new LayoutRect(0, 0, t.W, ControlHeight), t.Key, Control: t),
             DateControl d => new LayoutItem(LayoutKind.Date, new LayoutRect(0, 0, DateWidth, ControlHeight), d.Key, Control: d),
@@ -393,6 +448,414 @@ public static class FormLayout
             }
 
             return widths;
+        }
+
+        /* ---------------- 종이 서식 : 표와 칸 내용 ---------------- */
+
+        /// <summary>칸 내용의 배치 결과. 좌표는 내용 원점(0,0) 기준이다.</summary>
+        sealed record Placed(List<LayoutItem> Items, int W, int H);
+
+        static Placed Single(LayoutItem item) => new([item], item.Bounds.W, item.Bounds.H);
+
+        void Emit(Placed placed, int x, int y)
+        {
+            foreach (var item in placed.Items)
+            {
+                Add(item with { Bounds = item.Bounds.Offset(x, y) });
+            }
+        }
+
+        void Table(TableBlock table, int left)
+        {
+            var colX = new int[table.Columns.Count + 1];
+            for (var c = 0; c < table.Columns.Count; c++)
+            {
+                colX[c + 1] = colX[c] + table.Columns[c];
+            }
+
+            // 병합 칸이 차지한 자리를 건너뛰며 칸마다 시작 열을 정한다
+            var occupied = new HashSet<(int, int)>();
+            var cells = new List<(TableCell Cell, int R, int C)>();
+            for (var r = 0; r < table.Rows.Count; r++)
+            {
+                var c = 0;
+                foreach (var cell in table.Rows[r])
+                {
+                    while (occupied.Contains((r, c)))
+                    {
+                        c++;
+                    }
+
+                    if (c + cell.ColSpan > table.Columns.Count)
+                    {
+                        throw new InvalidDataException($"표 칸이 열 수를 넘습니다: {r}행 {c}열");
+                    }
+
+                    cells.Add((cell, r, c));
+                    for (var rr = r; rr < r + cell.RowSpan; rr++)
+                    {
+                        for (var cc = c; cc < c + cell.ColSpan; cc++)
+                        {
+                            occupied.Add((rr, cc));
+                        }
+                    }
+
+                    c += cell.ColSpan;
+                }
+            }
+
+            var rowCount = Math.Max(table.Rows.Count, cells.Max(x => x.R + x.Cell.RowSpan));
+            var rowH = new int[rowCount];
+            var contents = new Placed?[cells.Count];
+            var needs = new int[cells.Count];
+            for (var i = 0; i < cells.Count; i++)
+            {
+                var (cell, r, c) = cells[i];
+                var inner = colX[c + cell.ColSpan] - colX[c] - 2 * PadOf(cell);
+                int need;
+                if (cell.Label is { } label)
+                {
+                    need = cell.Has("big") ? HeadingHeight : LabelHeight(label, inner) + 2 * CellPadY;
+                }
+                else
+                {
+                    var placed = Content(cell.Items ?? [], inner, cell.Has("spread"), cell.Has("grid5"));
+                    contents[i] = placed;
+                    need = placed.H + 2 * CellPadY;
+                }
+
+                var min = cell.H ?? (cell.Has("compact") || cell.Has("timeGrid") ? ControlHeight + 2 : ControlHeight + 4);
+                needs[i] = Math.Max(need, min);
+                if (cell.RowSpan == 1)
+                {
+                    rowH[r] = Math.Max(rowH[r], needs[i]);
+                }
+            }
+
+            for (var i = 0; i < cells.Count; i++)
+            {
+                var (cell, r, _) = cells[i];
+                var spanned = Enumerable.Range(r, cell.RowSpan).Sum(x => rowH[x]);
+                if (spanned < needs[i])
+                {
+                    rowH[r + cell.RowSpan - 1] += needs[i] - spanned;
+                }
+            }
+
+            var rowY = new int[rowCount + 1];
+            for (var r = 0; r < rowCount; r++)
+            {
+                rowY[r + 1] = rowY[r] + rowH[r];
+            }
+
+            var top = Y;
+            for (var i = 0; i < cells.Count; i++)
+            {
+                var (cell, r, c) = cells[i];
+                var rect = new LayoutRect(left + colX[c], top + rowY[r], colX[c + cell.ColSpan] - colX[c],
+                    rowY[r + cell.RowSpan] - rowY[r]);
+                Add(new LayoutItem(LayoutKind.TableCell, rect, Text: cell.Label, Style: StyleOf(cell)));
+                if (contents[i] is not { } placed)
+                {
+                    continue;
+                }
+
+                if (placed.Items is [{ Kind: LayoutKind.TextArea } area] && cell.Has("fill"))
+                {
+                    // 칸을 가득 채우는 입력(마취기록지 REMARK 등)
+                    Add(area with { Bounds = new LayoutRect(rect.X + 2, rect.Y + 2, rect.W - 4, rect.H - 4) });
+                }
+                else if (placed.Items is [{ Kind: LayoutKind.Text } time] && cell.Has("timeGrid"))
+                {
+                    Add(time with { Bounds = new LayoutRect(rect.X + 1, rect.Y + 1, rect.W - 2, rect.H - 2) });
+                }
+                else
+                {
+                    var pad = PadOf(cell);
+                    var dx = pad + (cell.Has("center") ? Math.Max(0, (rect.W - 2 * pad - placed.W) / 2) : 0);
+                    var dy = cell.Has("top") ? CellPadY : Math.Max(CellPadY, (rect.H - placed.H) / 2);
+                    Emit(placed, rect.X + dx, rect.Y + dy);
+                }
+            }
+
+            Y = top + rowY[rowCount] + 6;
+        }
+
+        static int PadOf(TableCell cell) => cell.Has("chart") || cell.Has("timeGrid") ? 1 : CellPadX;
+
+        static CellStyle StyleOf(TableCell cell)
+        {
+            var style = CellStyle.None;
+            if (cell.Label is not null && !cell.Has("plain") && !cell.Has("head"))
+            {
+                style |= CellStyle.Label;
+            }
+
+            if (cell.Has("left")) style |= CellStyle.Left;
+            if (cell.Has("bold")) style |= CellStyle.Bold;
+            if (cell.Has("big")) style |= CellStyle.Big;
+            if (cell.Has("noBorder")) style |= CellStyle.NoBorder;
+            if (cell.Has("head")) style |= CellStyle.Head | CellStyle.Bold | CellStyle.Left;
+            return style;
+        }
+
+        /// <summary>라벨 칸 높이. 줄바꿈 문자와 칸 폭을 넘는 글자에서 줄을 나눈다.</summary>
+        int LabelHeight(string label, int width)
+        {
+            var lines = label.Split('\n').Sum(part => Math.Max(1, (measure(part) + width - 1) / Math.Max(1, width)));
+            return Math.Max(ControlHeight - 2 * CellPadY, lines * LabelLineHeight + 2);
+        }
+
+        Placed Content(IReadOnlyList<FormControl> controls, int width, bool spread = false, bool grid5 = false)
+        {
+            var flow = new ContentFlow(Math.Max(width, 20));
+            for (var i = 0; i < controls.Count; i++)
+            {
+                ContentControl(controls[i], flow, spread, grid5, TrailingWidth(controls, i + 1));
+            }
+
+            return flow.Result();
+        }
+
+        /// <summary>
+        /// 남은 폭을 채우는 입력 뒤에 붙는 라벨·고정 폭 입력의 폭(단위 "㎖" 등). 그만큼 남겨 둬야 같은 줄에 붙는다.
+        /// </summary>
+        int TrailingWidth(IReadOnlyList<FormControl> controls, int from)
+        {
+            var width = 0;
+            for (var i = from; i < controls.Count; i++)
+            {
+                switch (controls[i])
+                {
+                    case LabelControl or TextControl { Grow: false } or PatientControl:
+                        width += Leaf(controls[i] is PatientControl p
+                            ? new LabelControl("", PatientFieldWidth(p.Field)) : controls[i]).Bounds.W + Gap;
+                        break;
+                    default:
+                        return width;
+                }
+            }
+
+            return width;
+        }
+
+        void ContentControl(FormControl control, ContentFlow flow, bool spread, bool grid5, int trailing = 0)
+        {
+            switch (control)
+            {
+                case BreakControl:
+                    flow.NewLine();
+                    break;
+                case LineControl line:
+                    var placed = Content(line.Items, flow.Width);
+                    flow.PutBlock(placed, line.Center ? Math.Max(0, (flow.Width - placed.W) / 2) : 0);
+                    break;
+                case VBoxControl box:
+                    flow.Put(VBox(box, box.W ?? (flow.Remaining >= 60 ? flow.Remaining : flow.Width)));
+                    break;
+                case HBoxControl box:
+                    flow.PutBlock(HBox(box, flow.Width), 0);
+                    break;
+                case OptionControl options when (spread || grid5) && !options.Stack
+                                                && SpreadOptions(options, flow.Width, grid5) is { } spreadOut:
+                    flow.PutBlock(spreadOut, 0);
+                    if (options.Tail is { } spreadTail)
+                    {
+                        ContentControl(spreadTail, flow, false, false);
+                    }
+
+                    break;
+                case OptionControl options:
+                    for (var i = 0; i < options.AllOptions.Count; i++)
+                    {
+                        if (options.Stack)
+                        {
+                            flow.NewLine();
+                        }
+
+                        flow.Put(Inline([OptionItem(options, i), .. InlineFor(options, i).Select(Leaf)]));
+                    }
+
+                    if (options.Tail is { } tail)
+                    {
+                        ContentControl(tail, flow, false, false);
+                    }
+
+                    break;
+                case TextControl { Grow: true } text:
+                    var w = flow.Remaining - trailing;
+                    if (w < 40 && !flow.AtLineStart)
+                    {
+                        flow.NewLine();
+                        w = flow.Width - trailing;
+                    }
+
+                    flow.Put(Single(new LayoutItem(LayoutKind.Text, new LayoutRect(0, 0, Math.Max(24, w), ControlHeight),
+                        text.Key, Control: text)));
+                    break;
+                case TextAreaControl { W: null } area:
+                    flow.PutBlock(Single(new LayoutItem(LayoutKind.TextArea, new LayoutRect(0, 0, flow.Width, area.H),
+                        area.Key, Control: area)), 0);
+                    break;
+                case PatientControl patient:
+                    flow.Put(Single(new LayoutItem(LayoutKind.PatientField,
+                        new LayoutRect(0, 0, PatientFieldWidth(patient.Field), ControlHeight), Text: patient.Field, Control: patient)));
+                    break;
+                case ImageControl image:
+                    flow.Put(Single(new LayoutItem(LayoutKind.Image, new LayoutRect(0, 0, image.W, image.H),
+                        Text: image.Name, Control: image)));
+                    break;
+                case LegendControl legend:
+                    flow.PutBlock(Single(new LayoutItem(LayoutKind.Legend, new LayoutRect(0, 0, flow.Width, legend.H),
+                        Control: legend)), 0);
+                    break;
+                case ChartControl chart:
+                    flow.PutBlock(Single(new LayoutItem(LayoutKind.Chart, new LayoutRect(0, 0, flow.Width, chart.H),
+                        Control: chart)), 0);
+                    break;
+                case LabelControl { W: { } fixedW } label:
+                    flow.Put(Single(new LayoutItem(LayoutKind.Label, new LayoutRect(0, 0, fixedW, ControlHeight), Text: label.Text)));
+                    break;
+                default:
+                    flow.Put(Single(Leaf(control)));
+                    break;
+            }
+        }
+
+        /// <summary>선택지와 인라인 입력처럼 떨어지면 안 되는 요소를 가로로 붙인 덩어리.</summary>
+        static Placed Inline(IReadOnlyList<LayoutItem> items)
+        {
+            var list = new List<LayoutItem>();
+            var x = 0;
+            foreach (var item in items)
+            {
+                list.Add(item with { Bounds = item.Bounds with { X = x, Y = 0 } });
+                x += item.Bounds.W + Gap;
+            }
+
+            return new Placed(list, x - Gap, items.Max(i => i.Bounds.H));
+        }
+
+        /// <summary>
+        /// 선택지를 같은 폭의 칸에 나눠 놓는다(웹 .spread: 한 줄에 모두, .k5: 한 줄에 5개). 선택지가 칸보다
+        /// 넓으면 null을 돌려 보통 흐름 배치로 놓는다.
+        /// </summary>
+        Placed? SpreadOptions(OptionControl options, int width, bool grid5)
+        {
+            var count = options.AllOptions.Count;
+            var perRow = grid5 ? 5 : count;
+            var slot = width / Math.Min(count, perRow);
+            var units = Enumerable.Range(0, count)
+                .Select(i => Inline([OptionItem(options, i), .. InlineFor(options, i).Select(Leaf)])).ToList();
+            if (units.Any(u => u.W > slot - Gap))
+            {
+                return null;
+            }
+
+            var items = new List<LayoutItem>();
+            for (var i = 0; i < count; i++)
+            {
+                var dx = i % perRow * slot;
+                var dy = i / perRow * (ControlHeight + 2);
+                items.AddRange(units[i].Items.Select(item => item with { Bounds = item.Bounds.Offset(dx, dy) }));
+            }
+
+            var rows = (count + perRow - 1) / perRow;
+            return new Placed(items, width, rows * ControlHeight + (rows - 1) * 2);
+        }
+
+        Placed VBox(VBoxControl box, int width)
+        {
+            var items = new List<LayoutItem>();
+            var y = 0;
+            var maxW = 0;
+            foreach (var child in box.Items)
+            {
+                var placed = child is LineControl line ? Content(line.Items, width) : Content([child], width);
+                var center = box.Center || child is LineControl { Center: true };
+                var x = center ? Math.Max(0, (width - placed.W) / 2) : 0;
+                items.AddRange(placed.Items.Select(i => i with { Bounds = i.Bounds.Offset(x, y) }));
+                y += placed.H + 1;
+                maxW = Math.Max(maxW, x + placed.W);
+            }
+
+            return new Placed(items, box.W ?? (box.Center ? width : maxW), Math.Max(0, y - 1));
+        }
+
+        Placed HBox(HBoxControl box, int width)
+        {
+            const int gap = 10;
+            var count = box.Items.Count;
+            var fixedW = box.Spread ? 0 : box.Items.Sum(c => c is VBoxControl { W: { } w } ? w : 0);
+            var flexible = box.Spread ? count : box.Items.Count(c => c is not VBoxControl { W: not null });
+            var share = flexible == 0 ? 0 : Math.Max(40, (width - fixedW - gap * (count - 1)) / flexible);
+            var items = new List<LayoutItem>();
+            var x = 0;
+            var height = 0;
+            foreach (var child in box.Items)
+            {
+                var childW = !box.Spread && child is VBoxControl { W: { } w } ? w : share;
+                var placed = child is VBoxControl vbox ? VBox(vbox, childW) : Content([child], childW);
+                var dx = box.Spread ? Math.Max(0, (childW - placed.W) / 2) : 0;
+                items.AddRange(placed.Items.Select(i => i with { Bounds = i.Bounds.Offset(x + dx, 0) }));
+                x += childW + gap;
+                height = Math.Max(height, placed.H);
+            }
+
+            return new Placed(items, Math.Max(0, x - gap), height);
+        }
+
+        /// <summary>칸 안의 흐름 배치. 넘치면 줄을 바꾸고, 블록(줄·가로 묶음·그래프)은 줄 하나를 통째로 쓴다.</summary>
+        sealed class ContentFlow(int width)
+        {
+            readonly List<LayoutItem> _items = [];
+            int _x;
+            int _top;
+            int _lineHeight;
+            int _maxW;
+
+            public int Width => width;
+            public int Remaining => width - _x;
+            public bool AtLineStart => _x == 0;
+
+            public void NewLine()
+            {
+                if (_x > 0 || _lineHeight > 0)
+                {
+                    _top += _lineHeight + 2;
+                }
+
+                _x = 0;
+                _lineHeight = 0;
+            }
+
+            public void Put(Placed unit)
+            {
+                if (_x > 0 && _x + unit.W > width)
+                {
+                    NewLine();
+                }
+
+                Append(unit, _x, _top);
+                _x += unit.W + Gap;
+                _lineHeight = Math.Max(_lineHeight, unit.H);
+            }
+
+            public void PutBlock(Placed unit, int x)
+            {
+                NewLine();
+                Append(unit, x, _top);
+                _top += unit.H + 2;
+            }
+
+            void Append(Placed unit, int x, int y)
+            {
+                _items.AddRange(unit.Items.Select(i => i with { Bounds = i.Bounds.Offset(x, y) }));
+                _maxW = Math.Max(_maxW, x + unit.W);
+            }
+
+            public Placed Result() =>
+                new(_items, _maxW, _items.Count == 0 ? 0 : _items.Max(i => i.Bounds.Bottom));
         }
 
         sealed class Flow

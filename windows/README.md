@@ -46,9 +46,15 @@ dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -o o
 ## 구조화 서식지
 
 환자 목록의 `DEMO-09`~`DEMO-14`는 산과 서식 기록이다(Labor record Ⅱ, 수술기록 C/sec, 산전초음파 1st·
-2nd&3rd, Fetal echocardiography, Fetal Neurosonography). 고르면 차트 칸 자리에 서식이 뜨고 중간 열이 숨는다.
-서식 정의는 루트의 `ob-forms*.js`에서 `node windows/tools/export-ob-forms.mjs`로 만든
+2nd&3rd, Fetal echocardiography, Fetal Neurosonography). `DEMO-15`~`DEMO-18`은 정형외과·마취 종이 서식
+기록이다(초진기록지, 마취전 환자평가, 마취기록지, 회복실 기록지). 고르면 차트 칸 자리에 서식이 뜨고 중간 열이 숨는다.
+서식 정의는 루트의 `ob-forms*.js`·`paper-forms.js`·`surgery-forms-data.js`에서 `node windows/tools/export-ob-forms.mjs`로 만든
 `src/EmrDemo.Core/Seed/forms.json`이다. 구조만 가져오고 예시 값은 버려 **모든 서식이 빈 상태로 시작**한다.
+
+종이 서식은 칸을 병합한 표(`table`)로 짠다. 라벨 칸·입력 칸 테두리, Mallampati 그림, 병원 로고(비식별화한
+"예시병원" 자리표시), 마취기록지 활력징후 그래프 격자는 두 모드 모두 직접 그린 장식이다(그래프는 빈 격자만 보이고
+입력은 받지 않는다). standard 모드에서 라벨 칸 글자와 머리글 환자 칸(등록번호·이름·성별/나이·진료과)은 `Label`이라
+UIA Text로 읽힌다. 환자 칸은 입력이 아니어서 저장 값이 없고, 성별·나이는 서식 정의의 예시 값(`patient`)이다.
 
 | 스키마 | standard | custom | 저장 값 |
 |---|---|---|---|
@@ -62,7 +68,8 @@ dotnet publish src/EmrDemo.App -c Release -r win-x64 --self-contained false -o o
 - 값은 저장 스냅샷의 `patient.formValues`(키 → 문자열)에 들어가고, `field_commit`의 field는 `form.<키>`다.
   체크·라디오·드롭다운은 바뀌는 즉시, 텍스트·날짜·셀은 기존 규칙대로 기록한다.
 - 키는 `<서식id>.b<블록 번호>.<항목 번호>`(파생 입력은 `.other`·`.tail`·`.<선택지>.<번호>`, 작성일은
-  `<서식id>.writtenOn`). standard 모드 AutomationId는 키이고, 라디오·체크 선택지는 `<키>#<선택지 번호>`다.
+  `<서식id>.writtenOn`). 종이 서식 표 안 입력은 `<서식id>.b<블록>.r<행>c<칸 순번>.<항목>`이고, 칸 안 묶음(줄·세로·가로)은
+  `.<번호>`를 더 붙인다(예: `preanes.b2.r12c0.0.1.0`). standard 모드 AutomationId는 키이고, 라디오·체크 선택지는 `<키>#<선택지 번호>`다.
 - standard `DateTimePicker`는 UIA에서 ComboBox(Value·Toggle·ExpandCollapse)로 보인다. 빈 날짜(체크 해제)는
   화면에 날짜를 감추고 UIA Value가 공백 한 칸(`" "`)이다. 날짜를 넣으려면 Toggle로 체크한 뒤 값을 바꾼다.
 - custom 모드는 서식 전체가 컨트롤 하나다. 클릭으로 요소를 고르고 `Tab`/`Shift+Tab`으로 이동, 체크·라디오는

@@ -70,3 +70,14 @@
 
 - 가정: `DateTimePicker`의 UIA 노출 형태는 CI 덤프로 확인한 뒤 프로브 검사를 정한다.
 - 가정: 서식의 `draw`(그림 작성 영역)는 웹처럼 비활성 영역으로 둔다.
+
+## 추가(2026-10-20) — 정형외과·마취 종이 서식 4종
+
+- 웹 데모의 `paper-forms.js`·`surgery-forms-data.js`(초진기록지·마취전 환자평가·마취기록지·회복실 기록지)를 같은
+  내보내기 스크립트로 `forms.json` 뒤에 붙인다. 환자 목록은 `FormCatalog` 순서대로 `DEMO-15`~`DEMO-18`이 된다.
+- 스키마 추가: 블록 `heading`·`line`·`gap`·`table`(열 너비 px 고정, 칸 `colSpan`·`rowSpan`·`label` 또는 `items`·`style`),
+  컨트롤 `patient`(머리글 환자 칸)·`image`(Mallampati·로고)·`legend`·`chart`(마취기록지 그래프, 빈 격자)·`line`·`vbox`·`hbox`,
+  `text.grow`(칸의 남은 폭 채우기). 웹의 null 열 너비는 내보낼 때 서식 폭으로 풀어 px로 적는다.
+- 배치: 표는 칸 내용을 먼저 흘려 놓아 높이를 재고, 행 높이 = 그 행 단일 칸의 최댓값, 병합 칸이 모자라면 마지막 행을
+  늘린다. `fill` 칸의 textarea와 `timeGrid` 칸의 입력은 칸을 가득 채운다. 표는 배치 폭과 상관없이 고정 폭이다.
+- 장식(칸 테두리·바탕, 그림, 그래프)은 `PaperDrawing`이 두 모드에 같이 그린다.
