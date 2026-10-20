@@ -77,9 +77,13 @@ static class PaperDrawing
             new PointF(14, 19), new PointF(10, 19), new PointF(10, 14), new PointF(5, 14), new PointF(5, 10), new PointF(10, 10),
         }.Select(p => new PointF(box.X + p.X * u, box.Y + p.Y * u)).ToArray();
         g.FillPolygon(Brushes.White, cross);
+        // 그림(안티앨리어싱) 상태 안에서 그리므로 GDI+ 글자를 쓴다. W1에서 TextRenderer로 그린 로고 글자가
+        // 마취기록지를 맨 아래까지 내렸을 때만 빠지는 일이 있었다.
         using var font = new Font("Malgun Gothic", 11f, FontStyle.Bold);
-        TextRenderer.DrawText(g, "예시병원", font, new Rectangle(box.Right + 4, r.Y, r.Width - size - 4, r.Height),
-            ColorTranslator.FromHtml("#3e4a5a"), Keep | TextFormatFlags.VerticalCenter);
+        using var brush = new SolidBrush(ColorTranslator.FromHtml("#3e4a5a"));
+        using var format = new StringFormat { LineAlignment = StringAlignment.Center, FormatFlags = StringFormatFlags.NoWrap };
+        g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+        g.DrawString("예시병원", font, brush, new RectangleF(box.Right + 4, r.Y, r.Width - size - 4, r.Height), format);
     }
 
     static GraphicsPath RoundRect(Rectangle r, int radius)
