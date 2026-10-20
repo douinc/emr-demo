@@ -6687,5 +6687,8210 @@
     ]
    }
   ]
+ },
+ {
+  "id": "osfirst",
+  "title": "초진기록지",
+  "department": "정형외과",
+  "summary": "정형외과 초진 기록 (C.C · P.I · 통증 평가 · P/E)",
+  "labelWidth": 150,
+  "writtenOnKey": "osfirst.writtenOn",
+  "blocks": [
+   {
+    "type": "heading",
+    "text": "초진기록지"
+   },
+   {
+    "type": "table",
+    "columns": [
+     84,
+     96,
+     52,
+     104,
+     76,
+     86,
+     60,
+     162
+    ],
+    "rows": [
+     [
+      {
+       "label": "등록번호",
+       "style": [
+        "bold"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "patient",
+         "field": "id"
+        }
+       ]
+      },
+      {
+       "label": "이름",
+       "style": [
+        "bold"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "patient",
+         "field": "name"
+        }
+       ]
+      },
+      {
+       "label": "성별/나이",
+       "style": [
+        "bold"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "patient",
+         "field": "sexAge"
+        }
+       ]
+      },
+      {
+       "label": "진료과",
+       "style": [
+        "bold"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "patient",
+         "field": "dept"
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     530,
+     190
+    ],
+    "rows": [
+     [
+      {
+       "label": "Chief Complaint",
+       "style": [
+        "head"
+       ]
+      },
+      {
+       "label": "Onset",
+       "style": [
+        "head"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "textarea",
+         "key": "osfirst.b2.r1c0.0",
+         "h": 46
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "textarea",
+         "key": "osfirst.b2.r1c1.0",
+         "h": 46
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     720
+    ],
+    "rows": [
+     [
+      {
+       "label": "Present Illness",
+       "style": [
+        "head"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "textarea",
+         "key": "osfirst.b3.r1c0.0",
+         "h": 80
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     720
+    ],
+    "rows": [
+     [
+      {
+       "items": [
+        {
+         "c": "vbox",
+         "items": [
+          {
+           "c": "line",
+           "items": [
+            {
+             "c": "label",
+             "text": "통증",
+             "w": 46
+            },
+            {
+             "c": "check",
+             "key": "osfirst.b4.r0c0.0.0.1",
+             "options": [
+              "유",
+              "무"
+             ]
+            },
+            {
+             "c": "label",
+             "text": "",
+             "w": 50
+            },
+            {
+             "c": "label",
+             "text": "VAS"
+            },
+            {
+             "c": "text",
+             "key": "osfirst.b4.r0c0.0.0.4",
+             "w": 56
+            },
+            {
+             "c": "label",
+             "text": "점"
+            },
+            {
+             "c": "label",
+             "text": "",
+             "w": 20
+            },
+            {
+             "c": "label",
+             "text": "or"
+            },
+            {
+             "c": "label",
+             "text": "",
+             "w": 20
+            },
+            {
+             "c": "label",
+             "text": "FPSR"
+            },
+            {
+             "c": "text",
+             "key": "osfirst.b4.r0c0.0.0.10",
+             "w": 56
+            },
+            {
+             "c": "label",
+             "text": "점"
+            }
+           ]
+          },
+          {
+           "c": "line",
+           "items": [
+            {
+             "c": "label",
+             "text": "빈도",
+             "w": 46
+            },
+            {
+             "c": "text",
+             "key": "osfirst.b4.r0c0.0.1.1",
+             "w": 90,
+             "grow": true
+            }
+           ]
+          },
+          {
+           "c": "line",
+           "items": [
+            {
+             "c": "label",
+             "text": "양상",
+             "w": 46
+            },
+            {
+             "c": "text",
+             "key": "osfirst.b4.r0c0.0.2.1",
+             "w": 90,
+             "grow": true
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     720
+    ],
+    "rows": [
+     [
+      {
+       "label": "Past History",
+       "style": [
+        "head"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "textarea",
+         "key": "osfirst.b5.r1c0.0",
+         "h": 64
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     720
+    ],
+    "rows": [
+     [
+      {
+       "label": "Physical Examination",
+       "style": [
+        "head"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "textarea",
+         "key": "osfirst.b6.r1c0.0",
+         "h": 80
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     720
+    ],
+    "rows": [
+     [
+      {
+       "label": "특이소견",
+       "style": [
+        "head"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "textarea",
+         "key": "osfirst.b7.r1c0.0",
+         "h": 46
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     720
+    ],
+    "rows": [
+     [
+      {
+       "label": "Impression",
+       "style": [
+        "head"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "textarea",
+         "key": "osfirst.b8.r1c0.0",
+         "h": 36
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     720
+    ],
+    "rows": [
+     [
+      {
+       "label": "Plan",
+       "style": [
+        "head"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "textarea",
+         "key": "osfirst.b9.r1c0.0",
+         "h": 52
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "items": [
+     {
+      "c": "image",
+      "name": "logo",
+      "w": 110,
+      "h": 26
+     },
+     {
+      "c": "label",
+      "text": "",
+      "w": 40
+     },
+     {
+      "c": "label",
+      "text": "작성일"
+     },
+     {
+      "c": "date",
+      "key": "osfirst.b10.3"
+     },
+     {
+      "c": "label",
+      "text": "",
+      "w": 10
+     },
+     {
+      "c": "label",
+      "text": "주치의"
+     },
+     {
+      "c": "text",
+      "key": "osfirst.b10.6",
+      "w": 90
+     },
+     {
+      "c": "label",
+      "text": "(서명)"
+     }
+    ]
+   }
+  ],
+  "patient": {
+   "sex": "M",
+   "age": "54"
+  }
+ },
+ {
+  "id": "preanes",
+  "title": "마취전 환자평가",
+  "department": "마취통증의학과",
+  "summary": "마취 전 환자 상태 평가 (병력 · 검사 · 기도 평가)",
+  "labelWidth": 150,
+  "writtenOnKey": "preanes.writtenOn",
+  "blocks": [
+   {
+    "type": "heading",
+    "text": "마취전 환자평가"
+   },
+   {
+    "type": "line",
+    "items": [
+     {
+      "c": "label",
+      "text": "등록번호 :"
+     },
+     {
+      "c": "patient",
+      "field": "id"
+     },
+     {
+      "c": "label",
+      "text": "이름 :"
+     },
+     {
+      "c": "patient",
+      "field": "name"
+     },
+     {
+      "c": "label",
+      "text": "성별/나이 :"
+     },
+     {
+      "c": "patient",
+      "field": "sexAge"
+     },
+     {
+      "c": "label",
+      "text": "병실 :"
+     },
+     {
+      "c": "text",
+      "key": "preanes.b1.7",
+      "w": 110
+     },
+     {
+      "c": "label",
+      "text": "집도의 :"
+     },
+     {
+      "c": "text",
+      "key": "preanes.b1.9",
+      "w": 100
+     }
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     170,
+     180,
+     110,
+     100,
+     220
+    ],
+    "rows": [
+     [
+      {
+       "label": "수술전 진단명"
+      },
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "text",
+         "key": "preanes.b2.r0c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "예정 수술명"
+      },
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "text",
+         "key": "preanes.b2.r1c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "rowSpan": 2,
+       "label": "Vital sign"
+      },
+      {
+       "colSpan": 2,
+       "items": [
+        {
+         "c": "label",
+         "text": "BP(mmHg) :"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r2c1.1",
+         "w": 50
+        },
+        {
+         "c": "label",
+         "text": "/"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r2c1.3",
+         "w": 50
+        }
+       ]
+      },
+      {
+       "colSpan": 2,
+       "items": [
+        {
+         "c": "label",
+         "text": "PR(회/분) :"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r2c2.1",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "colSpan": 2,
+       "items": [
+        {
+         "c": "label",
+         "text": "RR(회/분) :"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r3c0.1",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 2,
+       "items": [
+        {
+         "c": "label",
+         "text": "BT(℃) :"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r3c1.1",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "키.몸무게"
+      },
+      {
+       "colSpan": 2,
+       "items": [
+        {
+         "c": "label",
+         "text": "HT :"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r4c1.1",
+         "w": 90
+        },
+        {
+         "c": "label",
+         "text": "cm"
+        }
+       ]
+      },
+      {
+       "colSpan": 2,
+       "items": [
+        {
+         "c": "label",
+         "text": "WT :"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r4c2.1",
+         "w": 90
+        },
+        {
+         "c": "label",
+         "text": "kg"
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "금식.동의서"
+      },
+      {
+       "colSpan": 2,
+       "items": [
+        {
+         "c": "check",
+         "key": "preanes.b2.r5c1.0",
+         "options": [
+          "NPO since"
+         ]
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r5c1.1",
+         "w": 110
+        }
+       ]
+      },
+      {
+       "colSpan": 2,
+       "items": [
+        {
+         "c": "check",
+         "key": "preanes.b2.r5c2.0",
+         "options": [
+          "Permision"
+         ]
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "rowSpan": 3,
+       "label": "마취관련 과거력"
+      },
+      {
+       "label": "Difficult airway",
+       "style": [
+        "left",
+        "plain"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "check",
+         "key": "preanes.b2.r6c2.0",
+         "options": [
+          "N",
+          "Y"
+         ]
+        }
+       ],
+       "style": [
+        "spread"
+       ]
+      }
+     ],
+     [
+      {
+       "label": "Complication",
+       "style": [
+        "left",
+        "plain"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "check",
+         "key": "preanes.b2.r7c1.0",
+         "options": [
+          "N",
+          "Y"
+         ]
+        }
+       ],
+       "style": [
+        "spread"
+       ]
+      }
+     ],
+     [
+      {
+       "label": "FHx",
+       "style": [
+        "left",
+        "plain"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "check",
+         "key": "preanes.b2.r8c1.0",
+         "options": [
+          "N",
+          "Y"
+         ]
+        }
+       ],
+       "style": [
+        "spread"
+       ]
+      }
+     ],
+     [
+      {
+       "rowSpan": 2,
+       "label": "PHX"
+      },
+      {
+       "label": "OP history",
+       "style": [
+        "left",
+        "plain"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "preanes.b2.r9c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "check",
+         "key": "preanes.b2.r10c0.0",
+         "options": [
+          "Asthma",
+          "Hypertension",
+          "DM",
+          "고지혈증",
+          "Hepatitis",
+          "TBC",
+          "Thyroid Dis",
+          "Allergy",
+          "URI"
+         ]
+        }
+       ],
+       "style": [
+        "grid5"
+       ]
+      }
+     ],
+     [
+      {
+       "rowSpan": 3,
+       "label": "Labs study"
+      },
+      {
+       "label": "Chest PA",
+       "style": [
+        "left",
+        "plain"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "preanes.b2.r11c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "EKG",
+       "style": [
+        "left",
+        "plain"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "preanes.b2.r12c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "hbox",
+         "items": [
+          {
+           "c": "vbox",
+           "items": [
+            {
+             "c": "line",
+             "items": [
+              {
+               "c": "check",
+               "key": "preanes.b2.r13c0.0.0.0.0",
+               "options": [
+                "Hb/Hct/Plt"
+               ]
+              },
+              {
+               "c": "label",
+               "text": "("
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.0.0.2",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": "/"
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.0.0.4",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": "/"
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.0.0.6",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": ")"
+              }
+             ]
+            },
+            {
+             "c": "line",
+             "items": [
+              {
+               "c": "check",
+               "key": "preanes.b2.r13c0.0.0.1.0",
+               "options": [
+                "PT/APTT"
+               ]
+              },
+              {
+               "c": "label",
+               "text": "("
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.0.1.2",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": "/"
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.0.1.4",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": ")"
+              }
+             ]
+            },
+            {
+             "c": "line",
+             "items": [
+              {
+               "c": "check",
+               "key": "preanes.b2.r13c0.0.0.2.0",
+               "options": [
+                "Na/k/Cl"
+               ]
+              },
+              {
+               "c": "label",
+               "text": "("
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.0.2.2",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": "/"
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.0.2.4",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": "/"
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.0.2.6",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": ")"
+              }
+             ]
+            },
+            {
+             "c": "line",
+             "items": [
+              {
+               "c": "check",
+               "key": "preanes.b2.r13c0.0.0.3.0",
+               "options": [
+                "U/A"
+               ]
+              },
+              {
+               "c": "label",
+               "text": "("
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.0.3.2",
+               "w": 110
+              },
+              {
+               "c": "label",
+               "text": ")"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "c": "vbox",
+           "items": [
+            {
+             "c": "line",
+             "items": [
+              {
+               "c": "check",
+               "key": "preanes.b2.r13c0.0.1.0.0",
+               "options": [
+                "ABO Typing"
+               ]
+              },
+              {
+               "c": "label",
+               "text": "("
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.1.0.2",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": "/"
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.1.0.4",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": ")"
+              }
+             ]
+            },
+            {
+             "c": "line",
+             "items": [
+              {
+               "c": "check",
+               "key": "preanes.b2.r13c0.0.1.1.0",
+               "options": [
+                "AST/ALT"
+               ]
+              },
+              {
+               "c": "label",
+               "text": "("
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.1.1.2",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": "/"
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.1.1.4",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": ")"
+              }
+             ]
+            },
+            {
+             "c": "line",
+             "items": [
+              {
+               "c": "check",
+               "key": "preanes.b2.r13c0.0.1.2.0",
+               "options": [
+                "Bun/Cr"
+               ]
+              },
+              {
+               "c": "label",
+               "text": "("
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.1.2.2",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": "/"
+              },
+              {
+               "c": "text",
+               "key": "preanes.b2.r13c0.0.1.2.4",
+               "w": 40
+              },
+              {
+               "c": "label",
+               "text": ")"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "치아상태"
+      },
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "check",
+         "key": "preanes.b2.r14c1.0",
+         "options": [
+          "Normal",
+          "Abnormal (의치/흔들림)"
+         ]
+        }
+       ],
+       "style": [
+        "spread"
+       ]
+      }
+     ],
+     [
+      {
+       "label": "Mallampai grade"
+      },
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "hbox",
+         "items": [
+          {
+           "c": "vbox",
+           "center": true,
+           "items": [
+            {
+             "c": "image",
+             "name": "mallampati1",
+             "w": 72,
+             "h": 90
+            },
+            {
+             "c": "check",
+             "key": "preanes.b2.r15c1.0.0.0",
+             "options": [
+              "Class 1"
+             ]
+            }
+           ]
+          },
+          {
+           "c": "vbox",
+           "center": true,
+           "items": [
+            {
+             "c": "image",
+             "name": "mallampati2",
+             "w": 72,
+             "h": 90
+            },
+            {
+             "c": "check",
+             "key": "preanes.b2.r15c1.0.1.0",
+             "options": [
+              "Class 2"
+             ]
+            }
+           ]
+          },
+          {
+           "c": "vbox",
+           "center": true,
+           "items": [
+            {
+             "c": "image",
+             "name": "mallampati3",
+             "w": 72,
+             "h": 90
+            },
+            {
+             "c": "check",
+             "key": "preanes.b2.r15c1.0.2.0",
+             "options": [
+              "Class 3"
+             ]
+            }
+           ]
+          },
+          {
+           "c": "vbox",
+           "center": true,
+           "items": [
+            {
+             "c": "image",
+             "name": "mallampati4",
+             "w": 72,
+             "h": 90
+            },
+            {
+             "c": "check",
+             "key": "preanes.b2.r15c1.0.3.0",
+             "options": [
+              "Class 4"
+             ]
+            }
+           ]
+          }
+         ],
+         "spread": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "Premedication"
+      },
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "text",
+         "key": "preanes.b2.r16c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "ASA class"
+      },
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "check",
+         "key": "preanes.b2.r17c1.0",
+         "options": [
+          "Normal",
+          "Abnormal (의치/흔들림)"
+         ]
+        }
+       ],
+       "style": [
+        "spread"
+       ]
+      }
+     ],
+     [
+      {
+       "label": "Anesthetic plan"
+      },
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "check",
+         "key": "preanes.b2.r18c1.0",
+         "options": [
+          "General",
+          "Spinal",
+          "Epidural",
+          "BPB",
+          "Mask",
+          "Other"
+         ]
+        }
+       ],
+       "style": [
+        "spread"
+       ]
+      }
+     ],
+     [
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "preanes.b2.r19c0.0",
+         "w": 50
+        },
+        {
+         "c": "label",
+         "text": "년"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r19c0.2",
+         "w": 30
+        },
+        {
+         "c": "label",
+         "text": "월"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r19c0.4",
+         "w": 30
+        },
+        {
+         "c": "label",
+         "text": "일"
+        },
+        {
+         "c": "label",
+         "text": "("
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r19c0.7",
+         "w": 30
+        },
+        {
+         "c": "label",
+         "text": ":"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r19c0.9",
+         "w": 30
+        },
+        {
+         "c": "label",
+         "text": ")"
+        }
+       ],
+       "style": [
+        "center"
+       ]
+      },
+      {
+       "colSpan": 2,
+       "items": [
+        {
+         "c": "label",
+         "text": "마취의 :"
+        },
+        {
+         "c": "text",
+         "key": "preanes.b2.r19c1.1",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "items": [
+     {
+      "c": "label",
+      "text": "",
+      "w": 300
+     },
+     {
+      "c": "image",
+      "name": "logo",
+      "w": 110,
+      "h": 26
+     }
+    ]
+   }
+  ],
+  "patient": {
+   "sex": "M",
+   "age": "54"
+  }
+ },
+ {
+  "id": "anesrec",
+  "title": "마취기록지",
+  "department": "마취통증의학과",
+  "summary": "ANESTHESIA RECORD (투약 · 활력징후 그래프 · 마취 방법)",
+  "labelWidth": 150,
+  "writtenOnKey": "anesrec.writtenOn",
+  "blocks": [
+   {
+    "type": "table",
+    "columns": [
+     150,
+     450,
+     80,
+     80,
+     80
+    ],
+    "rows": [
+     [
+      {
+       "label": "ROOM"
+      },
+      {
+       "rowSpan": 2,
+       "label": "ANESTHESIA RECORD",
+       "style": [
+        "noBorder",
+        "plain",
+        "big"
+       ]
+      },
+      {
+       "label": "YEAR"
+      },
+      {
+       "label": "MONTH"
+      },
+      {
+       "label": "DAY"
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b0.r1c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b0.r1c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ],
+       "style": [
+        "center"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b0.r1c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b0.r1c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     100,
+     60,
+     60,
+     130,
+     490
+    ],
+    "rows": [
+     [
+      {
+       "rowSpan": 2,
+       "items": [
+        {
+         "c": "vbox",
+         "items": [
+          {
+           "c": "label",
+           "text": "NAME"
+          },
+          {
+           "c": "patient",
+           "field": "name"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "rowSpan": 2,
+       "items": [
+        {
+         "c": "vbox",
+         "items": [
+          {
+           "c": "label",
+           "text": "SEX"
+          },
+          {
+           "c": "patient",
+           "field": "sex"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "rowSpan": 2,
+       "items": [
+        {
+         "c": "vbox",
+         "items": [
+          {
+           "c": "label",
+           "text": "AGE"
+          },
+          {
+           "c": "patient",
+           "field": "age"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "rowSpan": 2,
+       "items": [
+        {
+         "c": "vbox",
+         "items": [
+          {
+           "c": "label",
+           "text": "HT/BW"
+          },
+          {
+           "c": "line",
+           "items": [
+            {
+             "c": "text",
+             "key": "anesrec.b1.r0c3.0.1.0",
+             "w": 50
+            },
+            {
+             "c": "label",
+             "text": "/"
+            },
+            {
+             "c": "text",
+             "key": "anesrec.b1.r0c3.0.1.2",
+             "w": 50
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "HOSPITAL NO.",
+         "w": 110
+        },
+        {
+         "c": "patient",
+         "field": "id"
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "ASA PHYSICAL STATUS",
+         "w": 140
+        },
+        {
+         "c": "radio",
+         "key": "anesrec.b1.r1c0.1",
+         "options": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+         ]
+        },
+        {
+         "c": "check",
+         "key": "anesrec.b1.r1c0.2",
+         "options": [
+          "E"
+         ]
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "colSpan": 4,
+       "label": "마취유전 구두로 환자상태 평가 확인 하였음",
+       "style": [
+        "left",
+        "plain"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b1.r2c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "colSpan": 4,
+       "label": "PREOP.DIAGNOSIS  /  POSTOP.DIAGNOSIS",
+       "style": [
+        "left",
+        "plain"
+       ]
+      },
+      {
+       "label": "PROPOSED OPERATION / OPERATION PERFORMED",
+       "style": [
+        "left",
+        "plain"
+       ]
+      }
+     ],
+     [
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b1.r4c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b1.r4c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     190,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     13,
+     182
+    ],
+    "rows": [
+     [
+      {
+       "label": "TIME",
+       "style": [
+        "left",
+        "bold"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r0c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "label": "REMARK",
+       "style": [
+        "left",
+        "bold",
+        "plain"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "O2("
+        },
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c0.1",
+         "w": 44
+        },
+        {
+         "c": "label",
+         "text": "ℓ/min)"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r1c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "rowSpan": 25,
+       "items": [
+        {
+         "c": "textarea",
+         "key": "anesrec.b2.r1c13.0",
+         "h": 40
+        }
+       ],
+       "style": [
+        "fill",
+        "top"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "Air("
+        },
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c0.1",
+         "w": 44
+        },
+        {
+         "c": "label",
+         "text": "ℓ/min)"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r2c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "Sevoflurance("
+        },
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c0.1",
+         "w": 30
+        },
+        {
+         "c": "label",
+         "text": "%)"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r3c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r4c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "H/S",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": "(ml)"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r5c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "N/S",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": "(ml)"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r6c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "Volulyte 500",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": "(ml)"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r7c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "Blood",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": ""
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r8c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r9c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "덱스메딘 50",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": "ml"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r10c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "Fentanyl",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": "(mg)"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r11c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "2%리도카인",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": "(mg)"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r12c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "포폴",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": "(mg)"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r13c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "로큐니움",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": "(mg)"
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r14c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r15c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r16c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r17c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "SpO2",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": ""
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r18c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "ETCO2",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": ""
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r19c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "EKG",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": ""
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r20c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "Temperature",
+         "w": 108
+        },
+        {
+         "c": "label",
+         "text": ""
+        }
+       ],
+       "style": [
+        "compact"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c1.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c2.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c3.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c4.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c5.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c6.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c7.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c8.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c9.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c10.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c11.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      },
+      {
+       "colSpan": 3,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r21c12.0",
+         "w": 90
+        }
+       ],
+       "style": [
+        "timeGrid"
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "legend",
+         "h": 300,
+         "min": 10,
+         "max": 210
+        }
+       ],
+       "style": [
+        "chart"
+       ]
+      },
+      {
+       "colSpan": 36,
+       "items": [
+        {
+         "c": "chart",
+         "columns": 36,
+         "h": 300,
+         "min": 10,
+         "max": 210
+        }
+       ],
+       "style": [
+        "chart"
+       ]
+      }
+     ],
+     [
+      {
+       "label": "Drug No.",
+       "style": [
+        "left"
+       ]
+      },
+      {
+       "colSpan": 36,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r23c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "Pt. Position",
+       "style": [
+        "left"
+       ]
+      },
+      {
+       "colSpan": 36,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r24c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "colSpan": 37,
+       "items": [
+        {
+         "c": "vbox",
+         "items": [
+          {
+           "c": "line",
+           "items": [
+            {
+             "c": "label",
+             "text": "ANESTHESIA METHOD"
+            }
+           ],
+           "center": true
+          },
+          {
+           "c": "hbox",
+           "items": [
+            {
+             "c": "vbox",
+             "items": [
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.0.0.0",
+                 "options": [
+                  "Circuit(비급여/ 급여)"
+                 ]
+                },
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.0.0.1",
+                 "options": [
+                  "Circle with MASK"
+                 ]
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.0.1.0",
+                 "options": [
+                  "LMA #"
+                 ]
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.0.1.1",
+                 "w": 30
+                },
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.0.1.2",
+                 "options": [
+                  "I-Gel #"
+                 ]
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.0.1.3",
+                 "w": 30
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.0.2.0",
+                 "options": [
+                  "Endotracheal"
+                 ]
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "Size"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.0.3.1",
+                 "w": 30
+                },
+                {
+                 "c": "label",
+                 "text": "Fr./ cuff"
+                },
+                {
+                 "c": "radio",
+                 "key": "anesrec.b2.r25c0.0.1.0.3.3",
+                 "options": [
+                  "+",
+                  "-"
+                 ]
+                },
+                {
+                 "c": "label",
+                 "text": "/ depth:"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.0.3.5",
+                 "w": 30
+                },
+                {
+                 "c": "label",
+                 "text": "cm"
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "radio",
+                 "key": "anesrec.b2.r25c0.0.1.0.4.0",
+                 "options": [
+                  "Oral",
+                  "Naso",
+                  "Trac"
+                 ]
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.0.5.0",
+                 "options": [
+                  "Video Blade (1회용.C)"
+                 ]
+                },
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.0.5.1",
+                 "options": [
+                  "wire/plain"
+                 ]
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.0.6.0",
+                 "options": [
+                  "pillow"
+                 ]
+                },
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.0.6.1",
+                 "options": [
+                  "Tube holder"
+                 ]
+                },
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.0.6.2",
+                 "options": [
+                  "ST Probe"
+                 ]
+                }
+               ]
+              }
+             ],
+             "w": 275
+            },
+            {
+             "c": "vbox",
+             "items": [
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.1.0.0",
+                 "options": [
+                  "Regional"
+                 ]
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "radio",
+                 "key": "anesrec.b2.r25c0.0.1.1.1.0",
+                 "options": [
+                  "SPI",
+                  "EPI",
+                  "BPB",
+                  "CSE",
+                  "Caudal"
+                 ]
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "P.Po :"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.1.2.1",
+                 "w": 50
+                },
+                {
+                 "c": "label",
+                 "text": "Needle:"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.1.2.3",
+                 "w": 36
+                },
+                {
+                 "c": "label",
+                 "text": "G"
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "Injection level :"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.1.3.1",
+                 "w": 90,
+                 "grow": true
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "Anesth level :"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.1.4.1",
+                 "w": 90,
+                 "grow": true
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "CSF :"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.1.5.1",
+                 "w": 50
+                },
+                {
+                 "c": "label",
+                 "text": "Blood :"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.1.5.3",
+                 "w": 50
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.1.6.0",
+                 "options": [
+                  "Mask"
+                 ]
+                },
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.1.6.1",
+                 "options": [
+                  "N-P"
+                 ]
+                },
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.1.6.2",
+                 "options": [
+                  "ST Probe"
+                 ]
+                }
+               ]
+              }
+             ],
+             "w": 205
+            },
+            {
+             "c": "vbox",
+             "items": [
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.2.0.0",
+                 "options": [
+                  "IV PCA"
+                 ]
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "Fentanyl"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.2.1.1",
+                 "w": 50
+                },
+                {
+                 "c": "label",
+                 "text": "㎍"
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "+네큐팜"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.2.2.1",
+                 "w": 50
+                },
+                {
+                 "c": "label",
+                 "text": "@"
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "+람세트"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.2.3.1",
+                 "w": 50
+                },
+                {
+                 "c": "label",
+                 "text": "@"
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "+N/S=100㎖"
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.2.5.0",
+                 "options": [
+                  "IV PCA"
+                 ]
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "Fentanyl"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.2.6.1",
+                 "w": 50
+                },
+                {
+                 "c": "label",
+                 "text": "㎍"
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "+람세트"
+                },
+                {
+                 "c": "text",
+                 "key": "anesrec.b2.r25c0.0.1.2.7.1",
+                 "w": 50
+                },
+                {
+                 "c": "label",
+                 "text": "@"
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "label",
+                 "text": "+N/S=100㎖"
+                }
+               ]
+              },
+              {
+               "c": "line",
+               "items": [
+                {
+                 "c": "check",
+                 "key": "anesrec.b2.r25c0.0.1.2.9.0",
+                 "options": [
+                  "PCA refuse"
+                 ]
+                }
+               ]
+              }
+             ],
+             "w": 150
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "URINE OUTPUT",
+       "style": [
+        "left"
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r26c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r26c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r26c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r26c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r26c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r26c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "TOTAL"
+        },
+        {
+         "c": "text",
+         "key": "anesrec.b2.r26c7.1",
+         "w": 90,
+         "grow": true
+        },
+        {
+         "c": "label",
+         "text": "㎖"
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "BLOODLOSS",
+       "style": [
+        "left"
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r27c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r27c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r27c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r27c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r27c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "colSpan": 6,
+       "items": [
+        {
+         "c": "text",
+         "key": "anesrec.b2.r27c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "label",
+         "text": "TOTAL"
+        },
+        {
+         "c": "text",
+         "key": "anesrec.b2.r27c7.1",
+         "w": 90,
+         "grow": true
+        },
+        {
+         "c": "label",
+         "text": "㎖"
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "colSpan": 22,
+       "items": [
+        {
+         "c": "vbox",
+         "items": [
+          {
+           "c": "label",
+           "text": "ANESTHESIOLOGISTS"
+          },
+          {
+           "c": "text",
+           "key": "anesrec.b2.r28c0.0.1",
+           "w": 90,
+           "grow": true
+          }
+         ]
+        }
+       ],
+       "style": [
+        "top"
+       ]
+      },
+      {
+       "colSpan": 15,
+       "items": [
+        {
+         "c": "vbox",
+         "items": [
+          {
+           "c": "label",
+           "text": "SURGEONS"
+          },
+          {
+           "c": "text",
+           "key": "anesrec.b2.r28c1.0.1",
+           "w": 90,
+           "grow": true
+          }
+         ]
+        }
+       ],
+       "style": [
+        "top"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "vbox",
+         "items": [
+          {
+           "c": "line",
+           "items": [
+            {
+             "c": "label",
+             "text": "Scru.Nr",
+             "w": 50
+            },
+            {
+             "c": "text",
+             "key": "anesrec.b2.r28c2.0.0.1",
+             "w": 90,
+             "grow": true
+            }
+           ]
+          },
+          {
+           "c": "line",
+           "items": [
+            {
+             "c": "label",
+             "text": "ANE.Nr",
+             "w": 50
+            },
+            {
+             "c": "text",
+             "key": "anesrec.b2.r28c2.0.1.1",
+             "w": 90,
+             "grow": true
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "items": [
+     {
+      "c": "label",
+      "text": "",
+      "w": 320
+     },
+     {
+      "c": "image",
+      "name": "logo",
+      "w": 110,
+      "h": 26
+     }
+    ]
+   }
+  ],
+  "patient": {
+   "sex": "M",
+   "age": "54"
+  }
+ },
+ {
+  "id": "pacu",
+  "title": "회복실 기록지",
+  "department": "마취통증의학과",
+  "summary": "회복실 간호 기록 (활력징후 · I/O · PAR score)",
+  "labelWidth": 150,
+  "writtenOnKey": "pacu.writtenOn",
+  "blocks": [
+   {
+    "type": "heading",
+    "text": "회복실 기록지"
+   },
+   {
+    "type": "line",
+    "items": [
+     {
+      "c": "label",
+      "text": "등록번호 :"
+     },
+     {
+      "c": "patient",
+      "field": "id"
+     },
+     {
+      "c": "label",
+      "text": "이름 :"
+     },
+     {
+      "c": "patient",
+      "field": "name"
+     },
+     {
+      "c": "label",
+      "text": "성별/나이 :"
+     },
+     {
+      "c": "patient",
+      "field": "sexAge"
+     },
+     {
+      "c": "label",
+      "text": "진료과 :"
+     },
+     {
+      "c": "patient",
+      "field": "dept"
+     }
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     96,
+     150,
+     80,
+     150,
+     80,
+     224
+    ],
+    "rows": [
+     [
+      {
+       "label": "마취종류"
+      },
+      {
+       "colSpan": 5,
+       "items": [
+        {
+         "c": "check",
+         "key": "pacu.b2.r0c1.0",
+         "options": [
+          "General",
+          "Spninal",
+          "BPB",
+          "Epidural",
+          "Mask",
+          "Other"
+         ]
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "colSpan": 2,
+       "label": "Pre op. Mental Status:",
+       "style": [
+        "left"
+       ]
+      },
+      {
+       "colSpan": 4,
+       "items": [
+        {
+         "c": "check",
+         "key": "pacu.b2.r1c1.0",
+         "options": [
+          "Alert",
+          "Drowsy",
+          "Confused",
+          "Non-responsive",
+          "Other"
+         ]
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "Monitor"
+      },
+      {
+       "colSpan": 5,
+       "items": [
+        {
+         "c": "check",
+         "key": "pacu.b2.r2c1.0",
+         "options": [
+          "NIBP",
+          "EKG",
+          "SpO2",
+          "Others"
+         ]
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "입실시간"
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b2.r3c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "label": "퇴실시간"
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b2.r3c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "label": "퇴실장소"
+      },
+      {
+       "items": [
+        {
+         "c": "check",
+         "key": "pacu.b2.r3c5.0",
+         "options": [
+          "수술실",
+          "회복실"
+         ]
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "회복실 간호사"
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b2.r4c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "label": "담당 마취의"
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b2.r4c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "label": "낙상예방\n간호"
+      },
+      {
+       "items": [
+        {
+         "c": "check",
+         "key": "pacu.b2.r4c5.0",
+         "options": [
+          "Knee band",
+          "Arm band"
+         ]
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "items": [
+     {
+      "c": "label",
+      "text": "[Vital Sign]"
+     }
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     230,
+     90,
+     70,
+     70,
+     70,
+     70,
+     60,
+     60,
+     60
+    ],
+    "rows": [
+     [
+      {
+       "label": "Time"
+      },
+      {
+       "label": "BP"
+      },
+      {
+       "label": "PR"
+      },
+      {
+       "label": "RR"
+      },
+      {
+       "label": "SpO2"
+      },
+      {
+       "label": "Temp"
+      },
+      {
+       "label": "오심"
+      },
+      {
+       "label": "구토"
+      },
+      {
+       "label": "NRS"
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r1c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r1c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r1c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r1c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r1c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r1c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r1c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r1c7.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r1c8.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r2c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r2c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r2c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r2c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r2c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r2c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r2c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r2c7.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r2c8.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r3c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r3c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r3c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r3c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r3c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r3c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r3c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r3c7.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r3c8.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r4c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r4c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r4c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r4c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r4c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r4c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r4c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r4c7.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r4c8.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r5c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r5c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r5c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r5c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r5c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r5c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r5c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r5c7.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r5c8.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r6c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r6c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r6c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r6c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r6c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r6c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r6c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r6c7.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r6c8.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r7c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r7c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r7c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r7c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r7c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r7c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r7c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r7c7.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r7c8.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r8c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r8c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r8c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r8c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r8c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r8c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r8c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r8c7.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r8c8.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r9c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r9c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r9c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r9c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r9c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r9c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r9c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r9c7.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r9c8.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r10c0.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r10c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r10c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r10c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r10c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r10c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r10c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r10c7.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b4.r10c8.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "gap",
+    "h": 6
+   },
+   {
+    "type": "table",
+    "columns": [
+     550,
+     230
+    ],
+    "rows": [
+     [
+      {
+       "label": "간호기록 및 Remark 인계사항"
+      },
+      {
+       "label": "피부상태 확인"
+      }
+     ],
+     [
+      {
+       "rowSpan": 3,
+       "items": [
+        {
+         "c": "textarea",
+         "key": "pacu.b6.r1c0.0",
+         "h": 40
+        }
+       ],
+       "style": [
+        "fill"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "check",
+         "key": "pacu.b6.r1c1.0",
+         "options": [
+          "유",
+          "무"
+         ]
+        }
+       ],
+       "h": 34,
+       "style": [
+        "spread"
+       ]
+      }
+     ],
+     [
+      {
+       "label": "치아상태 확인"
+      }
+     ],
+     [
+      {
+       "items": [
+        {
+         "c": "check",
+         "key": "pacu.b6.r3c0.0",
+         "options": [
+          "유",
+          "무"
+         ]
+        }
+       ],
+       "h": 34,
+       "style": [
+        "spread"
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     96,
+     130,
+     140,
+     70,
+     130,
+     214
+    ],
+    "rows": [
+     [
+      {
+       "label": "Foley cath."
+      },
+      {
+       "items": [
+        {
+         "c": "check",
+         "key": "pacu.b7.r0c1.0",
+         "options": [
+          "무",
+          "유"
+         ]
+        }
+       ],
+       "style": [
+        "spread"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b7.r0c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "label": "Drain"
+      },
+      {
+       "items": [
+        {
+         "c": "check",
+         "key": "pacu.b7.r0c4.0",
+         "options": [
+          "무",
+          "유"
+         ]
+        }
+       ],
+       "style": [
+        "spread"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b7.r0c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "IV PCA"
+      },
+      {
+       "items": [
+        {
+         "c": "check",
+         "key": "pacu.b7.r1c1.0",
+         "options": [
+          "무",
+          "유"
+         ]
+        }
+       ],
+       "style": [
+        "spread"
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b7.r1c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "label": "기타"
+      },
+      {
+       "colSpan": 2,
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b7.r1c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "items": [
+     {
+      "c": "label",
+      "text": "[Intake/Output]"
+     }
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     110,
+     167,
+     167,
+     167,
+     169
+    ],
+    "rows": [
+     [
+      {
+       "rowSpan": 2,
+       "label": "Type"
+      },
+      {
+       "colSpan": 2,
+       "label": "Intake"
+      },
+      {
+       "colSpan": 2,
+       "label": "Output"
+      }
+     ],
+     [
+      {
+       "label": "Fluid"
+      },
+      {
+       "label": "Blood"
+      },
+      {
+       "label": "Uluid"
+      },
+      {
+       "label": "Blood"
+      }
+     ],
+     [
+      {
+       "label": "수술실"
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r2c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r2c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r2c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r2c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "회복실"
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r3c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r3c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r3c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r3c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "Total"
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r4c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r4c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r4c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b9.r4c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "items": [
+     {
+      "c": "label",
+      "text": "[PAR Score]"
+     }
+    ]
+   },
+   {
+    "type": "table",
+    "columns": [
+     110,
+     111,
+     111,
+     111,
+     111,
+     111,
+     115
+    ],
+    "rows": [
+     [
+      {
+       "label": ""
+      },
+      {
+       "label": "활동성"
+      },
+      {
+       "label": "호흡"
+      },
+      {
+       "label": "순환"
+      },
+      {
+       "label": "의식"
+      },
+      {
+       "label": "피부색"
+      },
+      {
+       "label": "합계"
+      }
+     ],
+     [
+      {
+       "label": "입실"
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r1c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r1c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r1c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r1c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r1c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r1c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ],
+     [
+      {
+       "label": "퇴실"
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r2c1.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r2c2.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r2c3.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r2c4.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r2c5.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      },
+      {
+       "items": [
+        {
+         "c": "text",
+         "key": "pacu.b11.r2c6.0",
+         "w": 90,
+         "grow": true
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "items": [
+     {
+      "c": "label",
+      "text": "",
+      "w": 480
+     },
+     {
+      "c": "label",
+      "text": "작성 간호사"
+     },
+     {
+      "c": "text",
+      "key": "pacu.b12.2",
+      "w": 100
+     },
+     {
+      "c": "label",
+      "text": "(서명)"
+     }
+    ]
+   }
+  ],
+  "patient": {
+   "sex": "M",
+   "age": "54"
+  }
  }
 ]

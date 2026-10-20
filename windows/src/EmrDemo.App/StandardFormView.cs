@@ -10,7 +10,9 @@ interface IFormView
     /// <summary>(키, 값). 값이 빈 문자열이면 입력이 지워진 것이다.</summary>
     event Action<string, string>? Committed;
 
-    FormLayoutResult Show(FormDefinition form, IReadOnlyDictionary<string, string> values);
+    /// <param name="patient">머리글 환자 칸 값(<see cref="FormDefinition.PatientFields"/>).</param>
+    FormLayoutResult Show(FormDefinition form, IReadOnlyDictionary<string, string> values,
+        IReadOnlyDictionary<string, string> patient);
 
     void CommitPending();
 }
@@ -27,6 +29,8 @@ static class FormMetrics
     public static readonly Color GridLine = ColorTranslator.FromHtml("#9aa4b1");
     public static readonly Color Highlight = ColorTranslator.FromHtml("#fff7d6");
     public static readonly Color ReadOnly = ColorTranslator.FromHtml("#f1f2f4");
+    public static readonly Color PaperLabel = ColorTranslator.FromHtml("#f5f5f3");
+    public static readonly Color PaperLine = ColorTranslator.FromHtml("#6b6b6b");
 
     public static int Measure(string text) =>
         text.Length == 0 ? 0 : TextRenderer.MeasureText(text, Theme.Font, Size.Empty, TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix).Width;
@@ -47,7 +51,8 @@ sealed class StandardFormView : IFormView
     public Control Control => _host;
     public event Action<string, string>? Committed;
 
-    public FormLayoutResult Show(FormDefinition form, IReadOnlyDictionary<string, string> values)
+    public FormLayoutResult Show(FormDefinition form, IReadOnlyDictionary<string, string> values,
+        IReadOnlyDictionary<string, string> patient)
     {
         if (!_pages.TryGetValue(form.Id, out var page))
         {
@@ -62,6 +67,7 @@ sealed class StandardFormView : IFormView
         }
 
         _current = page;
+        page.ShowPatient(patient);
         page.Load(values);
         page.AutoScrollPosition = Point.Empty;
         return page.Layout;
@@ -76,6 +82,7 @@ sealed class StandardFormView : IFormView
         readonly List<Action> _pending = [];
         readonly Dictionary<string, string> _committed = [];
         readonly Dictionary<string, string> _initial = [];
+        readonly List<(Label Label, string Field)> _patientLabels = [];
         bool _loading;
 
         public FormPage(FormDefinition form, Action<string, string> commit)
@@ -104,6 +111,14 @@ sealed class StandardFormView : IFormView
             }
 
             _loading = false;
+        }
+
+        public void ShowPatient(IReadOnlyDictionary<string, string> patient)
+        {
+            foreach (var (label, field) in _patientLabels)
+            {
+                label.Text = patient.GetValueOrDefault(field, "");
+            }
         }
 
         public void CommitPending()
@@ -147,6 +162,16 @@ sealed class StandardFormView : IFormView
                         break;
                     case LayoutKind.DrawArea:
                         AddLabel(item, BorderStyle.FixedSingle, Color.Gray);
+                        break;
+                    case LayoutKind.Heading:
+                        AddLabel(item);
+                        break;
+                    case LayoutKind.TableCell when item.Text is not null:
+                        AddCellLabel(item);
+                        break;
+                    case LayoutKind.PatientField:
+                        AddLabel(item);
+                        _patientLabels.Add(((Label)Controls[^1], item.Text!));
                         break;
                     case LayoutKind.Button or LayoutKind.GridButton:
                         Place(new Button { Text = item.Text, FlatStyle = FlatStyle.System, Font = Theme.Font, TabStop = false }, item);
@@ -201,16 +226,34 @@ sealed class StandardFormView : IFormView
             var bold = item.Kind is LayoutKind.Section or LayoutKind.Title;
             Place(new Label
             {
-                Text = item.Text,
-                Font = bold ? Theme.Bold : Theme.Font,
+                Text = item.Kind == LayoutKind.PatientField ? "" : item.Text,
+                Font = item.Kind == LayoutKind.Heading ? Theme.Heading : bold ? Theme.Bold : Theme.Font,
                 ForeColor = fore ?? (item.Kind == LayoutKind.Section ? FormMetrics.SectionText : Color.Black),
                 BackColor = item.Kind is LayoutKind.SetHeader ? Theme.Face2 : Color.Transparent,
-                TextAlign = item.Kind == LayoutKind.DrawArea ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleLeft,
+                TextAlign = item.Kind is LayoutKind.DrawArea or LayoutKind.Heading
+                    ? ContentAlignment.MiddleCenter : ContentAlignment.MiddleLeft,
                 AutoEllipsis = item.Kind is LayoutKind.RowLabel or LayoutKind.SetHeader,
                 Padding = Padding.Empty,
                 BorderStyle = border,
                 UseMnemonic = false,
             }, item);
+        }
+
+        /// <summary>표 라벨 칸의 글자. 칸 테두리·바탕은 <see cref="FormDecorations"/>가 그린다.</summary>
+        void AddCellLabel(LayoutItem item)
+        {
+            var label = new Label
+            {
+                Text = item.Text,
+                Font = item.Style.HasFlag(CellStyle.Big) ? Theme.Heading : item.Style.HasFlag(CellStyle.Bold) ? Theme.Bold : Theme.Font,
+                ForeColor = Color.Black,
+                BackColor = Color.Transparent,
+                TextAlign = item.Style.HasFlag(CellStyle.Left) ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter,
+                Padding = new Padding(2, 0, 2, 0),
+                UseMnemonic = false,
+            };
+            Controls.Add(label);
+            label.Bounds = new Rectangle(item.Bounds.X + 1, item.Bounds.Y + 1, item.Bounds.W - 1, item.Bounds.H - 1);
         }
 
         TextBox NewTextBox(string key, LayoutItem item, bool multiline)
@@ -529,6 +572,18 @@ static class FormDecorations
                     break;
                 case LayoutKind.SetBox or LayoutKind.SignBox:
                     g.DrawRectangle(line, r.X, r.Y, r.Width - 1, r.Height - 1);
+                    break;
+                case LayoutKind.TableCell:
+                    PaperDrawing.Cell(g, item, r);
+                    break;
+                case LayoutKind.Image:
+                    PaperDrawing.Image(g, item.Text!, r);
+                    break;
+                case LayoutKind.Chart:
+                    PaperDrawing.Chart(g, (ChartControl)item.Control!, r);
+                    break;
+                case LayoutKind.Legend:
+                    PaperDrawing.Legend(g, (LegendControl)item.Control!, r);
                     break;
             }
         }

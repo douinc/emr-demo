@@ -27,10 +27,11 @@ public sealed class FormRecordTests : IDisposable
         Assert.Equal("예시 환자 09", formPatients[0].Name);
         Assert.All(formPatients, p =>
         {
-            Assert.Equal("산부인과", p.Department);
+            Assert.Equal(FormCatalog.Get(p.FormId!).Department, p.Department);
             Assert.Equal("", p.ChartText);
             Assert.Empty(p.FormValues);
         });
+        Assert.Equal("DEMO-15", formPatients.Single(p => p.FormId == "osfirst").Id);
         Assert.All(patients.Take(8), p => Assert.Null(p.FormId));
     }
 
@@ -107,7 +108,7 @@ public sealed class FormRecordTests : IDisposable
 
         Assert.Equal(8 + FormCatalog.All.Count, patients.Count);
         Assert.Equal("보존", patients[0].ChartText);
-        Assert.Equal("DEMO-14", patients[^1].Id);
+        Assert.Equal("DEMO-18", patients[^1].Id);
     }
 
     [Fact]

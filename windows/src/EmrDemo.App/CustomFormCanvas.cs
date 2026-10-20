@@ -10,13 +10,21 @@ namespace EmrDemo.App;
 /// </summary>
 sealed class CustomFormCanvas : Control, IFormView
 {
+    /// <summary>
+    /// TextRenderer(GDI)는 이 플래그가 없으면 Graphics의 이동 변환과 클립을 무시한다. 캔버스는 스크롤을 이동 변환으로
+    /// 그리므로, 없으면 내린 상태에서 글자만 스크롤 0 자리에 그려진다.
+    /// </summary>
+    internal const TextFormatFlags KeepGraphics = TextFormatFlags.PreserveGraphicsTranslateTransform
+        | TextFormatFlags.PreserveGraphicsClipping;
+
     const TextFormatFlags Flags = TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine
-        | TextFormatFlags.VerticalCenter;
+        | TextFormatFlags.VerticalCenter | KeepGraphics;
 
     FormLayoutResult _layout = new([], 0, 0);
     List<LayoutItem> _focusable = [];
     readonly Dictionary<string, string> _values = [];
     readonly Dictionary<string, string> _committed = [];
+    IReadOnlyDictionary<string, string> _patient = new Dictionary<string, string>();
     int _focus = -1;
     TextBuffer? _edit;
     int _dropdownHighlight = -1;
@@ -42,9 +50,11 @@ sealed class CustomFormCanvas : Control, IFormView
 
     protected override AccessibleObject CreateAccessibilityInstance() => new OpaqueAccessibleObject(this);
 
-    public FormLayoutResult Show(FormDefinition form, IReadOnlyDictionary<string, string> values)
+    public FormLayoutResult Show(FormDefinition form, IReadOnlyDictionary<string, string> values,
+        IReadOnlyDictionary<string, string> patient)
     {
         _layout = FormMetrics.Layout(form);
+        _patient = patient;
         _focusable = _layout.Items.Where(i => i.IsInteractive && i.Kind != LayoutKind.Option || IsFirstOption(i)).ToList();
         _values.Clear();
         _committed.Clear();
@@ -290,6 +300,16 @@ sealed class CustomFormCanvas : Control, IFormView
             : f == item);
         switch (item.Kind)
         {
+            case LayoutKind.Heading:
+                TextRenderer.DrawText(g, item.Text, Theme.Heading, r, Color.Black, Flags | TextFormatFlags.HorizontalCenter);
+                break;
+            case LayoutKind.TableCell when item.Text is not null:
+                PaperDrawing.CellLabel(g, item, r);
+                break;
+            case LayoutKind.PatientField:
+                TextRenderer.DrawText(g, _patient.GetValueOrDefault(item.Text!, ""), Theme.Font, r, Color.Black,
+                    Flags | TextFormatFlags.EndEllipsis);
+                break;
             case LayoutKind.Title:
             case LayoutKind.Section:
                 TextRenderer.DrawText(g, item.Text, Theme.Bold, r,
@@ -430,7 +450,8 @@ sealed class CustomFormCanvas : Control, IFormView
 
     void PaintMultiline(Graphics g, string text, Rectangle inner, bool editing)
     {
-        const TextFormatFlags lineFlags = TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine;
+        const TextFormatFlags lineFlags = TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine
+            | KeepGraphics;
         var lineHeight = FormMetrics.Measure("가") > 0 ? TextRenderer.MeasureText("가", Theme.Font).Height : 14;
         var y = inner.Y + 2;
         var start = 0;

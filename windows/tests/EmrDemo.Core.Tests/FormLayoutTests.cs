@@ -12,7 +12,8 @@ public class FormLayoutTests
     public static TheoryData<string> FormIds => new(FormCatalog.All.Select(f => f.Id));
 
     static bool IsLeaf(LayoutItem item) =>
-        item.Kind is not (LayoutKind.TitleBand or LayoutKind.SetBox or LayoutKind.SignBox or LayoutKind.GridTitle);
+        item.Kind is not (LayoutKind.TitleBand or LayoutKind.SetBox or LayoutKind.SignBox or LayoutKind.GridTitle
+            or LayoutKind.TableCell);
 
     public static TheoryData<string, int> FormIdsAndWidths => new(
         FormCatalog.All.SelectMany(f => new[] { 860, 420, 200 }.Select(w => (f.Id, w))));
@@ -188,6 +189,107 @@ public class FormLayoutTests
 
         Assert.All(options.Skip(1).Zip(options), pair => Assert.True(pair.First.Bounds.Y > pair.Second.Bounds.Y));
         Assert.Single(options.Select(o => o.Bounds.X).Distinct());
+    }
+
+    public static TheoryData<string> PaperFormIds => new(FormCatalog.All.Where(f => f.Blocks.OfType<TableBlock>().Any()).Select(f => f.Id));
+
+    [Theory]
+    [MemberData(nameof(PaperFormIds))]
+    public void TableCellContents_StayInsideTheirCell(string formId)
+    {
+        var items = Build(formId).Items;
+        var cells = items.Where(i => i.Kind == LayoutKind.TableCell).ToList();
+
+        foreach (var item in items.Where(i => i.Kind is not (LayoutKind.TableCell or LayoutKind.TitleBand)))
+        {
+            var cell = cells.FirstOrDefault(c => c.Bounds.Contains(item.Bounds.X, item.Bounds.Y));
+            if (cell is null)
+            {
+                continue;
+            }
+
+            Assert.True(item.Bounds.Right <= cell.Bounds.Right && item.Bounds.Bottom <= cell.Bounds.Bottom,
+                $"{item.Kind} {item.Key}{item.Text} at {item.Bounds} spills out of cell {cell.Bounds}");
+        }
+    }
+
+    [Theory]
+    [MemberData(nameof(PaperFormIds))]
+    public void TableCells_TileTheTableWithoutOverlap(string formId)
+    {
+        var cells = Build(formId).Items.Where(i => i.Kind == LayoutKind.TableCell).ToList();
+
+        for (var i = 0; i < cells.Count; i++)
+        {
+            for (var j = i + 1; j < cells.Count; j++)
+            {
+                Assert.False(cells[i].Bounds.Intersects(cells[j].Bounds), $"cell {cells[i].Bounds} overlaps {cells[j].Bounds}");
+            }
+        }
+    }
+
+    [Fact]
+    public void Table_RowSpanCoversTheSpannedRows()
+    {
+        var items = Build("preanes").Items;
+        var label = items.Single(i => i.Kind == LayoutKind.TableCell && i.Text == "마취관련 과거력");
+        var rows = items.Where(i => i.Kind == LayoutKind.TableCell && i.Text is "Difficult airway" or "Complication" or "FHx").ToList();
+
+        Assert.Equal(3, rows.Count);
+        Assert.Equal(label.Bounds.Y, rows.Min(r => r.Bounds.Y));
+        Assert.Equal(label.Bounds.Bottom, rows.Max(r => r.Bounds.Bottom));
+        Assert.All(rows, r => Assert.Equal(label.Bounds.Right, r.Bounds.X));
+        Assert.Equal(CellStyle.Label, label.Style);
+        Assert.True(rows.All(r => r.Style.HasFlag(CellStyle.Left) && !r.Style.HasFlag(CellStyle.Label)));
+    }
+
+    [Fact]
+    public void AnesthesiaRecord_TimeInputsFillTheirCellsAndRemarkFillsItsSpan()
+    {
+        var items = Build("anesrec").Items;
+        var cells = items.Where(i => i.Kind == LayoutKind.TableCell).ToList();
+        var chart = items.Single(i => i.Kind == LayoutKind.Chart);
+        var legend = items.Single(i => i.Kind == LayoutKind.Legend);
+        var remark = items.Single(i => i.Kind == LayoutKind.TextArea);
+        var remarkCell = cells.Single(c => c.Bounds.Contains(remark.Bounds.X, remark.Bounds.Y));
+
+        Assert.Equal(remarkCell.Bounds with { X = remarkCell.Bounds.X + 2, Y = remarkCell.Bounds.Y + 2,
+            W = remarkCell.Bounds.W - 4, H = remarkCell.Bounds.H - 4 }, remark.Bounds);
+        Assert.True(remark.Bounds.Bottom > chart.Bounds.Bottom, "REMARK spans past the chart");
+        Assert.Equal(chart.Bounds.Y, legend.Bounds.Y);
+        Assert.Equal(36 * 13 - 2, chart.Bounds.W);
+        // TIME 줄 : 15분 칸 12개
+        var timeRow = items.Where(i => i.Kind == LayoutKind.Text && i.Bounds.W == 3 * 13 - 2)
+            .GroupBy(i => i.Bounds.Y).OrderBy(g => g.Key).First();
+        Assert.Equal(12, timeRow.Count());
+    }
+
+    [Fact]
+    public void GrowInput_LeavesRoomForTheUnitLabelAfterIt()
+    {
+        var items = Build("anesrec").Items;
+        var units = items.Where(i => i.Kind == LayoutKind.Label && i.Text == "㎖").ToList();
+
+        Assert.Equal(2, units.Count);
+        Assert.All(units, unit => Assert.Contains(items, i => i.Kind == LayoutKind.Text && i.Bounds.Y == unit.Bounds.Y
+            && i.Bounds.Right + FormLayout.Gap == unit.Bounds.X));
+    }
+
+    [Fact]
+    public void PaperForms_PlaceImagesPatientFieldsAndSpreadOptions()
+    {
+        var items = Build("preanes").Items;
+        var images = items.Where(i => i.Kind == LayoutKind.Image).ToList();
+        var classes = items.Where(i => i.Kind == LayoutKind.Option && i.Text!.StartsWith("Class ")).ToList();
+
+        Assert.Equal(["mallampati1", "mallampati2", "mallampati3", "mallampati4", "logo"], images.Select(i => i.Text));
+        Assert.All(classes.Zip(images), pair => Assert.True(pair.First.Bounds.Y >= pair.Second.Bounds.Bottom));
+        Assert.Equal(["id", "name", "sexAge"], items.Where(i => i.Kind == LayoutKind.PatientField).Select(i => i.Text));
+        var plan = items.Where(i => i.Kind == LayoutKind.Option && i.Control is CheckControl c && c.Options.Contains("Spinal"))
+            .OrderBy(i => i.OptionIndex).ToList();
+        var steps = plan.Zip(plan.Skip(1), (a, b) => b.Bounds.X - a.Bounds.X).Distinct().ToList();
+        Assert.Single(steps);
+        Assert.Single(plan.Select(o => o.Bounds.Y).Distinct());
     }
 
     [Fact]
