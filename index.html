@@ -5,6 +5,7 @@
 <title>[접속정보 : 배성준] 처방관리 Ver. 2.0.0.122</title>
 <link rel="stylesheet" href="ob-forms.css">
 <link rel="stylesheet" href="paper-forms.css">
+<link rel="stylesheet" href="voice-fill.css">
 <style>
 :root{
   --face:#f0efe8;
@@ -585,6 +586,8 @@ body{overflow:auto;}
 <script src="ob-forms-data.js"></script>
 <script src="paper-forms.js"></script>
 <script src="surgery-forms-data.js"></script>
+<script src="voice-fill-scripts.js"></script>
+<script src="voice-fill.js"></script>
 <script>
 (function () {
   var records = [
@@ -826,6 +829,7 @@ adv) 눈 세척 자주 시행하세요.`
     document.getElementById('chartMetaDetail').textContent = record.detail || record.summary;
 
     document.querySelector('.main').classList.toggle('form-mode', !!record.form);
+    if (window.VoiceFill) window.VoiceFill.detach();   // 다른 기록으로 넘어가면 진행 중인 녹음을 끝낸다
     if (record.form) {
       // 구조화 서식지 : 폼 렌더러로 그리고 자유기술 영역은 숨긴다
       body.style.display = 'none';
@@ -835,6 +839,8 @@ adv) 눈 세척 자주 시행하세요.`
           { id: id, name: '예시 환자 ' + String(index + 1).padStart(2, '0'), dept: record.department });
       } else {
         window.OBForms.render(formView, record.form);
+        // 산과 서식: 녹음 버튼(말한 내용으로 칸 채우기)
+        if (window.VoiceFill) window.VoiceFill.attach(formView, record.form);
       }
       formView.scrollTop = 0;
     } else {

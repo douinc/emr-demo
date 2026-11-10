@@ -103,6 +103,8 @@
 
   /* ---------------- DOM 유틸 ---------------- */
   var seq = 0;
+  /* 스키마 조각(spec·grid 블록) → 마지막으로 그린 DOM. 음성 입력(voice-fill.js)이 칸을 찾을 때 쓴다 */
+  var bound = new Map();
   function el(tag, cls, text) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -215,7 +217,8 @@
           oline.style.alignItems = 'center';
           oline.style.gap = '4px';
           oline.appendChild(option(kind, name, spec.otherLabel || 'Other', false));
-          oline.appendChild(renderCtrl(t(spec.other, { fill: true })));
+          node._other = renderCtrl(t(spec.other, { fill: true }));
+          oline.appendChild(node._other);
           node.appendChild(oline);
         }
         if (spec.tail) node.appendChild(renderCtrl(spec.tail));
@@ -224,6 +227,7 @@
       default:
         node = el('span', null, '');
     }
+    bound.set(spec, node);
     if (spec.unit) {
       var wrap = el('span');
       wrap.style.display = 'inline-flex';
@@ -274,6 +278,7 @@
     }
     wrap.appendChild(table);
     box.appendChild(wrap);
+    bound.set(block, table);
     return box;
   }
 
@@ -325,6 +330,7 @@
   }
 
   function render(container, form) {
+    bound = new Map();
     container.innerHTML = '';
     var fm = el('div', 'fm');
 
@@ -341,7 +347,8 @@
     container.appendChild(fm);
   }
 
-  global.OBForms = { render: render, renderCtrl: renderCtrl };
+  global.OBForms = { render: render, renderCtrl: renderCtrl,
+    bound: function (spec) { return bound.get(spec); } };
   global.OBFormDSL = { S: S, t: t, d: d, ta: ta, r: r, k: k, sel: sel, btn: btn, lbl: lbl, br: br,
     nna: nna, staff: staff, signBlock: signBlock, sonoHeader: sonoHeader,
     imageQuality: imageQuality, biometry: biometry, impression: impression,
