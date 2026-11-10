@@ -50,6 +50,35 @@
       'Falx 와 CSP 정상, corpus callosum 은 모양 정상에 길이 3.6센티입니다. ' +
       '소뇌, cisterna magna, vermis 정상입니다. ' +
       '척추는 canal integrity 와 skin integrity 정상이고, conus medullaris 는 L2 레벨입니다. ' +
-      'Impression 은 IUP 24주, normal fetal neurosonographic findings 입니다.'
+      'Impression 은 IUP 24주, normal fetal neurosonographic findings 입니다.',
+    /* ---- 정형외과·마취 종이 서식 ---- */
+    osfirst:
+      '주호소는 우측 무릎 통증이고, 계단 내려갈 때 무릎이 걸리는 느낌이 있습니다. Onset 은 약 5주 전입니다. ' +
+      '현병력입니다. 5주 전 등산 후 하산하다가 우측 무릎을 비튼 뒤 통증이 생겼고, 계단을 내려가거나 쪼그려 앉을 때 ' +
+      '무릎 안쪽 통증과 locking 증상이 반복됩니다. 타 병원에서 물리치료를 2주 받았지만 호전이 없어 내원했습니다. ' +
+      '통증은 있고 VAS 6점, 빈도는 계단 보행 시마다 하루 수 회, 양상은 무릎 안쪽이 찌르는 듯합니다. ' +
+      '과거력은 고혈압으로 amlodipine 5mg 복용 중이고, 수술력과 약물 알레르기는 없습니다. ' +
+      '진찰 소견입니다. 우측 무릎 effusion 있고 medial joint line tenderness 양성, McMurray test 양성, Lachman test 음성, ' +
+      'ROM 은 0도에서 120도입니다. 특이소견으로 knee X-ray 에서 골절 소견 없습니다. ' +
+      'Impression 은 우측 무릎 medial meniscus tear 의심이고, Plan 은 우측 무릎 MRI 촬영하고 NSAIDs 1주 처방합니다.',
+    preanes:
+      '병실은 5병동 512호입니다. 수술 전 진단명은 medial meniscus tear, right knee 이고, ' +
+      '예정 수술명은 arthroscopic partial meniscectomy 입니다. ' +
+      '혈압 132 에 84, 맥박 76, 호흡수 18, 체온 36.6도입니다. 키 172센티, 몸무게 74킬로입니다. ' +
+      '어젯밤 자정부터 금식했고 동의서 받았습니다. ' +
+      '마취 관련 과거력으로 difficult airway 없고, complication 없고, 가족력도 없습니다. ' +
+      '수술력은 없고 고혈압이 있습니다. Chest PA 는 no active lung lesion, EKG 는 normal sinus rhythm 입니다. ' +
+      '혈색소 14.2, 헤마토크릿 42.1, 혈소판 245 이고, 혈액형은 A형 Rh 양성입니다. ' +
+      '치아 상태는 normal, Mallampati 는 class 2 입니다. Premedication 은 없고, 마취 계획은 general 입니다.',
+    pacu:
+      '마취 종류는 general 이고, 수술 전 의식 상태는 alert 였습니다. 모니터는 NIBP, EKG, SpO2 적용했습니다. ' +
+      '입실 시간 10시 18분, 퇴실 시간 11시 10분입니다. 낙상 예방으로 knee band 와 arm band 적용했습니다. ' +
+      '활력징후입니다. 10시 18분 혈압 138 에 86, 맥박 84, 호흡 16, 산소포화도 98, 체온 36.2, 오심 구토 없고 NRS 3점. ' +
+      '10시 35분 혈압 130 에 80, 맥박 78, 호흡 14, 산소포화도 99, 체온 36.4, 오심 구토 없고 NRS 3점입니다. ' +
+      '간호기록입니다. 10시 18분 회복실 입실, drowsy 하나 구두 지시에 반응함. 산소 5리터 facial mask 로 적용함. ' +
+      '피부 상태 이상 없고 치아 상태도 이상 없습니다. Foley 는 없고 drain 도 없습니다. IV PCA 는 있고 fentanyl based 입니다. ' +
+      '수술실 수액 500, 수술실 출혈 10, 회복실 수액 100 입니다. ' +
+      'PAR score 는 입실 시 활동성 2, 호흡 2, 순환 2, 의식 1, 피부색 2, 합계 9점이고, ' +
+      '퇴실 시 활동성 2, 호흡 2, 순환 2, 의식 2, 피부색 2, 합계 10점입니다.'
   };
 })(window);
