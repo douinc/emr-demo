@@ -38,6 +38,8 @@
   function apiBase() {
     var fromQuery = '';
     try { fromQuery = new URLSearchParams(global.location.search).get('voiceApi') || ''; } catch (e) { /* 무시 */ }
+    // 주소창 값은 이 PC(로컬 개발)일 때만 받는다 — 링크 하나로 접속 코드·마이크 소리가 남의 서버로 가지 않게.
+    if (fromQuery && !/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/.test(fromQuery)) fromQuery = '';
     return (fromQuery || setting(LS_API) || DEFAULT_API).replace(/\/+$/, '');
   }
   function wsUrl(path) { return apiBase().replace(/^http/, 'ws') + path; }
@@ -746,7 +748,7 @@
     var opened = openDialog('음성 입력 설정', function (body) {
       var api = field(body, '중계 서버 주소', 'text', setting(LS_API), DEFAULT_API);
       var code = field(body, '접속 코드', 'password', setting(LS_CODE));
-      body.appendChild(el('div', 'vf-dialog-note', '서버 주소를 비우면 기본 주소를 씁니다. 주소창의 ?voiceApi= 값이 있으면 그 값이 먼저입니다.'));
+      body.appendChild(el('div', 'vf-dialog-note', '서버 주소를 비우면 기본 주소를 씁니다. 주소창의 ?voiceApi= 는 localhost 주소일 때만 쓰고, 있으면 그 값이 먼저입니다.'));
       return { api: api, code: code };
     }, function (inputs) {
       var api = inputs.api.value.trim().replace(/\/+$/, '');

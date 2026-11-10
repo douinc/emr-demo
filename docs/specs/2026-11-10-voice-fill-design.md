@@ -44,7 +44,7 @@ EMR 화면 안에서 Dou Open API(실시간 전사 + 서식 결과 생성)를 �
 
 ## 설정
 
-- 중계 서버 주소: 기본 `https://playground.dou.so/emr-demo-api`. 주소창 `?voiceApi=`, 또는 설정 창(localStorage `emrDemo.voice.api`)으로 바꾼다.
+- 중계 서버 주소: 기본 `https://playground.dou.so/emr-demo-api`. 주소창 `?voiceApi=`(localhost 주소만 받는다 — 링크로 접속 코드·소리가 남의 서버로 가지 않게), 또는 설정 창(localStorage `emrDemo.voice.api`)으로 바꾼다.
 - 접속 코드: 처음 녹음할 때 한 번 묻고 localStorage `emrDemo.voice.accessCode` 에 둔다. 설정 창에서 바꾼다.
 - 마이크는 https 또는 localhost 에서만 된다.
 
