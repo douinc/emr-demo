@@ -177,7 +177,9 @@
         pic.innerHTML = mouthSvg(spec.n);
         fig.appendChild(pic);
         var name = 'Class ' + spec.n;
-        fig.appendChild(renderCtrl(D.k([name], spec.val ? [name] : [])));
+        var check = renderCtrl(D.k([name], spec.val ? [name] : []));
+        if (global.OBForms.bind) global.OBForms.bind(spec, check);   // 음성 입력(voice-fill.js)이 이 체크칸을 찾는다
+        fig.appendChild(check);
         return fig;
       }
       case 'logo': {

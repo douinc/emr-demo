@@ -348,7 +348,8 @@
   }
 
   global.OBForms = { render: render, renderCtrl: renderCtrl,
-    bound: function (spec) { return bound.get(spec); } };
+    bound: function (spec) { return bound.get(spec); },
+    bind: function (spec, node) { bound.set(spec, node); } };
   global.OBFormDSL = { S: S, t: t, d: d, ta: ta, r: r, k: k, sel: sel, btn: btn, lbl: lbl, br: br,
     nna: nna, staff: staff, signBlock: signBlock, sonoHeader: sonoHeader,
     imageQuality: imageQuality, biometry: biometry, impression: impression,

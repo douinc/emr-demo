@@ -835,8 +835,15 @@ adv) 눈 세척 자주 시행하세요.`
       body.style.display = 'none';
       formView.classList.add('on');
       if (record.form.paper) {
-        window.PaperForms.render(formView, record.form,
-          { id: id, name: '예시 환자 ' + String(index + 1).padStart(2, '0'), dept: record.department });
+        var drawPaper = function () {
+          window.PaperForms.render(formView, record.form,
+            { id: id, name: '예시 환자 ' + String(index + 1).padStart(2, '0'), dept: record.department });
+        };
+        drawPaper();
+        // 종이 서식 중 음성 입력을 붙이는 것(초진기록지·마취전 환자평가·회복실 기록지)
+        if (window.VoiceFill && window.VoiceFill.supports(record.form)) {
+          window.VoiceFill.attach(formView, record.form, drawPaper);
+        }
       } else {
         window.OBForms.render(formView, record.form);
         // 산과 서식: 녹음 버튼(말한 내용으로 칸 채우기)

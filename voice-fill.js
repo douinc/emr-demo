@@ -58,6 +58,25 @@
     'FHB': 'Fetal heart beat 태아 심박수(bpm, 숫자만)', 'Ut. Cont.': 'Uterine contraction 자궁수축(간격 / 지속 / 강도, 예: q 5min / 30sec / mild)',
     'Mx': 'Management 처치·경과', 'Remark': '기록 제목(예: NST reactive, 양막 파수)', 'Other': '상세 내용'
   };
+  /* 종이 서식형(정형외과·마취) */
+  var PAPER_UNIT_RE = /^(cm|kg|점|년|월|일)$/;
+  var PAPER_DATE_PART = { '년': '연도(YYYY)', '월': '월(MM)', '일': '일(DD)' };
+  var PAPER_SLOTS = { 'BP(mmHg)': ['수축기', '이완기'], 'ABO Typing': ['ABO 혈액형', 'Rh 인자'] };
+  var PAPER_COLUMN_HINT = {
+    'Time': '측정 시각 HH:MM', 'BP': '혈압 수축기/이완기(예: 130/80)', 'PR': '맥박(회/분, 숫자만)', 'RR': '호흡수(회/분, 숫자만)',
+    'SpO2': '산소포화도(%, 숫자만)', 'Temp': '체온(℃, 숫자만)', '오심': "없으면 '-', 있으면 '+'", '구토': "없으면 '-', 있으면 '+'",
+    'NRS': '통증 점수 0~10(숫자만)'
+  };
+  /* 라벨만으로는 뜻이 모자란 칸에 붙이는 풀이(칸 라벨 또는 구역 이름으로 찾는다) */
+  var PAPER_HINT = {
+    '피부상태 확인': ' (피부 이상이 있으면 유, 없으면 무)', '치아상태 확인': ' (치아 손상·흔들림이 있으면 유, 없으면 무)',
+    'Intake/Output': ' (mL, 숫자만. Uluid 는 소변 등 수액 배출량, Blood 는 수혈량 또는 출혈량)',
+    'PAR Score': ' (항목별 0~2점, 합계는 다섯 항목의 합. 숫자만)',
+    'ABO 혈액형': ' — A, B, O, AB 중 하나만 쓴다', 'Rh 인자': ' — 양성이면 Rh+, 음성이면 Rh- 라고만 쓴다',
+    '입실시간': ' (HH:MM)', '퇴실시간': ' (HH:MM)', '금식.동의서': ' (NPO since 내용은 금식을 시작한 날짜·시각)'
+  };
+  /* 음성 입력을 붙이는 종이 서식 */
+  var PAPER_VOICE = ['osfirst', 'preanes', 'pacu'];
   var CHECK_HINT = { '+': "'+'(있음·보임) 체크 여부", '-': "'-'(없음·안 보임) 체크 여부" };
 
   function clean(text) {
@@ -320,9 +339,237 @@
         }
       });
     }
-    walk(form.rows);
+    /* ---------------- 종이 서식형(paper-forms.js): 표의 칸 병합을 풀어 라벨을 찾는다 ---------------- */
+    var todaySpecs = [];      // 빈 서식으로 만들 때 오늘 날짜를 넣을 날짜 칸(작성일)
 
-    return { form: form, fields: fields, clearables: clearables, ratios: ratios, outline: outline, terms: terms };
+    function flat(items, out) {
+      (items || []).forEach(function (it) {
+        if (it.c === 'vb' || it.c === 'hb' || it.c === 'ln') {
+          if (it.c === 'ln' && out.length) out.push({ c: 'br' });
+          flat(it.items, out);
+          if (it.c === 'ln') out.push({ c: 'br' });
+        } else if (it.c === 'lw') {
+          if (clean(it.text)) out.push({ c: 'lbl', text: it.text });
+        } else out.push(it);
+      });
+      return out;
+    }
+    function isInput(it) { return /^(t|d|ta|s|r|k|mp)$/.test(it.c); }
+    function labelText(text) { return clean(text).replace(/\s*[:：]$/, ''); }
+    function exclusive(opts) {
+      var key = opts.join('|');
+      return opts.length === 2 && (/^(유\|무|무\|유|N\|Y|Y\|N|수술실\|회복실)$/.test(key) || /^Normal\|Abnormal/.test(key));
+    }
+
+    /* 칸 하나(또는 한 줄)의 컨트롤들에 이름을 붙여 칸 목록에 넣는다 */
+    function paperItems(base, rawItems, opts) {
+      opts = opts || {};
+      var items = flat(rawItems, []);
+      if (!items.some(isInput)) return false;
+      var signed = items.some(function (it) { return it.c === 'sign'; });
+      outline.push('- ' + (base ? base + ': ' : '') + sentence(items.map(function (it) {
+        return it.c === 'mp' ? { c: 'lbl', text: 'Class ' + it.n } : it;
+      })).replace(/\s*;\s*/g, ' ; ').replace(/^\s*;\s*|\s*;\s*$/g, ''));
+
+      var pending = [], lastName = '', slot = 0, seen = {}, picks = [];
+      function flushPicks() {
+        if (!picks.length) return;
+        var specs = picks; picks = [];
+        specs.forEach(function (spec) { clearables.push({ spec: spec, choice: true }); });
+        add({ kind: 'pick', specs: specs, options: specs.map(function (spec) { return 'Class ' + spec.n; }),
+          desc: base + ' — 하나만 고른다' });
+      }
+      items.forEach(function (it, i) {
+        var prev = items[i - 1], next = items[i + 1];
+        if (it.c !== 'mp') flushPicks();
+        if (it.c === 'br') { pending = []; lastName = ''; slot = 0; return; }
+        if (it.c === 'pt') { pending = []; return; }
+        if (it.c === 'lbl') {
+          var text = labelText(it.text);
+          if (!text || SEP_RE.test(text) || text === 'or') return;
+          if (prev && prev.c === 't' && PAPER_UNIT_RE.test(text)) return;   // 앞 칸의 단위
+          term(text);
+          pending.push(text);
+          return;
+        }
+        if (it.c === 'mp') { picks.push(it); return; }
+        if (!isInput(it)) return;
+
+        var unit = next && next.c === 'lbl' && PAPER_UNIT_RE.test(clean(next.text)) ? clean(next.text) : '';
+        var local = pending.join(' ');
+        pending = [];
+        if (local) { lastName = local; slot = 0; }
+        if (it.c === 't' || it.c === 'ta') {
+          var slots = PAPER_SLOTS[lastName];
+          if (it._vfName) local = it._vfName;
+          else if (!local && prev && prev.c === 'k' && prev.opts.length === 1) local = prev.opts[0] + ' 내용';
+          else if (PAPER_DATE_PART[unit]) { local = PAPER_DATE_PART[unit]; unit = ''; }
+          else if (!local && next && next.c === 'lbl' && clean(next.text) === ':') local = '시(HH, 24시간제)';
+          else if (!local && prev && prev.c === 'lbl' && clean(prev.text) === ':') local = '분(MM)';
+          else if (slots) { local = lastName + ' ' + (slots[slot] || (slot + 1) + '번째 칸'); slot += 1; }
+          else if (!local && lastName) { slot += 1; local = lastName + ' ' + (slot + 1) + '번째 칸'; }
+          else if (!local && opts.shared) local = '상세 내용';
+        }
+        if (signed) {
+          // 서명 줄: 작성일은 오늘로 두고, 서명자 이름은 음성으로 채우지 않는다
+          if (it.c === 'd') { clearables.push({ spec: it }); todaySpecs.push(it); }
+          return;
+        }
+        var tag = local + '|' + unit + '|' + it.c;
+        seen[tag] = (seen[tag] || 0) + 1;
+        if (seen[tag] > 1) local = (local ? local + ' ' : '') + seen[tag] + '번째 칸';
+
+        if (it.c === 'k' && it.opts.length === 1 && isSlotCheck(items, i)) {
+          // "검사명 ( 값 / 값 )" — 체크칸 뒤 값 칸들에 이름을 준다
+          var name = it.opts[0];
+          var values = [];
+          for (var j = i + 1; j < items.length && items[j].c !== 'br'; j++) if (items[j].c === 't') values.push(items[j]);
+          var parts = PAPER_SLOTS[name] || (name.split('/').length === values.length ? name.split('/') : null);
+          term(name);
+          clearables.push({ spec: it, choice: true });
+          add({ kind: 'bool', spec: it, desc: path(base, name) + " — 이 검사의 값을 말했으면 체크" });
+          values.forEach(function (spec, n) {
+            spec._vfName = parts ? clean(parts[n]) : (values.length === 1 ? name + ' 결과' : name + ' ' + (n + 1) + '번째 값');
+            if (PAPER_HINT[spec._vfName]) spec._vfName += PAPER_HINT[spec._vfName];
+          });
+          lastName = ''; slot = 0;
+          return;
+        }
+        if (it.c === 'k' && exclusive(it.opts)) {
+          it.opts.forEach(term);
+          clearables.push({ spec: it, choice: true });
+          add({ kind: 'radio', spec: it, options: it.opts.slice(), desc: path(base, local) + ' — 하나만 고른다' });
+          return;
+        }
+        if (it.c !== 'r' && it.c !== 'k') clearables.push({ spec: it });
+        controlField(it, base, local, unit);
+      });
+      flushPicks();
+      return true;
+    }
+    function isSlotCheck(items, i) {
+      var j = i + 1, values = 0;
+      for (; j < items.length && items[j].c !== 'br'; j++) {
+        if (items[j].c === 't') values += 1;
+        else if (items[j].c !== 'lbl' || !SEP_RE.test(clean(items[j].text))) return false;
+      }
+      return values > 0 && items[i + 1] && items[i + 1].c === 'lbl' && clean(items[i + 1].text) === '(';
+    }
+
+    function paperTable(block) {
+      var grid = [], cells = [];
+      block.rows.forEach(function (row, r) {
+        grid[r] = grid[r] || [];
+        var c = 0;
+        row.forEach(function (cell) {
+          if (typeof cell === 'string') cell = { l: cell };
+          while (grid[r][c]) c += 1;
+          var info = { cell: cell, r: r, c: c, cs: cell.cs || 1, rs: cell.rs || 1, label: cell.i == null };
+          for (var dr = 0; dr < info.rs; dr++) {
+            grid[r + dr] = grid[r + dr] || [];
+            for (var dc = 0; dc < info.cs; dc++) grid[r + dr][c + dc] = info;
+          }
+          cells.push(info);
+          c += info.cs;
+        });
+      });
+      var pure = block.rows.map(function (_, r) {
+        var own = cells.filter(function (info) { return info.r === r; });
+        return own.length > 0 && own.every(function (info) { return info.label; });
+      });
+      var inputs = cells.filter(function (info) { return !info.label && flat(info.cell.i, []).some(isInput); });
+      if (!inputs.length) return;
+
+      // 머리줄 + 한 칸에 입력 하나씩인 행이 이어지는 표 → 행 목록(배열)로 받는다
+      var dataRows = block.rows.slice(1);
+      var listLike = pure[0] && dataRows.length >= 2 && dataRows.every(function (row, n) {
+        return !pure[n + 1] && row.length === block.rows[0].length && row.every(function (cell) {
+          return cell && cell.i && cell.i.length === 1 && cell.i[0].c === 't';
+        });
+      });
+      if (listLike) {
+        var columns = block.rows[0].map(function (head, j) {
+          var name = labelText(typeof head === 'string' ? head : head.l);
+          term(name);
+          return { key: slug(name) || 'c' + (j + 1), name: name, hint: PAPER_COLUMN_HINT[name] || '' };
+        });
+        var used = {};
+        columns.forEach(function (col) {
+          if (used[col.key]) col.key += '_' + (used[col.key] + 1);
+          used[col.key] = (used[col.key] || 0) + 1;
+        });
+        var specs = dataRows.map(function (row) { return row.map(function (cell) { return cell.i[0]; }); });
+        var holder = { cells: specs };
+        var title = sec || '표';
+        outline.push('- [표] ' + title + ' — 열: ' + columns.map(function (c) { return c.name; }).join(' | ') + ' (최대 ' + specs.length + '행)');
+        clearables.push({ grid: holder });
+        add({ kind: 'grid', spec: holder, columns: columns, rows: specs.length,
+          desc: path('표 ' + title) + ' — 측정 시각 순서대로 한 행에 한 번의 측정, 최대 ' + specs.length + '행' });
+        prevBlockName = title;
+        return;
+      }
+
+      inputs.forEach(function (info) {
+        var left = [], shared = false, cc = info.c - 1;
+        while (cc >= 0) {
+          var g = grid[info.r][cc];
+          if (!g) break;
+          if (g.label) {
+            if (labelText(g.cell.l)) left.unshift(labelText(g.cell.l));
+            cc = g.c - 1;
+            var more = cc >= 0 ? grid[info.r][cc] : null;
+            if (!more || !more.label) break;
+          } else { shared = true; cc = g.c - 1; }
+        }
+        var top = [], rr = info.r - 1, found = false;
+        while (rr >= 0) {
+          var above = grid[rr] && grid[rr][info.c];
+          if (above && above.label && pure[above.r]) {
+            var text = labelText(above.cell.l);
+            if (text && top[0] !== text) top.unshift(text);
+            found = true;
+            rr = above.r - 1;
+            continue;
+          }
+          if (found) break;
+          rr -= 1;
+        }
+        left.concat(top).forEach(term);
+        var hasDate = flat(info.cell.i, []).some(function (it) { return it.c === 'lbl' && clean(it.text) === '년'; });
+        var label = path.apply(null, left.concat(top)) || (hasDate ? '작성 일시' : '');
+        var base = path(sec, label);
+        var hint = PAPER_HINT[left[left.length - 1]] || PAPER_HINT[top[top.length - 1]] || PAPER_HINT[sec] || '';
+        var from = fields.length;
+        if (paperItems(base, info.cell.i, { shared: shared && !top.length })) prevBlockName = label || prevBlockName;
+        if (hint) fields.slice(from).forEach(function (f) { f.desc += hint; });
+      });
+    }
+
+    function walkPaper(blocks) {
+      blocks.forEach(function (block) {
+        switch (block.type) {
+          case 'line': {
+            var items = flat(block.items, []);
+            if (!items.some(isInput)) {
+              // "[Vital Sign]" 같은 구역 제목 줄
+              var heading = items.filter(function (it) { return it.c === 'lbl'; }).map(function (it) { return clean(it.text); }).join(' ');
+              var m = heading.match(/^\[(.+)\]$/);
+              if (m) { sec = clean(m[1]); term(sec); outline.push('', '## ' + sec); prevBlockName = sec; }
+              return;
+            }
+            paperItems(sec, block.items);
+            return;
+          }
+          case 'table': paperTable(block); sec = ''; return;   // 구역 제목은 바로 다음 표까지만
+          default: return;
+        }
+      });
+    }
+
+    if (form.paper) walkPaper(form.blocks); else walk(form.rows);
+
+    return { form: form, fields: fields, clearables: clearables, ratios: ratios, outline: outline, terms: terms,
+      todaySpecs: todaySpecs };
   }
 
   /* ---------------- output_schema ---------------- */
@@ -334,6 +581,9 @@
       switch (f.kind) {
         case 'select':
         case 'radio':
+          p = { type: ['string', 'null'], enum: f.options.concat([null]), description: f.desc };
+          break;
+        case 'pick':
           p = { type: ['string', 'null'], enum: f.options.concat([null]), description: f.desc };
           break;
         case 'bool': p = { type: ['boolean', 'null'], description: f.desc }; break;
@@ -364,6 +614,27 @@
   /* ---------------- 서식 설명(source) ---------------- */
   function buildSource(model) {
     var form = model.form;
+    if (form.paper) {
+      return [
+        '서식: ' + form.title + ' (' + (form.dept || '') + ')',
+        '용도: ' + (form.summary || ''),
+        '',
+        '의료진이 진료·평가·간호를 하면서(또는 마친 뒤) 말로 불러 준 구술을 듣고, 아래 서식의 칸을 채운다.',
+        '',
+        '[작성 규칙]',
+        '- 구술에서 말하지 않은 칸은 비워 둔다(JSON 결과에서는 null). 추측하지 않고, 서식의 흔한 기본값도 넣지 않는다.',
+        '- 숫자 칸은 단위를 빼고 숫자만 쓴다(예: "172 센티" → 172, "6점" → 6). 혈압 "132 에 84" 는 수축기 132, 이완기 84 다.',
+        '- 체크·선택 칸은 서식에 적힌 선택지 글자 그대로 고른다. "없습니다·아니요" 는 무 또는 N, "있습니다" 는 유 또는 Y 다.',
+        '- 검사 이름 옆 체크칸은 그 검사의 값을 말했으면 체크한다.',
+        '- 날짜는 YYYY-MM-DD, 시각은 24시간제 HH:MM 으로 쓴다("10시 18분" → 10:18).',
+        '- 서술 칸은 구술 내용을 의무기록 문체로 간결하게 쓰고, 영어 의학 용어는 영어 그대로 둔다. 여러 내용은 줄을 바꿔 쓴다.',
+        '- 표는 말한 순서대로 한 행에 한 건씩 쓴다.',
+        '- 같은 항목을 고쳐 말하면 마지막에 말한 값을 쓴다.',
+        '- 환자 등록번호·이름과 서명 칸은 채우지 않는다.',
+        '',
+        '[서식 항목 — 화면에 놓인 순서. ___ 는 입력 칸]'
+      ].concat(model.outline).join('\n').replace(/\n{3,}/g, '\n\n');
+    }
     return [
       '서식: ' + form.title + ' (' + (form.dept || '') + ')',
       '용도: ' + (form.summary || ''),
@@ -388,7 +659,7 @@
 
   function describe(form) {
     if (typeof form === 'string') {
-      form = (global.OB_FORMS || []).filter(function (f) { return f.id === form; })[0];
+      form = (global.OB_FORMS || []).concat(global.SURGERY_FORMS || []).filter(function (f) { return f.id === form; })[0];
       if (!form) throw new Error('unknown form');
     }
     var model = buildModel(form);
@@ -414,6 +685,9 @@
     if (wrap) wrap.classList.toggle('on', !!on);
   }
   function gridInputs(block) {
+    if (block.cells) {   // 종이 서식의 표: 칸마다 따로 그린 입력
+      return block.cells.map(function (row) { return row.map(nodeOf).filter(Boolean); });
+    }
     var table = nodeOf(block);
     if (!table) return [];
     return Array.prototype.slice.call(table.querySelectorAll('tr')).slice(1).map(function (tr) {
@@ -425,6 +699,8 @@
     switch (field.kind) {
       case 'radio': case 'checks': case 'bool':
         return choiceInputs(field.spec);
+      case 'pick':
+        return field.specs.map(function (spec) { return choiceInputs(spec)[0]; }).filter(Boolean);
       case 'grid':
         return [].concat.apply([], gridInputs(field.spec));
       default: {
@@ -443,7 +719,7 @@
       }
       var node = nodeOf(item.spec);
       if (!node) return;
-      if (item.spec.c === 'r' || item.spec.c === 'k') {
+      if (item.spec.c === 'r' || item.spec.c === 'k' || item.spec.c === 'mp') {
         choiceInputs(item.spec).forEach(function (input) { setChoice(input, false); });
         if (node._other) node._other.value = '';
       } else if (item.spec.c === 's') {
@@ -454,6 +730,10 @@
     });
     var written = host.querySelector('.fm-titlebar input[type=date]');
     if (written) written.value = today();
+    (model.todaySpecs || []).forEach(function (spec) {
+      var node = nodeOf(spec);
+      if (node) node.value = today();
+    });
   }
 
   /* ============================================================
@@ -474,8 +754,14 @@
     return b;
   }
 
-  function attach(host, form) {
+  function supports(form) {
+    return !!form && (!form.paper || PAPER_VOICE.indexOf(form.id) !== -1);
+  }
+
+  /* redraw: 서식을 처음 상태로 다시 그리는 함수(예시 값으로 되돌리기). 없으면 산과 서식 렌더러를 쓴다 */
+  function attach(host, form, redraw) {
     detach();
+    if (!supports(form)) return;
     var fm = host.querySelector('.fm');
     if (!fm) return;
     var model = buildModel(form);
@@ -542,8 +828,8 @@
     state.btnReset.addEventListener('click', function () {
       if (state.phase !== 'idle' && state.phase !== 'done' && state.phase !== 'error') return;
       var scriptOpen = state.scriptBox.classList.contains('on');
-      global.OBForms.render(host, form);
-      attach(host, form);
+      if (redraw) redraw(); else global.OBForms.render(host, form);
+      attach(host, form, redraw);
       if (scriptOpen) current.btnScript.click();
       setStatus(current, '예시 값으로 되돌렸습니다');
     });
@@ -985,7 +1271,7 @@
         if (!state.voiceSet[key]) return;
         delete state.voiceSet[key];
         elementsOf(f).forEach(function (node) {
-          if (f.kind === 'radio' || f.kind === 'checks' || f.kind === 'bool') setChoice(node, false);
+          if (f.kind === 'radio' || f.kind === 'checks' || f.kind === 'bool' || f.kind === 'pick') setChoice(node, false);
           else if (f.kind === 'select') node.selectedIndex = -1;
           else node.value = '';
           unmark(node);
@@ -999,6 +1285,13 @@
           if (!hit) return;
           nodes.forEach(function (n) { setChoice(n, n === hit); unmark(n); });
           touched.push(mark(state, hit));
+          break;
+        }
+        case 'pick': {
+          var at = f.options.indexOf(v);
+          if (at === -1 || !nodes[at]) return;
+          nodes.forEach(function (n, i) { setChoice(n, i === at); unmark(n); });
+          touched.push(mark(state, nodes[at]));
           break;
         }
         case 'checks': {
@@ -1040,7 +1333,7 @@
         default: {
           var input = nodes[0];
           if (!input) return;
-          var text = String(v);
+          var text = String(v).replace(/\u2212/g, '-');
           if (input.value === text) { state.voiceSet[key] = true; return; }
           input.value = text;
           touched.push(mark(state, input));
@@ -1061,7 +1354,7 @@
       rowCells.forEach(function (cell, c) {
         if (state.dirty[f.key + ':' + r + ':' + c]) return;
         var raw = item[f.columns[c].key];
-        var text = raw == null ? '' : String(raw);
+        var text = raw == null ? '' : String(raw).replace(/\u2212/g, '-');
         if (text) any = true;
         if (cell.value === text) return;
         if (!text && !cell.classList.contains('vf-filled')) return;
@@ -1175,6 +1468,7 @@
   global.VoiceFill = {
     attach: attach,
     detach: detach,
+    supports: supports,
     describe: describe,
     /* 시험용: 지금 열린 서식을 비우고, 결과 JSON 을 그대로 넣어 본다 */
     clear: function () { if (current) clearForm(current.model, current.host); },
